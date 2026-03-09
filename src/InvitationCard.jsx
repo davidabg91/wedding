@@ -1,5 +1,10 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { WeddingIcons } from './components/WeddingIcons.jsx';
+import teddyBearImg from './assets/teddy_bear.png';
+import angelImg from './assets/angel.png';
+import starsImg from './assets/stars.png';
+import balloonsImg from './assets/balloons.png';
+import wreathIvoryImg from './assets/wreath_ivory.png';
 
 const BaroqueOrnament = ({ style }) => (
     <svg viewBox="0 0 500 100" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: '400px', opacity: 0.35, ...style }}>
@@ -81,7 +86,7 @@ const CornerOrnament = ({ position = "top-left", eventType }) => {
 };
 
 const TeddyBear = ({ style }) => (
-    <img src="/teddy_bear.png" alt="Teddy Bear Illustration" style={{ width: '180px', height: 'auto', mixBlendMode: 'multiply', ...style }} />
+    <img src={teddyBearImg} alt="Teddy Bear Illustration" style={{ width: '180px', height: 'auto', mixBlendMode: 'multiply', ...style }} />
 );
 
 const Cloud = ({ style, duration = "15s", delay = "0s" }) => (
@@ -100,15 +105,15 @@ const Cloud = ({ style, duration = "15s", delay = "0s" }) => (
 );
 
 const AngelSymbol = ({ style }) => (
-    <img src="/angel.png" alt="Angel Illustration" style={{ width: '180px', height: 'auto', mixBlendMode: 'multiply', ...style }} />
+    <img src={angelImg} alt="Angel Illustration" style={{ width: '180px', height: 'auto', mixBlendMode: 'multiply', ...style }} />
 );
 
 const StarCluster = ({ style }) => (
-    <img src="/stars.png" alt="Stars Illustration" style={{ width: '120px', height: 'auto', mixBlendMode: 'multiply', ...style }} />
+    <img src={starsImg} alt="Stars Illustration" style={{ width: '120px', height: 'auto', mixBlendMode: 'multiply', ...style }} />
 );
 
 const BalloonIllustration = ({ style }) => (
-    <img src="/balloons.png" alt="Balloons Illustration" style={{ width: '150px', height: 'auto', mixBlendMode: 'multiply', ...style }} />
+    <img src={balloonsImg} alt="Balloons Illustration" style={{ width: '150px', height: 'auto', mixBlendMode: 'multiply', ...style }} />
 );
 
 const CountdownTimer = ({ targetDate, label }) => {
@@ -205,7 +210,7 @@ const FloralHeroPhoto = ({ src, alt, eventType }) => {
                     position: 'absolute',
                     width: '180%',
                     height: '180%',
-                    backgroundImage: 'url("/wreath_ivory.png")',
+                    backgroundImage: `url(${wreathIvoryImg})`,
                     backgroundSize: 'contain',
                     backgroundPosition: 'center',
                     backgroundRepeat: 'no-repeat',
