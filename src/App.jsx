@@ -11,6 +11,11 @@ function App() {
   const [eventData, setEventData] = useState(null);
   const [user, setUser] = useState(null);
 
+  // Ensure we scroll to top on every view transition
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [view]);
+
   const handleCreate = (data) => {
     setEventData(data);
     setView('video');
@@ -45,7 +50,11 @@ function App() {
   return (
     <div className="App">
       {view === 'create' && (
-        <CreatorForm onSubmit={handleCreate} />
+        <CreatorForm
+          onSubmit={handleCreate}
+          onLogin={() => setView('register')}
+          onRegister={() => setView('register')}
+        />
       )}
 
       {view === 'video' && (

@@ -134,3 +134,31 @@ h3,
     opacity: 1;
   }
 }
+
+@keyframes scrollMarquee {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.marquee-container {
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  padding: 2rem 0;
+  white-space: nowrap;
+}
+
+.marquee-content {
+  display: inline-flex;
+  gap: 4rem;
+  animation: scrollMarquee 40s linear infinite;
+}
+
+.marquee-container:hover .marquee-content {
+  animation-play-state: paused;
+}
