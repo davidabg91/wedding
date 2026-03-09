@@ -210,8 +210,8 @@ const ExtrasPage = ({ onBack, data, onRegister }) => {
                 <div style={{
                     display: 'grid',
                     gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-                    gap: '2.5rem',
-                    marginBottom: 'clamp(4rem, 10vw, 8rem)'
+                    gap: 'clamp(1.5rem, 5vw, 2.5rem)',
+                    marginBottom: 'clamp(3rem, 10vw, 8rem)'
                 }}>
                     {EXTRAS_DATA.map(extra => (
                         <ExtraCard

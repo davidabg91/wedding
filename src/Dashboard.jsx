@@ -34,11 +34,11 @@ const Dashboard = ({ data, guests = [], onLogout }) => {
 
             <div className="lux-container" style={{ maxWidth: '1000px', margin: '0 auto', position: 'relative', zIndex: 11 }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4rem', flexWrap: 'wrap', gap: '1.5rem' }}>
-                    <div>
-                        <h1 className="serif" style={{ fontSize: 'clamp(1.5rem, 5vw, 2rem)', color: '#222', letterSpacing: '2px' }}>
+                    <div style={{ textAlign: window.innerWidth <= 600 ? 'center' : 'left', width: window.innerWidth <= 600 ? '100%' : 'auto' }}>
+                        <h1 className="serif" style={{ fontSize: 'clamp(1.3rem, 5vw, 2rem)', color: '#222', letterSpacing: '1px', lineHeight: '1.2', marginBottom: '0.5rem' }}>
                             ВАШЕТО ТАБЛО: {data.groom.toUpperCase()} & {data.bride.toUpperCase()}
                         </h1>
-                        <p className="serif" style={{ color: '#666', fontSize: '0.9rem' }}>Проследяване на гости и потвърждения.</p>
+                        <p className="serif" style={{ color: '#666', fontSize: '0.85rem' }}>Проследяване на гости и потвърждения.</p>
                     </div>
                     <button
                         onClick={onLogout}

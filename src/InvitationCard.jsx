@@ -175,7 +175,7 @@ const CountdownTimer = ({ targetDate, label }) => {
                 borderRadius: '15px',
                 border: '1px solid rgba(197, 160, 89, 0.1)',
                 margin: '0 auto',
-                width: '90%'
+                width: 'min(95%, 600px)'
             }}>
                 <TimeUnit label="Дни" value={timeLeft.days} />
                 <div style={{ fontSize: '2rem', color: 'var(--accent-gold)', opacity: 0.3 }}>•</div>
@@ -199,7 +199,7 @@ const FloralHeroPhoto = ({ src, alt, eventType }) => {
             position: 'relative',
             width: '100%',
             maxWidth: '850px',
-            margin: 'clamp(4rem, 15vw, 10rem) auto clamp(4rem, 10vw, 8rem) auto',
+            margin: 'clamp(3rem, 10vw, 6rem) auto clamp(3rem, 8vw, 6rem) auto',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center'
@@ -342,7 +342,8 @@ const ProgramItem = ({ time, activity, icon, isReversed, theme }) => {
             margin: isMobile ? '2rem 0' : '3rem 0',
             flexDirection: effectiveIsReversed ? 'row-reverse' : 'row',
             position: 'relative',
-            zIndex: 2
+            zIndex: 2,
+            width: '100%'
         }}>
             <div style={{
                 flex: isMobile ? '0 0 70px' : 1,
@@ -503,7 +504,8 @@ const InvitationCard = ({ data }) => {
             color: theme.accent,
             '--accent-gold': theme.secondary,
             '--accent-gold-dark': theme.primary,
-            overflowX: 'hidden'
+            overflowX: 'hidden',
+            width: '100%'
         }}>
             <style>{`
                 @keyframes float-drift {
@@ -568,7 +570,7 @@ const InvitationCard = ({ data }) => {
                 borderRadius: '4px',
                 backgroundImage: 'var(--paper-texture)',
                 overflow: 'visible',
-                width: 'calc(100% - 2rem)'
+                width: 'min(calc(100% - 2rem), 850px)'
             }}>
                 {/* Decorative Inner Border */}
                 <div style={{
@@ -598,7 +600,14 @@ const InvitationCard = ({ data }) => {
                         </div>
                     )}
                     <div style={{ height: '1px', width: '100px', background: theme.secondary, margin: '1.5rem auto', opacity: 0.4 }}></div>
-                    <h2 className="script" style={{ fontSize: 'clamp(4rem, 15vw, 7rem)', color: theme.primary, marginTop: '0.5rem', lineHeight: '0.8' }}>
+                    <h2 className="script" style={{
+                        fontSize: 'clamp(3.5rem, 15vw, 7rem)',
+                        color: theme.primary,
+                        marginTop: '0.5rem',
+                        lineHeight: '1',
+                        wordBreak: 'break-word',
+                        width: '100%'
+                    }}>
                         {eventType === 'wedding' && `${data.groom} & ${data.bride}`}
                         {eventType === 'christening' && data.childName}
                         {eventType === 'birthday' && data.birthdayPerson}
@@ -692,10 +701,18 @@ const InvitationCard = ({ data }) => {
                 <div style={{ textAlign: 'center', padding: '3rem 0' }}><BaroqueOrnament style={{ width: 'min(400px, 80%)' }} /></div>
 
                 <Section className="rsvp-section" title="ПОТВЪРЖДЕНИЕ">
-                    <div style={{ padding: 'clamp(2rem, 8vw, 6rem) clamp(1rem, 5vw, 3rem)', background: 'rgba(255, 255, 255, 0.4)', boxShadow: '0 20px 50px rgba(0,0,0,0.03)', borderRadius: '4px', position: 'relative' }}>
+                    <div style={{
+                        padding: 'clamp(1.5rem, 5vw, 4rem) clamp(1rem, 4vw, 3rem)',
+                        background: 'rgba(255, 255, 255, 0.4)',
+                        boxShadow: '0 20px 50px rgba(0,0,0,0.03)',
+                        borderRadius: '4px',
+                        position: 'relative',
+                        width: '100%',
+                        boxSizing: 'border-box'
+                    }}>
                         {!submitted ? (
                             <form onSubmit={(e) => { e.preventDefault(); setSubmitted(true); }}>
-                                <p className="serif" style={{ marginBottom: '3rem', fontStyle: 'italic', color: '#777' }}>Моля, потвърдете Вашето присъствие.</p>
+                                <p className="serif" style={{ marginBottom: '2rem', fontStyle: 'italic', color: '#777', fontSize: '0.95rem' }}>Моля, потвърдете Вашето присъствие.</p>
                                 <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem', maxWidth: '500px', margin: '0 auto' }}>
                                     <input type="text" placeholder="Вашето име..." className="lux-input" style={{ textAlign: 'center' }} required />
                                     <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', alignItems: 'center' }}>

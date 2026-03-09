@@ -572,14 +572,21 @@ const CreatorForm = ({ data, onChange, onSubmit, onLogin, onRegister }) => {
       </div>
 
       {/* Creator Form Section */}
-      <div id="designer" className="lux-container" style={{ maxWidth: '1000px', padding: '1rem 2rem 4rem 2rem' }}>
-        <div className="paper-surface" style={{ padding: '5rem 4rem', border: '1px solid rgba(197, 160, 89, 0.2)', borderRadius: '4px', position: 'relative', overflow: 'hidden' }}>
+      <div id="designer" className="lux-container" style={{ maxWidth: '1000px', padding: '1rem' }}>
+        <div className="paper-surface" style={{ padding: 'clamp(2rem, 8vw, 5rem) clamp(1rem, 5vw, 4rem)', border: '1px solid rgba(197, 160, 89, 0.2)', borderRadius: '4px', position: 'relative', overflow: 'hidden' }}>
           {/* Subtle Background Ornament */}
           <div style={{ position: 'absolute', top: '-100px', right: '-100px', opacity: 0.05, transform: 'rotate(45deg)' }}>
             <img src={wreathIvory} alt="bg" style={{ width: '400px' }} />
           </div>
 
-          <h2 className="serif" style={{ textAlign: 'center', marginBottom: '2rem', color: 'var(--accent-gold-dark)', fontSize: 'clamp(1.8rem, 6vw, 3rem)', letterSpacing: 'clamp(2px, 1vw, 6px)' }}>
+          <h2 className="serif" style={{
+            textAlign: 'center',
+            marginBottom: '2.5rem',
+            color: 'var(--accent-gold-dark)',
+            fontSize: 'clamp(1.6rem, 7vw, 3rem)',
+            letterSpacing: 'clamp(2px, 1.5vw, 6px)',
+            lineHeight: '1.2'
+          }}>
             СЪЗДАЙТЕ ВАШАТА МОДЕРНА ПОКАНА
           </h2>
 
