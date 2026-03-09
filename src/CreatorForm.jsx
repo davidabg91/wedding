@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { WeddingIcons, WeddingIconOptions } from './components/WeddingIcons.jsx';
+import logo from './assets/logo.png';
+import wreathIvory from './assets/wreath_ivory.png';
 
 const CustomRequestModal = ({ isOpen, onClose }) => {
   const [formData, setFormData] = useState({
@@ -339,7 +341,7 @@ const CreatorForm = ({ data, onChange, onSubmit, onLogin, onRegister }) => {
         boxShadow: '0 4px 30px rgba(0, 0, 0, 0.03)'
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', cursor: 'pointer' }} onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-          <img src="/logo.png" alt="PokaniPro Logo" style={{ height: '40px', mixBlendMode: 'multiply' }} />
+          <img src={logo} alt="PokaniPro Logo" style={{ height: '40px', mixBlendMode: 'multiply' }} />
           <span className="serif" style={{ fontSize: '1.6rem', letterSpacing: '3px', color: 'var(--accent-gold-dark)', fontWeight: '500' }}>PokaniPro</span>
         </div>
 
@@ -470,13 +472,12 @@ const CreatorForm = ({ data, onChange, onSubmit, onLogin, onRegister }) => {
             }}>
               {/* Card Inner Reflections */}
               <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '40%', background: 'linear-gradient(to bottom, rgba(255,255,255,0.05), transparent)', pointerEvents: 'none' }}></div>
-              <div style={{ width: '80px', height: '80px', borderRadius: '50%', background: 'rgba(197,160,89,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '2rem', border: '1px solid rgba(197,160,89,0.3)' }}>
-                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--accent-gold)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                  <rect x="3" y="5" width="18" height="14" rx="2" ry="2"></rect>
-                  <polyline points="3 7 12 13 21 7"></polyline>
-                </svg>
+              <div style={{ width: '60px', height: '60px', borderRadius: '50%', background: 'rgba(197,160,89,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1.5rem', border: '1px solid rgba(197,160,89,0.3)', overflow: 'hidden' }}>
+                <img src={logo} alt="PokaniPro Symbol" style={{ height: '80px', objectFit: 'contain', objectPosition: 'top' }} />
               </div>
-              <h3 className="serif" style={{ color: 'white', fontSize: '1.8rem', marginBottom: '0.5rem', letterSpacing: '2px' }}>PokaniPro</h3>
+              <div style={{ background: '#000', padding: '0.8rem 1.5rem', borderRadius: '12px', marginBottom: '0.5rem' }}>
+                <img src={logo} alt="PokaniPro Logo" style={{ height: '30px', filter: 'brightness(0) invert(1)' }} />
+              </div>
               <div style={{ width: '40px', height: '2px', background: 'var(--accent-gold)', marginBottom: '1.5rem' }}></div>
               <p className="serif" style={{ color: '#aaa', fontSize: '0.9rem', letterSpacing: '4px', textTransform: 'uppercase' }}>Digital Core</p>
             </div>
@@ -539,7 +540,7 @@ const CreatorForm = ({ data, onChange, onSubmit, onLogin, onRegister }) => {
         <div className="paper-surface" style={{ padding: '5rem 4rem', border: '1px solid rgba(197, 160, 89, 0.2)', borderRadius: '4px', position: 'relative', overflow: 'hidden' }}>
           {/* Subtle Background Ornament */}
           <div style={{ position: 'absolute', top: '-100px', right: '-100px', opacity: 0.05, transform: 'rotate(45deg)' }}>
-            <img src="./wreath_ivory.png" alt="bg" style={{ width: '400px' }} />
+            <img src={wreathIvory} alt="bg" style={{ width: '400px' }} />
           </div>
 
           <h2 className="serif" style={{ textAlign: 'center', marginBottom: '2rem', color: 'var(--accent-gold-dark)', fontSize: '3rem', letterSpacing: '6px' }}>
@@ -893,10 +894,12 @@ const CreatorForm = ({ data, onChange, onSubmit, onLogin, onRegister }) => {
 
       {/* Footer Branding */}
       <footer id="support" style={{ padding: '4rem 0', textAlign: 'center', borderTop: '1px solid rgba(197, 160, 89, 0.1)', background: '#fdfaf5' }}>
-        <img src="./logo.png" alt="PokaniPro Logo" style={{ height: '40px', mixBlendMode: 'multiply', opacity: 0.5 }} />
+        <div style={{ height: '40px', overflow: 'hidden', display: 'inline-flex', alignItems: 'flex-start', justifyContent: 'center' }}>
+          <img src={logo} alt="PokaniPro Symbol" style={{ height: '70px', objectFit: 'contain', objectPosition: 'top', opacity: 0.5 }} />
+        </div>
         <p className="serif" style={{ fontSize: '0.8rem', letterSpacing: '4px', color: 'var(--accent-gold-dark)', marginTop: '1rem', opacity: 0.6 }}>POKANIPRO • © 2026 • ПОДДРЪЖКА: support@pokani.pro</p>
       </footer>
-    </div>
+    </div >
   );
 };
 
