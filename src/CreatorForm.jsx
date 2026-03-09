@@ -539,7 +539,7 @@ const CreatorForm = ({ data, onChange, onSubmit, onLogin, onRegister }) => {
         <div className="paper-surface" style={{ padding: '5rem 4rem', border: '1px solid rgba(197, 160, 89, 0.2)', borderRadius: '4px', position: 'relative', overflow: 'hidden' }}>
           {/* Subtle Background Ornament */}
           <div style={{ position: 'absolute', top: '-100px', right: '-100px', opacity: 0.05, transform: 'rotate(45deg)' }}>
-            <img src="/wreath_ivory.png" alt="bg" style={{ width: '400px' }} />
+            <img src="./wreath_ivory.png" alt="bg" style={{ width: '400px' }} />
           </div>
 
           <h2 className="serif" style={{ textAlign: 'center', marginBottom: '2rem', color: 'var(--accent-gold-dark)', fontSize: '3rem', letterSpacing: '6px' }}>
@@ -893,7 +893,7 @@ const CreatorForm = ({ data, onChange, onSubmit, onLogin, onRegister }) => {
 
       {/* Footer Branding */}
       <footer id="support" style={{ padding: '4rem 0', textAlign: 'center', borderTop: '1px solid rgba(197, 160, 89, 0.1)', background: '#fdfaf5' }}>
-        <img src="/logo.png" alt="PokaniPro Logo" style={{ height: '40px', mixBlendMode: 'multiply', opacity: 0.5 }} />
+        <img src="./logo.png" alt="PokaniPro Logo" style={{ height: '40px', mixBlendMode: 'multiply', opacity: 0.5 }} />
         <p className="serif" style={{ fontSize: '0.8rem', letterSpacing: '4px', color: 'var(--accent-gold-dark)', marginTop: '1rem', opacity: 0.6 }}>POKANIPRO • © 2026 • ПОДДРЪЖКА: support@pokani.pro</p>
       </footer>
     </div>
