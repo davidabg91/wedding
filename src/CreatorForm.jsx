@@ -472,14 +472,48 @@ const CreatorForm = ({ data, onChange, onSubmit, onLogin, onRegister }) => {
             }}>
               {/* Card Inner Reflections */}
               <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '40%', background: 'linear-gradient(to bottom, rgba(255,255,255,0.05), transparent)', pointerEvents: 'none' }}></div>
-              <div style={{ width: '60px', height: '60px', borderRadius: '50%', background: 'rgba(197,160,89,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1.5rem', border: '1px solid rgba(197,160,89,0.3)', overflow: 'hidden' }}>
-                <img src={logo} alt="PokaniPro Symbol" style={{ height: '80px', objectFit: 'contain', objectPosition: 'top' }} />
+              {/* Luxury Invitation Mockup */}
+              <div style={{
+                position: 'absolute',
+                top: '5%',
+                left: '5%',
+                right: '5%',
+                bottom: '5%',
+                background: '#fdfaf5', // Ivory paper
+                borderRadius: '16px',
+                padding: '2rem 1.5rem',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                boxShadow: 'inset 0 0 20px rgba(197,160,89,0.1)',
+                border: '1px solid rgba(197,160,89,0.3)',
+                overflow: 'hidden'
+              }}>
+                {/* Subtle ornament top */}
+                <svg width="60" height="20" viewBox="0 0 100 30" fill="none" style={{ marginBottom: '1rem', opacity: 0.6 }}>
+                  <path d="M10 15 Q50 -5 90 15" stroke="var(--accent-gold)" strokeWidth="1" fill="none" />
+                  <circle cx="50" cy="8" r="3" fill="var(--accent-gold)" />
+                </svg>
+
+                <p className="serif" style={{ fontSize: '0.6rem', letterSpacing: '3px', color: '#777', textTransform: 'uppercase', marginBottom: '0.5rem' }}>С Голямо Удоволствие</p>
+                <p className="serif" style={{ fontSize: '0.7rem', color: '#555', marginBottom: '1.5rem' }}>Ви Каним на Нашата Сватба</p>
+
+                <h3 style={{ fontFamily: '"Great Vibes", cursive, serif', fontSize: '2.5rem', color: 'var(--accent-gold-dark)', margin: '0 0 0.5rem 0', fontWeight: 'normal', lineHeight: '1.2' }}>Александър</h3>
+                <span style={{ fontSize: '1.2rem', color: 'var(--accent-gold)', marginBottom: '0.5rem', fontStyle: 'italic' }}>&</span>
+                <h3 style={{ fontFamily: '"Great Vibes", cursive, serif', fontSize: '2.5rem', color: 'var(--accent-gold-dark)', margin: '0 0 1.5rem 0', fontWeight: 'normal', lineHeight: '1.2' }}>София</h3>
+
+                <div style={{ width: '30px', height: '1px', background: 'var(--accent-gold)', marginBottom: '1rem', opacity: 0.5 }}></div>
+
+                <p className="serif" style={{ fontSize: '0.8rem', letterSpacing: '2px', color: '#444', fontWeight: 'bold', marginBottom: '0.3rem' }}>14.09.2026</p>
+                <p className="serif" style={{ fontSize: '0.65rem', color: '#777', textTransform: 'uppercase', letterSpacing: '1px' }}>Резиденция Тера</p>
+
+                {/* Subtle ornament bottom */}
+                <svg width="60" height="20" viewBox="0 0 100 30" fill="none" style={{ marginTop: 'auto', opacity: 0.6 }}>
+                  <path d="M10 15 Q50 35 90 15" stroke="var(--accent-gold)" strokeWidth="1" fill="none" />
+                  <circle cx="50" cy="22" r="3" fill="var(--accent-gold)" />
+                </svg>
               </div>
-              <div style={{ background: '#000', padding: '0.8rem 1.5rem', borderRadius: '12px', marginBottom: '0.5rem' }}>
-                <img src={logo} alt="PokaniPro Logo" style={{ height: '30px', filter: 'brightness(0) invert(1)' }} />
-              </div>
-              <div style={{ width: '40px', height: '2px', background: 'var(--accent-gold)', marginBottom: '1.5rem' }}></div>
-              <p className="serif" style={{ color: '#aaa', fontSize: '0.9rem', letterSpacing: '4px', textTransform: 'uppercase' }}>Digital Core</p>
             </div>
           </div>
 
@@ -895,7 +929,7 @@ const CreatorForm = ({ data, onChange, onSubmit, onLogin, onRegister }) => {
       {/* Footer Branding */}
       <footer id="support" style={{ padding: '4rem 0', textAlign: 'center', borderTop: '1px solid rgba(197, 160, 89, 0.1)', background: '#fdfaf5' }}>
         <div style={{ height: '40px', overflow: 'hidden', display: 'inline-flex', alignItems: 'flex-start', justifyContent: 'center' }}>
-          <img src={logo} alt="PokaniPro Symbol" style={{ height: '70px', objectFit: 'contain', objectPosition: 'top', opacity: 0.5 }} />
+          <img src={logo} alt="PokaniPro Symbol" style={{ height: '70px', objectFit: 'contain', objectPosition: 'top', opacity: 0.5, mixBlendMode: 'multiply' }} />
         </div>
         <p className="serif" style={{ fontSize: '0.8rem', letterSpacing: '4px', color: 'var(--accent-gold-dark)', marginTop: '1rem', opacity: 0.6 }}>POKANIPRO • © 2026 • ПОДДРЪЖКА: support@pokani.pro</p>
       </footer>
