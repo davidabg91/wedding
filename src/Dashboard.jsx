@@ -33,9 +33,9 @@ const Dashboard = ({ data, guests = [], onLogout }) => {
             }}></div>
 
             <div className="lux-container" style={{ maxWidth: '1000px', margin: '0 auto', position: 'relative', zIndex: 11 }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4rem' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4rem', flexWrap: 'wrap', gap: '1.5rem' }}>
                     <div>
-                        <h1 className="serif" style={{ fontSize: '2rem', color: '#222', letterSpacing: '2px' }}>
+                        <h1 className="serif" style={{ fontSize: 'clamp(1.5rem, 5vw, 2rem)', color: '#222', letterSpacing: '2px' }}>
                             ВАШЕТО ТАБЛО: {data.groom.toUpperCase()} & {data.bride.toUpperCase()}
                         </h1>
                         <p className="serif" style={{ color: '#666', fontSize: '0.9rem' }}>Проследяване на гости и потвърждения.</p>
@@ -58,7 +58,7 @@ const Dashboard = ({ data, guests = [], onLogout }) => {
 
                 <div style={{
                     display: 'grid',
-                    gridTemplateColumns: 'repeat(3, 1fr)',
+                    gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
                     gap: '2rem',
                     marginBottom: '4rem'
                 }}>
@@ -78,30 +78,33 @@ const Dashboard = ({ data, guests = [], onLogout }) => {
 
                 <div style={{
                     background: 'white',
-                    padding: '2rem',
-                    border: '1px solid rgba(197, 160, 89, 0.1)'
+                    padding: 'clamp(1rem, 4vw, 2rem)',
+                    border: '1px solid rgba(197, 160, 89, 0.1)',
+                    overflowX: 'auto'
                 }}>
                     <h2 className="serif" style={{ fontSize: '1.4rem', marginBottom: '2rem', borderBottom: '1px solid #f9f9f9', paddingBottom: '1rem' }}>СПИСЪК С ОТГОВОРИ</h2>
-                    <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
-                        <thead>
-                            <tr style={{ background: '#fcfcfc' }}>
-                                <th style={{ padding: '1.5rem', fontSize: '0.8rem', letterSpacing: '1px' }}>ИМЕ</th>
-                                <th style={{ padding: '1.5rem', fontSize: '0.8rem', letterSpacing: '1px' }}>СТАТУС</th>
-                                <th style={{ padding: '1.5rem', fontSize: '0.8rem', letterSpacing: '1px' }}>ГОСТИ</th>
-                                <th style={{ padding: '1.5rem', fontSize: '0.8rem', letterSpacing: '1px' }}>ОПИСАНИЕ</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {displayGuests.map((guest, idx) => (
-                                <tr key={idx} style={{ borderBottom: '1px solid #eee' }}>
-                                    <td style={{ padding: '1.5rem', fontSize: '0.9rem' }}>{guest.name}</td>
-                                    <td style={{ padding: '1.5rem', fontSize: '0.8rem', color: guest.status === "Ще присъства" ? '#27ae60' : '#c0392b', fontWeight: 'bold' }}>{guest.status}</td>
-                                    <td style={{ padding: '1.5rem', fontSize: '0.9rem' }}>{guest.count}</td>
-                                    <td style={{ padding: '1.5rem', fontSize: '0.8rem', color: '#888' }}>{guest.names || "—"}</td>
+                    <div style={{ minWidth: '600px' }}>
+                        <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
+                            <thead>
+                                <tr style={{ background: '#fcfcfc' }}>
+                                    <th style={{ padding: '1.5rem', fontSize: '0.8rem', letterSpacing: '1px' }}>ИМЕ</th>
+                                    <th style={{ padding: '1.5rem', fontSize: '0.8rem', letterSpacing: '1px' }}>СТАТУС</th>
+                                    <th style={{ padding: '1.5rem', fontSize: '0.8rem', letterSpacing: '1px' }}>ГОСТИ</th>
+                                    <th style={{ padding: '1.5rem', fontSize: '0.8rem', letterSpacing: '1px' }}>ОПИСАНИЕ</th>
                                 </tr>
-                            ))}
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                {displayGuests.map((guest, idx) => (
+                                    <tr key={idx} style={{ borderBottom: '1px solid #eee' }}>
+                                        <td style={{ padding: '1.5rem', fontSize: '0.9rem' }}>{guest.name}</td>
+                                        <td style={{ padding: '1.5rem', fontSize: '0.8rem', color: guest.status === "Ще присъства" ? '#27ae60' : '#c0392b', fontWeight: 'bold' }}>{guest.status}</td>
+                                        <td style={{ padding: '1.5rem', fontSize: '0.9rem' }}>{guest.count}</td>
+                                        <td style={{ padding: '1.5rem', fontSize: '0.8rem', color: '#888' }}>{guest.names || "—"}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

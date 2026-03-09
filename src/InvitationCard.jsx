@@ -7,7 +7,7 @@ import balloonsImg from './assets/balloons.png';
 import wreathIvoryImg from './assets/wreath_ivory.png';
 
 const BaroqueOrnament = ({ style }) => (
-    <svg viewBox="0 0 500 100" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: '400px', opacity: 0.35, ...style }}>
+    <svg viewBox="0 0 500 100" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: 'min(400px, 90%)', opacity: 0.35, ...style }}>
         <path d="M250 50C200 10 150 10 100 50C50 90 20 90 0 50" stroke="var(--accent-gold)" strokeWidth="0.8" />
         <path d="M250 50C300 10 350 10 400 50C450 90 480 90 500 50" stroke="var(--accent-gold)" strokeWidth="0.8" />
         <path d="M250 20C230 40 230 60 250 80C270 60 270 40 250 20Z" fill="var(--accent-gold)" opacity="0.2" />
@@ -43,16 +43,16 @@ const CornerOrnament = ({ position = "top-left", eventType }) => {
     return (
         <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg"
             style={{
-                width: '180px',
+                width: 'min(180px, 40vw)',
                 position: 'absolute',
                 transform: `rotate(${rotations[position]})`,
                 opacity: 0.35,
                 zIndex: 5,
                 ...{
-                    "top-left": { top: '-25px', left: '-25px' },
-                    "top-right": { top: '-25px', right: '-25px' },
-                    "bottom-right": { bottom: '-25px', right: '-25px' },
-                    "bottom-left": { bottom: '-25px', left: '-25px' }
+                    "top-left": { top: '-15px', left: '-15px' },
+                    "top-right": { top: '-15px', right: '-15px' },
+                    "bottom-right": { bottom: '-15px', right: '-15px' },
+                    "bottom-left": { bottom: '-15px', left: '-15px' }
                 }[position]
             }}>
             {isChild ? (
@@ -86,7 +86,7 @@ const CornerOrnament = ({ position = "top-left", eventType }) => {
 };
 
 const TeddyBear = ({ style }) => (
-    <img src={teddyBearImg} alt="Teddy Bear Illustration" style={{ width: '180px', height: 'auto', mixBlendMode: 'multiply', ...style }} />
+    <img src={teddyBearImg} alt="Teddy Bear Illustration" style={{ width: 'min(180px, 45%)', height: 'auto', mixBlendMode: 'multiply', ...style }} />
 );
 
 const Cloud = ({ style, duration = "15s", delay = "0s" }) => (
@@ -105,7 +105,7 @@ const Cloud = ({ style, duration = "15s", delay = "0s" }) => (
 );
 
 const AngelSymbol = ({ style }) => (
-    <img src={angelImg} alt="Angel Illustration" style={{ width: '180px', height: 'auto', mixBlendMode: 'multiply', ...style }} />
+    <img src={angelImg} alt="Angel Illustration" style={{ width: 'min(180px, 45%)', height: 'auto', mixBlendMode: 'multiply', ...style }} />
 );
 
 const StarCluster = ({ style }) => (
@@ -113,7 +113,7 @@ const StarCluster = ({ style }) => (
 );
 
 const BalloonIllustration = ({ style }) => (
-    <img src={balloonsImg} alt="Balloons Illustration" style={{ width: '150px', height: 'auto', mixBlendMode: 'multiply', ...style }} />
+    <img src={balloonsImg} alt="Balloons Illustration" style={{ width: 'min(150px, 40%)', height: 'auto', mixBlendMode: 'multiply', ...style }} />
 );
 
 const CountdownTimer = ({ targetDate, label }) => {
@@ -195,11 +195,11 @@ const FloralHeroPhoto = ({ src, alt, eventType }) => {
     const isHeart = !isWedding && !isBirthday;
 
     return (
-        <div style={{
+        <div className="floral-hero-container" style={{
             position: 'relative',
             width: '100%',
             maxWidth: '850px',
-            margin: '10rem auto 8rem auto',
+            margin: 'clamp(4rem, 15vw, 10rem) auto clamp(4rem, 10vw, 8rem) auto',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center'
@@ -227,9 +227,9 @@ const FloralHeroPhoto = ({ src, alt, eventType }) => {
             {/* The Photo Frame - Dynamic for Event Type */}
             <div style={{
                 position: 'relative',
-                width: '400px',
-                height: '400px',
-                borderRadius: isWedding ? '50%' : isBirthday ? '40px' : '0',
+                width: 'min(400px, 75vw)',
+                height: 'min(400px, 75vw)',
+                borderRadius: isWedding ? '50%' : isBirthday ? 'max(20px, 5vw)' : '0',
                 overflow: 'hidden',
                 zIndex: 1,
                 boxShadow: '0 30px 80px rgba(0,0,0,0.15)',
@@ -248,8 +248,8 @@ const FloralHeroPhoto = ({ src, alt, eventType }) => {
             <div style={{
                 position: 'absolute',
                 bottom: '-40px',
-                width: '600px',
-                height: '150px',
+                width: 'min(600px, 120%)',
+                height: 'min(150px, 30vw)',
                 background: 'radial-gradient(ellipse at center, var(--paper-bg) 0%, transparent 80%)',
                 zIndex: 2,
                 pointerEvents: 'none',
@@ -289,10 +289,11 @@ const HeartImage = ({ src, size = "200px" }) => (
 const MaskedImage = ({ src, alt, height = "450px", ornate = false }) => (
     <div style={{
         position: 'relative',
-        height: height,
+        height: 'auto',
+        minHeight: '200px',
         width: '100%',
         maxWidth: '700px',
-        margin: ornate ? '4rem auto 6rem auto' : '4rem auto',
+        margin: ornate ? 'clamp(2rem, 8vw, 4rem) auto clamp(3rem, 10vw, 6rem) auto' : 'clamp(2rem, 8vw, 4rem) auto',
         overflow: 'visible',
         maskImage: 'radial-gradient(circle at 50% 50%, black 10%, rgba(0,0,0,0.8) 30%, transparent 70%)',
         WebkitMaskImage: 'radial-gradient(circle at 50% 50%, black 10%, rgba(0,0,0,0.8) 30%, transparent 70%)',
@@ -301,7 +302,9 @@ const MaskedImage = ({ src, alt, height = "450px", ornate = false }) => (
         <div style={{
             position: 'relative',
             width: '100%',
-            height: '100%',
+            height: 'auto',
+            aspectRatio: '16/9',
+            maxHeight: height,
             overflow: 'hidden'
         }}>
             <img src={src} alt={alt} style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.95, filter: 'sepia(0.1) contrast(1.05) brightness(1.02)' }} />
@@ -321,24 +324,37 @@ const MaskedImage = ({ src, alt, height = "450px", ornate = false }) => (
 
 const ProgramItem = ({ time, activity, icon, isReversed, theme }) => {
     const IconComponent = WeddingIcons[icon] || WeddingIcons['✨'];
+    const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+
+    useEffect(() => {
+        const handleResize = () => setIsMobile(window.innerWidth <= 768);
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
+    const effectiveIsReversed = isMobile ? false : isReversed;
 
     return (
         <div style={{
             display: 'flex',
             alignItems: 'center',
-            gap: '20px',
-            margin: '3rem 0',
-            flexDirection: isReversed ? 'row-reverse' : 'row',
+            gap: isMobile ? '15px' : '20px',
+            margin: isMobile ? '2rem 0' : '3rem 0',
+            flexDirection: effectiveIsReversed ? 'row-reverse' : 'row',
             position: 'relative',
             zIndex: 2
         }}>
-            <div style={{ flex: 1, textAlign: isReversed ? 'left' : 'right', padding: isReversed ? '0 0 0 40px' : '0 40px 0 0' }}>
-                <p className="serif" style={{ fontSize: '1.2rem', color: theme.primary, fontWeight: '600', marginBottom: '0.2rem' }}>{time}</p>
+            <div style={{
+                flex: isMobile ? '0 0 70px' : 1,
+                textAlign: effectiveIsReversed ? 'left' : 'right',
+                padding: isMobile ? '0' : (effectiveIsReversed ? '0 0 0 40px' : '0 40px 0 0')
+            }}>
+                <p className="serif" style={{ fontSize: isMobile ? '1rem' : '1.2rem', color: theme.primary, fontWeight: '600', marginBottom: '0.2rem' }}>{time}</p>
             </div>
 
             <div style={{
-                width: '40px',
-                height: '40px',
+                width: isMobile ? '30px' : '40px',
+                height: isMobile ? '30px' : '40px',
                 background: theme.bg,
                 color: theme.secondary,
                 zIndex: 2,
@@ -350,8 +366,12 @@ const ProgramItem = ({ time, activity, icon, isReversed, theme }) => {
                 <IconComponent style={{ width: '100%', height: '100%' }} />
             </div>
 
-            <div style={{ flex: 1, textAlign: isReversed ? 'right' : 'left', padding: isReversed ? '0 40px 0 0' : '0 0 0 40px' }}>
-                <p className="serif" style={{ fontSize: '1.2rem', color: theme.accent, letterSpacing: '0.5px', lineHeight: '1.4' }}>{activity}</p>
+            <div style={{
+                flex: 1,
+                textAlign: effectiveIsReversed ? 'right' : 'left',
+                padding: isMobile ? '0' : (effectiveIsReversed ? '0 40px 0 0' : '0 0 0 40px')
+            }}>
+                <p className="serif" style={{ fontSize: isMobile ? '1rem' : '1.2rem', color: theme.accent, letterSpacing: '0.5px', lineHeight: '1.4' }}>{activity}</p>
             </div>
         </div>
     );
@@ -452,10 +472,10 @@ const InvitationCard = ({ data }) => {
             <div
                 ref={domRef}
                 className={`reveal ${isVisible ? 'active' : ''} ${className}`}
-                style={{ padding: '1rem 2rem', textAlign: 'center', transitionDelay: delay, marginBottom: '3rem', position: 'relative' }}
+                style={{ padding: 'min(1rem, 2vw) min(2rem, 5vw)', textAlign: 'center', transitionDelay: delay, marginBottom: 'var(--section-margin)', position: 'relative' }}
             >
                 {title && (
-                    <h3 className="serif" style={{ textAlign: 'center', color: theme.primary, letterSpacing: '4px', fontSize: '2.2rem', marginBottom: '3rem' }}>
+                    <h3 className="serif" style={{ textAlign: 'center', color: theme.primary, letterSpacing: '4px', fontSize: 'clamp(1.5rem, 6vw, 2.2rem)', marginBottom: 'clamp(1.5rem, 5vw, 3rem)' }}>
                         {title}
                     </h3>
                 )}
@@ -479,10 +499,11 @@ const InvitationCard = ({ data }) => {
             background: theme.bg,
             minHeight: '100vh',
             position: 'relative',
-            padding: '4rem 0',
+            padding: 'clamp(2rem, 8vw, 4rem) 0',
             color: theme.accent,
             '--accent-gold': theme.secondary,
-            '--accent-gold-dark': theme.primary
+            '--accent-gold-dark': theme.primary,
+            overflowX: 'hidden'
         }}>
             <style>{`
                 @keyframes float-drift {
@@ -535,18 +556,19 @@ const InvitationCard = ({ data }) => {
                 </div>
             )}
 
-            <div className="lux-container" style={{
+            <div className="lux-container main-card-container" style={{
                 maxWidth: '850px',
                 margin: '2rem auto',
                 position: 'relative',
                 zIndex: 11,
                 background: theme.bg,
                 boxShadow: '0 40px 100px rgba(0,0,0,0.12), 0 10px 30px rgba(0,0,0,0.05)',
-                padding: '6rem 4rem',
+                padding: 'clamp(3rem, 10vw, 6rem) clamp(1.5rem, 5vw, 4rem)',
                 border: '1px solid rgba(197, 160, 89, 0.3)',
                 borderRadius: '4px',
                 backgroundImage: 'var(--paper-texture)',
-                overflow: 'visible'
+                overflow: 'visible',
+                width: 'calc(100% - 2rem)'
             }}>
                 {/* Decorative Inner Border */}
                 <div style={{
@@ -564,26 +586,26 @@ const InvitationCard = ({ data }) => {
                 <CornerOrnament position="bottom-right" eventType={eventType} />
 
                 <div style={{ textAlign: 'center', marginBottom: '3rem', position: 'relative', zIndex: 1 }}>
-                    <h2 className="serif" style={{ fontSize: '1.1rem', letterSpacing: '12px', opacity: 0.6, marginBottom: '2rem', textTransform: 'uppercase' }}>
+                    <h2 className="serif" style={{ fontSize: 'clamp(0.8rem, 3vw, 1.1rem)', letterSpacing: 'clamp(4px, 2vw, 12px)', opacity: 0.6, marginBottom: '2rem', textTransform: 'uppercase' }}>
                         {eventType === 'wedding' ? 'Wedding Invitation' : 'Special Event Invitation'}
                     </h2>
-                    <h1 className="serif" style={{ fontSize: '4rem', marginTop: '3rem', letterSpacing: '5px', fontWeight: '400', color: theme.primary }}>
+                    <h1 className="serif" style={{ fontSize: 'clamp(2rem, 10vw, 4.0rem)', marginTop: '3rem', letterSpacing: '5px', fontWeight: '400', color: theme.primary }}>
                         {theme.label}
                     </h1>
                     {theme.symbol && (
-                        <div style={{ margin: '2rem auto' }}>
+                        <div style={{ margin: '2rem auto', maxWidth: '100%' }}>
                             {theme.symbol}
                         </div>
                     )}
                     <div style={{ height: '1px', width: '100px', background: theme.secondary, margin: '1.5rem auto', opacity: 0.4 }}></div>
-                    <h2 className="script" style={{ fontSize: 'min(7rem, 15vw)', color: theme.primary, marginTop: '0.5rem', lineHeight: '0.8' }}>
+                    <h2 className="script" style={{ fontSize: 'clamp(4rem, 15vw, 7rem)', color: theme.primary, marginTop: '0.5rem', lineHeight: '0.8' }}>
                         {eventType === 'wedding' && `${data.groom} & ${data.bride}`}
                         {eventType === 'christening' && data.childName}
                         {eventType === 'birthday' && data.birthdayPerson}
                         {eventType === 'jubilee' && `${data.jubileePerson}`}
                     </h2>
                     {eventType === 'jubilee' && data.jubileeYears && (
-                        <p className="serif" style={{ fontSize: '2.5rem', color: theme.secondary, marginTop: '2rem', fontStyle: 'italic' }}>
+                        <p className="serif" style={{ fontSize: 'clamp(1.5rem, 6vw, 2.5rem)', color: theme.secondary, marginTop: '2rem', fontStyle: 'italic' }}>
                             {data.jubileeYears} ГОДИНИ
                         </p>
                     )}
@@ -596,7 +618,7 @@ const InvitationCard = ({ data }) => {
                         </p>
                     )}
 
-                    <p className="serif" style={{ fontSize: '1.5rem', color: theme.accent, maxWidth: '650px', margin: '0 auto', lineHeight: '2', fontStyle: 'italic' }}>
+                    <p className="serif" style={{ fontSize: 'clamp(1rem, 4vw, 1.5rem)', color: theme.accent, maxWidth: '650px', margin: '0 auto', lineHeight: '1.8', fontStyle: 'italic' }}>
                         {eventType === 'wedding'
                             ? '"Най-красивото в живота е да намериш човек, който вижда в теб всичко, от което ти се страхува някой да бъдеш."'
                             : eventType === 'christening'
@@ -621,8 +643,8 @@ const InvitationCard = ({ data }) => {
                 {eventType === 'christening' && data.church && (
                     <Section title="СВЕТО ТАЙНСТВО">
                         <OrthodoxCross style={{ marginBottom: '2rem' }} />
-                        <p className="serif" style={{ fontSize: '1.1rem', letterSpacing: '4px', opacity: 0.6 }}>РИТУАЛЪТ ЩЕ СЕ ИЗВЪРШИ В</p>
-                        <p className="serif" style={{ fontSize: '2.5rem', color: theme.primary, margin: '1rem 0' }}>{data.church.toUpperCase()}</p>
+                        <p className="serif" style={{ fontSize: 'clamp(0.9rem, 3.5vw, 1.1rem)', letterSpacing: '4px', opacity: 0.6 }}>РИТУАЛЪТ ЩЕ СЕ ИЗВЪРШИ В</p>
+                        <p className="serif" style={{ fontSize: 'clamp(1.5rem, 5vw, 2.5rem)', color: theme.primary, margin: '1rem 0' }}>{data.church.toUpperCase()}</p>
                         <div style={{ height: '1px', width: '60px', background: theme.secondary, margin: '2rem auto' }}></div>
                     </Section>
                 )}
@@ -641,15 +663,15 @@ const InvitationCard = ({ data }) => {
                 )}
 
                 <Section title="ЛОКАЦИЯ">
-                    <h3 className="serif" style={{ letterSpacing: '6px', fontSize: '1.1rem', color: theme.primary, marginBottom: '2rem', opacity: 0.7 }}>КЪДЕ ЩЕ СЕ СЛУЧИ МАГИЯТА</h3>
-                    <p className="serif" style={{ fontSize: '3rem', color: theme.primary, marginBottom: '1.5rem' }}>{data.location}</p>
+                    <h3 className="serif" style={{ letterSpacing: '6px', fontSize: 'clamp(0.9rem, 3.5vw, 1.1rem)', color: theme.primary, marginBottom: '2rem', opacity: 0.7 }}>КЪДЕ ЩЕ СЕ СЛУЧИ МАГИЯТА</h3>
+                    <p className="serif" style={{ fontSize: 'clamp(1.8rem, 6vw, 3rem)', color: theme.primary, marginBottom: '1.5rem' }}>{data.location}</p>
                     {venuePhoto && <MaskedImage src={venuePhoto} alt="Location" height="400px" />}
                     <p className="serif" style={{ fontSize: '1.1rem', opacity: 0.7, maxWidth: '550px', margin: '2rem auto' }}>
                         Очакваме Ви с нетърпение в {data.location}, за да отпразнуваме заедно този щастлив ден.
                     </p>
                     {remainingPhotos[1] && <HeartImage src={remainingPhotos[1]} size="220px" />}
                     {data.locationLink && (
-                        <a href={data.locationLink} target="_blank" rel="noreferrer" className="lux-btn" style={{ marginTop: '3rem', display: 'inline-block', background: theme.primary, color: 'white' }}>📍 ВИЖ ЛОКАЦИЯ (GPS)</a>
+                        <a href={data.locationLink} target="_blank" rel="noreferrer" className="lux-btn" style={{ marginTop: '3rem', display: 'inline-block', background: theme.primary, color: 'white', width: 'min(280px, 90%)' }}>📍 ВИЖ ЛОКАЦИЯ (GPS)</a>
                     )}
                 </Section>
 
@@ -667,10 +689,10 @@ const InvitationCard = ({ data }) => {
                     </div>
                 )}
 
-                <div style={{ textAlign: 'center', padding: '3rem 0' }}><BaroqueOrnament /></div>
+                <div style={{ textAlign: 'center', padding: '3rem 0' }}><BaroqueOrnament style={{ width: 'min(400px, 80%)' }} /></div>
 
                 <Section className="rsvp-section" title="ПОТВЪРЖДЕНИЕ">
-                    <div style={{ padding: '6rem 3rem', background: 'rgba(255, 255, 255, 0.4)', boxShadow: '0 20px 50px rgba(0,0,0,0.03)', borderRadius: '4px', position: 'relative' }}>
+                    <div style={{ padding: 'clamp(2rem, 8vw, 6rem) clamp(1rem, 5vw, 3rem)', background: 'rgba(255, 255, 255, 0.4)', boxShadow: '0 20px 50px rgba(0,0,0,0.03)', borderRadius: '4px', position: 'relative' }}>
                         {!submitted ? (
                             <form onSubmit={(e) => { e.preventDefault(); setSubmitted(true); }}>
                                 <p className="serif" style={{ marginBottom: '3rem', fontStyle: 'italic', color: '#777' }}>Моля, потвърдете Вашето присъствие.</p>
@@ -688,20 +710,20 @@ const InvitationCard = ({ data }) => {
                                         <textarea placeholder="Имена на спътници..." className="lux-input" style={{ textAlign: 'center', height: '100px', resize: 'none', paddingTop: '1rem' }} value={guestNames} onChange={(e) => setGuestNames(e.target.value)} />
                                     )}
                                 </div>
-                                <div style={{ display: 'flex', gap: '50px', justifyContent: 'center', margin: '3rem 0' }}>
-                                    <label style={{ display: 'flex', alignItems: 'center', gap: '12px', cursor: 'pointer', fontSize: '1.1rem', color: theme.accent }}>
+                                <div style={{ display: 'flex', gap: 'clamp(20px, 5vw, 50px)', justifyContent: 'center', margin: '3rem 0', flexWrap: 'wrap' }}>
+                                    <label style={{ display: 'flex', alignItems: 'center', gap: '12px', cursor: 'pointer', fontSize: 'clamp(0.9rem, 3.5vw, 1.1rem)', color: theme.accent }}>
                                         <input type="radio" name="rsvp" defaultChecked style={{ accentColor: theme.primary }} /> Ще присъствам
                                     </label>
-                                    <label style={{ display: 'flex', alignItems: 'center', gap: '12px', cursor: 'pointer', fontSize: '1.1rem', color: theme.accent }}>
+                                    <label style={{ display: 'flex', alignItems: 'center', gap: '12px', cursor: 'pointer', fontSize: 'clamp(0.9rem, 3.5vw, 1.1rem)', color: theme.accent }}>
                                         <input type="radio" name="rsvp" style={{ accentColor: theme.primary }} /> Няма да мога
                                     </label>
                                 </div>
-                                <button type="submit" className="lux-btn" style={{ minWidth: '280px', background: theme.primary, color: 'white' }}>ИЗПРАТИ ОТГОВОР</button>
+                                <button type="submit" className="lux-btn" style={{ width: 'min(280px, 100%)', background: theme.primary, color: 'white' }}>ИЗПРАТИ ОТГОВОР</button>
                             </form>
                         ) : (
                             <div style={{ padding: '3rem 0', animation: 'fadeIn 2s' }}>
-                                <h3 className="script" style={{ fontSize: '5rem', color: theme.primary }}>Благодарим Ви!</h3>
-                                <p className="serif" style={{ marginTop: '2rem', fontSize: '1.2rem', opacity: 0.6 }}>Очакваме Ви с нетърпение!</p>
+                                <h3 className="script" style={{ fontSize: 'clamp(3rem, 12vw, 5rem)', color: theme.primary }}>Благодарим Ви!</h3>
+                                <p className="serif" style={{ marginTop: '2rem', fontSize: 'clamp(1rem, 4vw, 1.2rem)', opacity: 0.6 }}>Очакваме Ви с нетърпение!</p>
                             </div>
                         )}
                         <SwirlOrnament style={{ position: 'absolute', top: '20px', left: '20px', opacity: 0.1 }} />

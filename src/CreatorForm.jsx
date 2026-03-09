@@ -328,7 +328,7 @@ const CreatorForm = ({ data, onChange, onSubmit, onLogin, onRegister }) => {
     <div style={{ background: 'var(--paper-bg)', minHeight: '100vh' }}>
       {/* Premium Header */}
       <nav style={{
-        padding: '1rem 4rem',
+        padding: '1rem clamp(1rem, 5vw, 4rem)',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
@@ -338,39 +338,41 @@ const CreatorForm = ({ data, onChange, onSubmit, onLogin, onRegister }) => {
         position: 'sticky',
         top: 0,
         zIndex: 1000,
-        boxShadow: '0 4px 30px rgba(0, 0, 0, 0.03)'
+        boxShadow: '0 4px 30px rgba(0, 0, 0, 0.03)',
+        flexWrap: 'wrap',
+        gap: '1rem'
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', cursor: 'pointer' }} onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
           <img src={logo} alt="PokaniPro Logo" style={{ height: '40px', mixBlendMode: 'multiply' }} />
           <span className="serif" style={{ fontSize: '1.6rem', letterSpacing: '3px', color: 'var(--accent-gold-dark)', fontWeight: '500' }}>PokaniPro</span>
         </div>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '4rem' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '2rem' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 'clamp(1rem, 5vw, 4rem)' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 'clamp(1rem, 3vw, 2rem)' }}>
             <span
               className="serif"
-              style={{ fontSize: '0.9rem', letterSpacing: '2px', cursor: 'pointer', opacity: 0.8, textTransform: 'uppercase', fontWeights: '600' }}
+              style={{ fontSize: 'clamp(0.8rem, 3vw, 0.9rem)', letterSpacing: '2px', cursor: 'pointer', opacity: 0.8, textTransform: 'uppercase', fontWeights: '600' }}
               onClick={() => scrollToSection('features')}
             >
               Функции
             </span>
             <span
               className="serif"
-              style={{ fontSize: '0.9rem', letterSpacing: '2px', cursor: 'pointer', opacity: 0.8, textTransform: 'uppercase', fontWeights: '600' }}
+              style={{ fontSize: 'clamp(0.8rem, 3vw, 0.9rem)', letterSpacing: '2px', cursor: 'pointer', opacity: 0.8, textTransform: 'uppercase', fontWeights: '600' }}
               onClick={() => document.getElementById('designer').scrollIntoView({ behavior: 'smooth' })}
             >
               Създай
             </span>
           </div>
 
-          <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
+          <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
             <button
               onClick={onLogin}
               className="serif"
               style={{
                 background: 'none',
                 border: 'none',
-                fontSize: '0.9rem',
+                fontSize: 'clamp(0.8rem, 3vw, 0.9rem)',
                 letterSpacing: '2px',
                 cursor: 'pointer',
                 color: '#444',
@@ -383,8 +385,8 @@ const CreatorForm = ({ data, onChange, onSubmit, onLogin, onRegister }) => {
               onClick={onRegister}
               className="lux-btn"
               style={{
-                padding: '0.6rem 1.8rem',
-                fontSize: '0.8rem',
+                padding: '0.6rem clamp(1rem, 3vw, 1.8rem)',
+                fontSize: 'clamp(0.7rem, 2.5vw, 0.8rem)',
                 letterSpacing: '2px'
               }}
             >
@@ -416,20 +418,20 @@ const CreatorForm = ({ data, onChange, onSubmit, onLogin, onRegister }) => {
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', gap: '4rem', alignItems: 'center', maxWidth: '1200px', width: '100%', zIndex: 1, position: 'relative' }}>
 
           {/* Text Content */}
-          <div style={{ textAlign: 'left' }}>
-            <span className="serif" style={{ display: 'inline-block', color: 'var(--accent-gold)', fontSize: '0.85rem', letterSpacing: '4px', textTransform: 'uppercase', marginBottom: '1.5rem', fontWeight: 'bold', padding: '5px 15px', border: '1px solid rgba(197,160,89,0.3)', borderRadius: '20px', background: 'rgba(197,160,89,0.05)' }}>
+          <div style={{ textAlign: 'center', padding: '0 1rem' }}>
+            <span className="serif" style={{ display: 'inline-block', color: 'var(--accent-gold)', fontSize: 'clamp(0.7rem, 2.5vw, 0.85rem)', letterSpacing: '4px', textTransform: 'uppercase', marginBottom: '1.5rem', fontWeight: 'bold', padding: '5px 15px', border: '1px solid rgba(197,160,89,0.3)', borderRadius: '20px', background: 'rgba(197,160,89,0.05)' }}>
               Технологията среща Изкуството
             </span>
-            <h1 className="serif" style={{ fontSize: 'clamp(3rem, 5vw, 4.8rem)', color: '#fff', lineHeight: '1.1', marginBottom: '1.5rem', letterSpacing: '-1px' }}>
+            <h1 className="serif" style={{ fontSize: 'clamp(2.2rem, 8vw, 4.8rem)', color: '#fff', lineHeight: '1.1', marginBottom: '1.5rem', letterSpacing: '-1px' }}>
               Интелигентни Дигитални Покани.
             </h1>
-            <p className="serif" style={{ fontSize: '1.2rem', color: '#aaa', lineHeight: '1.7', marginBottom: '2.5rem', maxWidth: '500px' }}>
+            <p className="serif" style={{ fontSize: 'clamp(1rem, 4vw, 1.2rem)', color: '#aaa', lineHeight: '1.7', marginBottom: '2.5rem', maxWidth: '500px', margin: '0 auto 2.5rem auto' }}>
               Край на хартията. Подарете на гостите си изумително дигитално преживяване, което спира дъха. С мигновена доставка, жива програма и умна навигация директно в техния телефон.
             </p>
             <button
               style={{
-                fontSize: '1.1rem',
-                padding: '1.1rem 2.5rem',
+                fontSize: 'clamp(0.9rem, 3.5vw, 1.1rem)',
+                padding: '1.1rem clamp(1.5rem, 5vw, 2.5rem)',
                 background: 'linear-gradient(135deg, var(--accent-gold) 0%, var(--accent-gold-dark) 100%)',
                 color: 'white',
                 border: 'none',
@@ -450,10 +452,10 @@ const CreatorForm = ({ data, onChange, onSubmit, onLogin, onRegister }) => {
           </div>
 
           {/* 3D Glass Floating Card Showcase */}
-          <div style={{ perspective: '1000px', display: 'flex', justifyContent: 'center' }}>
+          <div style={{ perspective: '1000px', display: 'flex', justifyContent: 'center', marginTop: '2rem' }}>
             <div style={{
-              width: '320px',
-              height: '500px',
+              width: 'clamp(260px, 80vw, 320px)',
+              height: 'clamp(400px, 120vw, 500px)',
               background: 'rgba(25, 25, 25, 0.4)',
               backdropFilter: 'blur(20px)',
               WebkitBackdropFilter: 'blur(20px)',
@@ -577,7 +579,7 @@ const CreatorForm = ({ data, onChange, onSubmit, onLogin, onRegister }) => {
             <img src={wreathIvory} alt="bg" style={{ width: '400px' }} />
           </div>
 
-          <h2 className="serif" style={{ textAlign: 'center', marginBottom: '2rem', color: 'var(--accent-gold-dark)', fontSize: '3rem', letterSpacing: '6px' }}>
+          <h2 className="serif" style={{ textAlign: 'center', marginBottom: '2rem', color: 'var(--accent-gold-dark)', fontSize: 'clamp(1.8rem, 6vw, 3rem)', letterSpacing: 'clamp(2px, 1vw, 6px)' }}>
             СЪЗДАЙТЕ ВАШАТА МОДЕРНА ПОКАНА
           </h2>
 
@@ -608,14 +610,14 @@ const CreatorForm = ({ data, onChange, onSubmit, onLogin, onRegister }) => {
                   gap: '10px'
                 }}
               >
-                <span>{type.icon}</span> {type.label}
+                <span>{type.icon}</span> <span style={{ whiteSpace: 'nowrap' }}>{type.label}</span>
               </button>
             ))}
           </div>
 
           <form onSubmit={handleSubmit}>
             {/* Main Info */}
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '3rem' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '3rem' }}>
               {formData.eventType === 'wedding' && (
                 <>
                   <div>
@@ -639,7 +641,7 @@ const CreatorForm = ({ data, onChange, onSubmit, onLogin, onRegister }) => {
                     <label className="serif" style={{ color: 'var(--accent-gold-dark)', fontSize: '0.9rem', letterSpacing: '2px' }}>ХРАМ / ЦЪРКВА</label>
                     <input type="text" name="church" className="lux-input" placeholder="Име на църквата..." value={formData.church} onChange={handleChange} />
                   </div>
-                  <div style={{ gridColumn: '1 / -1', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem' }}>
+                  <div style={{ gridColumn: '1 / -1', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '2rem' }}>
                     <div>
                       <label className="serif" style={{ color: 'var(--accent-gold-dark)', fontSize: '0.9rem', letterSpacing: '2px' }}>РОДИТЕЛИ</label>
                       <input type="text" name="parents" className="lux-input" placeholder="Имена..." value={formData.parents} onChange={handleChange} />
@@ -649,7 +651,7 @@ const CreatorForm = ({ data, onChange, onSubmit, onLogin, onRegister }) => {
                       <input type="text" name="godparents" className="lux-input" placeholder="Имена..." value={formData.godparents} onChange={handleChange} />
                     </div>
                   </div>
-                  <div style={{ gridColumn: '1 / -1', display: 'flex', gap: '2rem', alignItems: 'center', marginTop: '1rem' }}>
+                  <div style={{ gridColumn: '1 / -1', display: 'flex', gap: '1.5rem', alignItems: 'center', marginTop: '1rem', flexWrap: 'wrap' }}>
                     <label className="serif" style={{ color: 'var(--accent-gold-dark)', fontSize: '0.9rem', letterSpacing: '2px' }}>ПОЛ:</label>
                     <div style={{ display: 'flex', gap: '1rem' }}>
                       {['boy', 'girl'].map(gender => (
@@ -687,11 +689,11 @@ const CreatorForm = ({ data, onChange, onSubmit, onLogin, onRegister }) => {
 
               {formData.eventType === 'jubilee' && (
                 <>
-                  <div>
+                  <div style={{ gridColumn: window.innerWidth <= 600 ? '1 / -1' : 'auto' }}>
                     <label className="serif" style={{ color: 'var(--accent-gold-dark)', fontSize: '0.9rem', letterSpacing: '2px' }}>ИМЕ НА ЮБИЛЯРА</label>
                     <input type="text" name="jubileePerson" className="lux-input" placeholder="Име..." value={formData.jubileePerson} onChange={handleChange} required />
                   </div>
-                  <div>
+                  <div style={{ gridColumn: window.innerWidth <= 600 ? '1 / -1' : 'auto' }}>
                     <label className="serif" style={{ color: 'var(--accent-gold-dark)', fontSize: '0.9rem', letterSpacing: '2px' }}>ГОДИНИ (ЮБИЛЕЙ)</label>
                     <input type="number" name="jubileeYears" className="lux-input" placeholder="Напр. 50" value={formData.jubileeYears} onChange={handleChange} required />
                   </div>
@@ -746,7 +748,7 @@ const CreatorForm = ({ data, onChange, onSubmit, onLogin, onRegister }) => {
               </div>
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '3rem', marginTop: '1rem', marginBottom: '3rem' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: 'clamp(1.5rem, 5vw, 3rem)', marginTop: '1rem', marginBottom: '3rem' }}>
               <div>
                 <label className="serif" style={{ color: 'var(--accent-gold-dark)', fontSize: '0.9rem', letterSpacing: '2px' }}>ЛОКАЦИЯ (РЕСТОРАНТ)</label>
                 <input type="text" name="location" className="lux-input" placeholder="напр. Резиденция..." value={formData.location} onChange={handleChange} required />
@@ -845,11 +847,11 @@ const CreatorForm = ({ data, onChange, onSubmit, onLogin, onRegister }) => {
             </div>
 
             {/* Photo Management */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem', marginBottom: '3rem' }}>
-              <div style={{ border: '1px dashed var(--accent-gold)', padding: '2rem', textAlign: 'center' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '2rem', marginBottom: '3rem' }}>
+              <div style={{ border: '1px dashed var(--accent-gold)', padding: 'clamp(1rem, 4vw, 2rem)', textAlign: 'center' }}>
                 <input type="file" multiple accept="image/*" onChange={handlePhotoUpload} style={{ display: 'none' }} id="photo-upload" />
                 <p className="serif" style={{ fontSize: '0.8rem', marginBottom: '1rem', color: 'var(--accent-gold-dark)' }}>Снимки на двойката</p>
-                <label htmlFor="photo-upload" className="lux-btn" style={{ cursor: 'pointer', fontSize: '0.7rem' }}>Добави снимки</label>
+                <label htmlFor="photo-upload" className="lux-btn" style={{ cursor: 'pointer', fontSize: '0.7rem', display: 'inline-block' }}>Добави снимки</label>
 
                 {/* Photo Preview Added Back - FIX for "not working" */}
                 {formData.photos.length > 0 && (

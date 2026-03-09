@@ -167,7 +167,7 @@ const ExtrasPage = ({ onBack, data, onRegister }) => {
         <div style={{
             background: 'var(--paper-bg)',
             minHeight: '100vh',
-            padding: '6rem 2rem',
+            padding: 'clamp(2rem, 8vw, 6rem) clamp(1rem, 4vw, 2rem)',
             position: 'relative'
         }}>
             <div style={{
@@ -192,7 +192,7 @@ const ExtrasPage = ({ onBack, data, onRegister }) => {
                         fontSize: '0.8rem',
                         letterSpacing: '2px',
                         cursor: 'pointer',
-                        marginBottom: '4rem',
+                        marginBottom: 'clamp(2rem, 5vw, 4rem)',
                         display: 'flex',
                         alignItems: 'center',
                         gap: '10px'
@@ -201,17 +201,17 @@ const ExtrasPage = ({ onBack, data, onRegister }) => {
                     ← ВРЪЩАНЕ КЪМ ПРЕГЛЕДА
                 </button>
 
-                <div style={{ textAlign: 'center', marginBottom: '6rem' }}>
-                    <h1 className="serif" style={{ fontSize: '3.5rem', color: '#222', marginBottom: '1.5rem', letterSpacing: '4px' }}>
+                <div style={{ textAlign: 'center', marginBottom: 'clamp(3rem, 10vw, 6rem)' }}>
+                    <h1 className="serif" style={{ fontSize: 'clamp(2rem, 8vw, 3.5rem)', color: '#222', marginBottom: '1.5rem', letterSpacing: 'clamp(1px, 1vw, 4px)' }}>
                         ПЕРСОНАЛИЗИРАЙТЕ СВОЯТА ПОКАНА
                     </h1>
                 </div>
 
                 <div style={{
                     display: 'grid',
-                    gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+                    gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
                     gap: '2.5rem',
-                    marginBottom: '8rem'
+                    marginBottom: 'clamp(4rem, 10vw, 8rem)'
                 }}>
                     {EXTRAS_DATA.map(extra => (
                         <ExtraCard
@@ -223,45 +223,45 @@ const ExtrasPage = ({ onBack, data, onRegister }) => {
                     ))}
                 </div>
 
-                {/* Summary Section - Explicitly redesigned to verify update */}
+                {/* Summary Section */}
                 <div style={{
-                    background: '#fffdf9', // Distinctive warm white
-                    padding: '4rem',
+                    background: '#fffdf9',
+                    padding: 'clamp(2rem, 8vw, 4rem)',
                     borderRadius: '8px',
                     boxShadow: '0 40px 80px rgba(197, 160, 89, 0.1)',
                     border: '2px solid rgba(197, 160, 89, 0.3)',
                     maxWidth: '800px',
-                    margin: '0 auto 6rem auto',
+                    margin: '0 auto clamp(3rem, 8vw, 6rem) auto',
                     textAlign: 'center'
                 }}>
-                    <h2 className="serif" style={{ fontSize: '2.2rem', color: 'var(--accent-gold-dark)', marginBottom: '3rem', letterSpacing: '3px' }}>
+                    <h2 className="serif" style={{ fontSize: 'clamp(1.5rem, 5vw, 2.2rem)', color: 'var(--accent-gold-dark)', marginBottom: 'clamp(2rem, 5vw, 3rem)', letterSpacing: '3px' }}>
                         ОБОБЩЕНИЕ НА ИЗБРАНОТО
                     </h2>
 
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', marginBottom: '4rem' }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', marginBottom: 'clamp(2rem, 6vw, 4rem)' }}>
                         {selectedList.map(extra => (
-                            <div key={extra.id} style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid rgba(197, 160, 89, 0.1)', paddingBottom: '1.2rem' }}>
-                                <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
-                                    <span style={{ fontSize: '1.8rem' }}>{extra.icon}</span>
-                                    <span className="serif" style={{ fontSize: '1.2rem', color: '#333' }}>{extra.title}</span>
+                            <div key={extra.id} style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid rgba(197, 160, 89, 0.1)', paddingBottom: '1.2rem', gap: '10px' }}>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                                    <span style={{ fontSize: '1.5rem' }}>{extra.icon}</span>
+                                    <span className="serif" style={{ fontSize: '1rem', color: '#333', textAlign: 'left' }}>{extra.title}</span>
                                 </div>
-                                <span className="serif" style={{ fontSize: '1.2rem', fontWeight: 'bold', color: extra.price === 0 ? '#27ae60' : 'var(--accent-gold-dark)' }}>
+                                <span className="serif" style={{ fontSize: '1rem', fontWeight: 'bold', color: extra.price === 0 ? '#27ae60' : 'var(--accent-gold-dark)', whiteSpace: 'nowrap' }}>
                                     {extra.priceLabel}
                                 </span>
                             </div>
                         ))}
                     </div>
 
-                    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'baseline', gap: '25px' }}>
-                        <span className="serif" style={{ fontSize: '1.4rem', color: '#7a7a7a', letterSpacing: '2px' }}>ФИНАЛНА СУМА:</span>
-                        <span className="serif" style={{ fontSize: '4rem', fontWeight: 'bold', color: 'var(--accent-gold-dark)' }}>
+                    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 'clamp(10px, 4vw, 25px)', flexWrap: 'wrap' }}>
+                        <span className="serif" style={{ fontSize: '1.2rem', color: '#7a7a7a', letterSpacing: '2px' }}>ФИНАЛНА СУМА:</span>
+                        <span className="serif" style={{ fontSize: 'clamp(2.5rem, 10vw, 4rem)', fontWeight: 'bold', color: 'var(--accent-gold-dark)' }}>
                             {finalTotal.toFixed(2)} €
                         </span>
                     </div>
                 </div>
 
                 <div style={{ textAlign: 'center' }}>
-                    <button onClick={onRegister} className="lux-btn" style={{ minWidth: '350px', padding: '1.5rem' }}>
+                    <button onClick={onRegister} className="lux-btn" style={{ width: 'min(350px, 100%)', padding: '1.5rem' }}>
                         РЕГИСТРАЦИЯ И ЗАПАЗВАНЕ (Checkout)
                     </button>
                 </div>
