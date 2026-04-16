@@ -76,6 +76,23 @@ export const getEvent = async (id) => {
 };
 
 /**
+ * Admin: Gets ALL events from Firestore
+ */
+export const getAllEvents = async () => {
+  try {
+    const q = query(collection(db, "events"), orderBy("createdAt", "desc"));
+    const querySnapshot = await getDocs(q);
+    return querySnapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    }));
+  } catch (e) {
+    console.error("Error getting all events: ", e);
+    throw e;
+  }
+};
+
+/**
  * Submits an RSVP for a specific event
  */
 export const submitRSVP = async (eventId, rsvpData) => {

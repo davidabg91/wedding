@@ -399,6 +399,9 @@ const InvitationCard = ({ data, eventId }) => {
                     bg: isGirl ? '#FFF5F5' : '#F4F9FF',
                     label: 'СВЕТО КРЪЩЕНИЕ',
                     timerLabel: 'ДО СВЕТИЯ ПРАЗНИК ОСТАВАТ',
+                    photosLabel: 'СНИМКИ НА АНГЕЛЧЕТО',
+                    venueLabel: 'МЯСТОТО НА ПРАЗНИКА',
+                    rsvpLabel: 'ЩЕ ПРИСЪСТВАТЕ ЛИ НА КРЪЩЕНИЕТО?',
                     ornament: isGirl ? '🌸' : '🕊️',
                     bgPattern: deco === 'none' ? 'none' : (deco === 'star' ? 'radial-gradient(var(--accent-gold) 0.5px, transparent 0.5px)' : 'radial-gradient(var(--accent-gold) 0.2px, transparent 0.2px)'),
                     bgSize: '20px 20px',
@@ -407,7 +410,8 @@ const InvitationCard = ({ data, eventId }) => {
                             deco === 'angel' ? <AngelSymbol style={{ marginTop: '2rem' }} /> :
                                 deco === 'star' ? <StarCluster style={{ marginTop: '2rem' }} /> :
                                     <BalloonIllustration style={{ marginTop: '2rem' }} />
-                    )
+                    ),
+                    introSubtitle: 'С ГОЛЯМА РАДОСТ ВИ КАНЯТ НА СВЕТО КРЪЩЕНИЕ'
                 };
             case 'birthday':
                 const bDeco = data.illustrativeTheme || 'balloon';
@@ -418,6 +422,9 @@ const InvitationCard = ({ data, eventId }) => {
                     bg: bDeco === 'none' ? '#fdfaf5' : '#FFF8F0',
                     label: 'ЧЕСТИТ РОЖДЕН ДЕН',
                     timerLabel: 'ДО ПРАЗНИКА ОСТАВАТ',
+                    photosLabel: 'СНИМКИ НА РОЖДЕНИКА',
+                    venueLabel: 'МЯСТОТО НА ПАРТИТО',
+                    rsvpLabel: 'ЩЕ ДОЙДЕТЕ ЛИ НА МОЯ РОЖДЕН ДЕН?',
                     ornament: bDeco === 'none' ? '✨' : '🎈',
                     bgPattern: bDeco === 'none' ? 'var(--paper-texture)' : `url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='20' cy='20' r='1' fill='%23FFC300' fill-opacity='0.4'/%3E%3Cpath d='M5 5l2 2m30 30l-2-2m-30 0l2-2m30-30l-2 2' stroke='%23FF5733' stroke-opacity='0.2' stroke-width='1'/%3E%3C/svg%3E")`,
                     bgSize: '40px 40px',
@@ -425,7 +432,8 @@ const InvitationCard = ({ data, eventId }) => {
                         bDeco === 'bear' ? <TeddyBear style={{ marginTop: '2rem' }} /> :
                             bDeco === 'star' ? <StarCluster style={{ marginTop: '2rem' }} /> :
                                 <BalloonIllustration style={{ marginTop: '2rem' }} />
-                    )
+                    ),
+                    introSubtitle: 'ВИ КАНЯ НА НЕЗАБРАВИМО ПАРТИ ЗА РОЖДЕН ДЕН'
                 };
             case 'jubilee':
                 return {
@@ -435,10 +443,14 @@ const InvitationCard = ({ data, eventId }) => {
                     bg: '#FBFAFF',
                     label: 'ЮБИЛЕЙ',
                     timerLabel: 'ДО ТЪРЖЕСТВЕНИЯ МОМЕНТ ОСТАВАТ',
+                    photosLabel: 'СНИМКИ ОТ ЖИВОТА',
+                    venueLabel: 'МЯСТОТО НА ТЪРЖЕСТВОТО',
+                    rsvpLabel: 'ЩЕ СПОДЕЛИТЕ ЛИ ПРАЗНИКА С МЕН?',
                     ornament: '✨',
                     bgPattern: 'radial-gradient(circle, var(--accent-gold) 0.2px, transparent 0.2px)',
                     bgSize: '15px 15px',
-                    symbol: <span style={{ fontSize: '3rem', marginTop: '2rem' }}>💎</span>
+                    symbol: <span style={{ fontSize: '3rem', marginTop: '2rem' }}>💎</span>,
+                    introSubtitle: 'ВИ КАНЯ ДА ОТПРАЗНУВАМЕ МОЯ ЮБИЛЕЙ ЗАЕДНО'
                 };
             default: // wedding
                 return {
@@ -448,10 +460,14 @@ const InvitationCard = ({ data, eventId }) => {
                     bg: '#fdfaf5',
                     label: 'СВАТБЕНА ПОКАНА',
                     timerLabel: 'ДО НАШИЯ ВЪЛШЕБЕН ДЕН ОСТАВАТ',
+                    photosLabel: 'СНИМКИ НА ДВОЙКАТА',
+                    venueLabel: 'МЯСТОТО НА СЪБИТИЕТО',
+                    rsvpLabel: 'МОЛЯ, ПОТВЪРДЕТЕ ВАШЕТО ПРИСЪСТВИЕ',
                     ornament: '💍',
                     bgPattern: 'url("data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cpath d=\'M30 30c0-10 10-20 20-20V0c-15 0-25 10-25 25S15 50 0 50v10c10 0 20-10 20-20s10-10 10-10z\' fill=\'%23c5a059\' fill-opacity=\'0.05\' fill-rule=\'evenodd\'/%3E%3C/svg%3E")',
                     bgSize: '60px 60px',
-                    symbol: <BaroqueOrnament style={{ marginTop: '2rem' }} />
+                    symbol: <BaroqueOrnament style={{ marginTop: '2rem' }} />,
+                    introSubtitle: 'С ГОЛЯМО УДОВОЛСТВИЕ ВИ КАНЯТ НА СВОЯТА СВАТБА'
                 };
         }
     };
@@ -610,7 +626,7 @@ const InvitationCard = ({ data, eventId }) => {
 
                 <div style={{ textAlign: 'center', marginBottom: '3rem', position: 'relative', zIndex: 1 }}>
                     <h2 className="serif" style={{ fontSize: 'clamp(0.8rem, 3vw, 1.1rem)', letterSpacing: 'clamp(4px, 2vw, 12px)', opacity: 0.6, marginBottom: '2rem', textTransform: 'uppercase' }}>
-                        {eventType === 'wedding' ? 'Wedding Invitation' : 'Special Event Invitation'}
+                        ДИГИТАЛНА ПОКАНА С ПОДАРЪК
                     </h2>
                     <h1 className="serif" style={{ fontSize: 'clamp(2rem, 10vw, 4.0rem)', marginTop: '3rem', letterSpacing: '5px', fontWeight: '400', color: theme.primary }}>
                         {theme.label}
@@ -644,9 +660,12 @@ const InvitationCard = ({ data, eventId }) => {
                 <Section>
                     {eventType === 'christening' && data.parents && (
                         <p className="serif" style={{ fontSize: '1.2rem', color: theme.primary, letterSpacing: '2px', marginBottom: '1rem' }}>
-                            {data.parents.toUpperCase()} ИМАТ УДОВОЛСТВИЕТО ДА ВИ ПОКАНЯТ НА
+                            {data.parents.toUpperCase()}
                         </p>
                     )}
+                    <p className="serif" style={{ fontSize: '1rem', color: theme.primary, letterSpacing: '4px', marginBottom: '1rem', opacity: 0.8 }}>
+                        {theme.introSubtitle}
+                    </p>
 
                     <p className="serif" style={{ fontSize: 'clamp(1rem, 4vw, 1.5rem)', color: theme.accent, maxWidth: '650px', margin: '0 auto', lineHeight: '1.8', fontStyle: 'italic' }}>
                         {eventType === 'wedding'
@@ -692,7 +711,15 @@ const InvitationCard = ({ data, eventId }) => {
                     </Section>
                 )}
 
-                <Section title="ЛОКАЦИЯ">
+                <Section title={theme.photosLabel}>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '2rem', margin: '2rem 0' }}>
+                        {remainingPhotos.map((src, i) => (
+                            <HeartImage key={i} src={src} size="min(250px, 60vw)" />
+                        ))}
+                    </div>
+                </Section>
+
+                <Section title={theme.venueLabel}>
                     <h3 className="serif" style={{ letterSpacing: '6px', fontSize: 'clamp(0.9rem, 3.5vw, 1.1rem)', color: theme.primary, marginBottom: '2rem', opacity: 0.7 }}>КЪДЕ ЩЕ СЕ СЛУЧИ МАГИЯТА</h3>
                     <p className="serif" style={{ fontSize: 'clamp(1.8rem, 6vw, 3rem)', color: theme.primary, marginBottom: '1.5rem' }}>{data.location}</p>
                     {venuePhoto && <MaskedImage src={venuePhoto} alt="Location" height="400px" />}
@@ -787,7 +814,7 @@ const InvitationCard = ({ data, eventId }) => {
                         ) : (
                             <div style={{ padding: '3rem 0', animation: 'fadeIn 2s' }}>
                                 <h3 className="script" style={{ fontSize: 'clamp(3rem, 12vw, 5rem)', color: theme.primary }}>Благодарим Ви!</h3>
-                                <p className="serif" style={{ marginTop: '2rem', fontSize: 'clamp(1rem, 4vw, 1.2rem)', opacity: 0.6 }}>Очакваме Ви с нетърпение!</p>
+                                <p className="serif" style={{ marginTop: '2rem', fontSize: 'clamp(1rem, 4vw, 1.2rem)', opacity: 0.6 }}>Очакваме Ви с голямо нетърпение!</p>
                             </div>
                         )}
                         <SwirlOrnament style={{ position: 'absolute', top: '20px', left: '20px', opacity: 0.1 }} />

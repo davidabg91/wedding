@@ -882,7 +882,11 @@ const CreatorForm = ({ data, onChange, onSubmit, onLogin, onRegister }) => {
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 250px), 1fr))', gap: '2rem', marginBottom: '3rem' }}>
               <div style={{ border: '1px dashed var(--accent-gold)', padding: 'clamp(1rem, 5vw, 2rem)', textAlign: 'center', width: '100%', boxSizing: 'border-box' }}>
                 <input type="file" multiple accept="image/*" onChange={handlePhotoUpload} style={{ display: 'none' }} id="photo-upload" />
-                <p className="serif" style={{ fontSize: '0.85rem', marginBottom: '1rem', color: 'var(--accent-gold-dark)', fontWeight: 'bold' }}>СНИМКИ НА ДВОЙКАТА</p>
+                <p className="serif" style={{ fontSize: '0.85rem', marginBottom: '1rem', color: 'var(--accent-gold-dark)', fontWeight: 'bold' }}>
+                  {formData.eventType === 'wedding' ? 'СНИМКИ НА ДВОЙКАТА' : 
+                   formData.eventType === 'christening' ? 'СНИМКИ НА АНГЕЛЧЕТО' : 
+                   formData.eventType === 'birthday' ? 'СНИМКИ НА РОЖДЕНИКА' : 'СНИМКИ НА ЮБИЛЯРА'}
+                </p>
                 <label htmlFor="photo-upload" className="lux-btn" style={{ cursor: 'pointer', fontSize: '0.75rem', display: 'inline-block', padding: '0.8rem 1.5rem' }}>ДОБАВИ СНИМКИ</label>
 
                 {formData.photos.length > 0 && (
@@ -898,10 +902,12 @@ const CreatorForm = ({ data, onChange, onSubmit, onLogin, onRegister }) => {
 
               <div style={{ border: '1px dashed var(--accent-gold)', padding: 'clamp(1rem, 5vw, 2rem)', textAlign: 'center', width: '100%', boxSizing: 'border-box' }}>
                 <input type="file" accept="image/*" onChange={handleVenuePhotoUpload} style={{ display: 'none' }} id="venue-upload" />
-                <p className="serif" style={{ fontSize: '0.85rem', marginBottom: '1rem', color: 'var(--accent-gold-dark)', fontWeight: 'bold' }}>СНИМКА НА РЕСТОРАНТА</p>
-                <label htmlFor="venue-upload" className="lux-btn" style={{ cursor: 'pointer', fontSize: '0.75rem', display: 'inline-block', padding: '0.8rem 1.5rem' }}>КАЧИ СНИМКА</label>
+                <p className="serif" style={{ fontSize: '0.85rem', marginBottom: '1rem', color: 'var(--accent-gold-dark)', fontWeight: 'bold' }}>СНИМКА НА МЯСТОТО</p>
+                <label htmlFor="venue-upload" className="lux-btn" style={{ cursor: 'pointer', fontSize: '0.75rem', display: 'inline-block', padding: '0.8rem 1.5rem' }}>
+                   {formData.venuePhoto ? 'ПРОМЕНИ СНИМКА' : 'КАЧИ СНИМКА'}
+                </label>
                 {formData.venuePhoto && (
-                  <div style={{ marginTop: '15px' }}>
+                  <div style={{ marginTop: '15px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                     <img src={formData.venuePhoto} alt="venue preview" style={{ width: '60px', height: '40px', objectFit: 'cover', border: '1px solid var(--accent-gold)' }} />
                     <p style={{ fontSize: '0.6rem', color: 'green', marginTop: '5px' }}>КАЧЕНА ✓</p>
                   </div>

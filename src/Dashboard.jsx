@@ -2,8 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { db } from './firebase';
 import { collection, onSnapshot, query, orderBy } from 'firebase/firestore';
 import { getEvent } from './firebaseService';
+import { useLocation } from 'react-router-dom';
 
-const Dashboard = ({ data: initialData, eventId, onLogout }) => {
+const Dashboard = ({ data: initialData, eventId: initialEventId, onLogout }) => {
+    const location = useLocation();
+    const adminEventId = location.state?.adminEventId;
+    const effectiveEventId = adminEventId || initialEventId;
+
     const [guests, setGuests] = useState([]);
     const [eventData, setEventData] = useState(initialData);
     const [loading, setLoading] = useState(true);
@@ -11,20 +16,20 @@ const Dashboard = ({ data: initialData, eventId, onLogout }) => {
     useEffect(() => {
         let unsubscribe;
         const fetchData = async () => {
-            if (!eventId) {
+            if (!effectiveEventId) {
                 setLoading(false);
                 return;
             }
 
             try {
                 // 1. Fetch event data if missing
-                if (!eventData) {
-                    const fetchedEvent = await getEvent(eventId);
+                if (!eventData || eventData.id !== effectiveEventId) {
+                    const fetchedEvent = await getEvent(effectiveEventId);
                     setEventData(fetchedEvent);
                 }
 
                 // 2. Setup real-time listener for RSVPs
-                const rsvpRef = collection(db, "events", eventId, "rsvps");
+                const rsvpRef = collection(db, "events", effectiveEventId, "rsvps");
                 const q = query(rsvpRef, orderBy("timestamp", "desc"));
 
                 unsubscribe = onSnapshot(q, (snapshot) => {
@@ -47,9 +52,9 @@ const Dashboard = ({ data: initialData, eventId, onLogout }) => {
 
         fetchData();
         return () => unsubscribe && unsubscribe();
-    }, [eventId, eventData]);
+    }, [effectiveEventId]);
 
-    const displayGuests = (guests.length === 0 && !eventId) ? [
+    const displayGuests = (guests.length === 0 && !effectiveEventId) ? [
         { name: "Демо Гост", count: 2, status: "Ще присъствам", names: "Демо", timestamp: new Date().toISOString() }
     ] : guests;
     
@@ -89,13 +94,13 @@ const Dashboard = ({ data: initialData, eventId, onLogout }) => {
                             ВАШЕТО ТАБЛО: {namesLabel}
                         </h1>
                         <p className="serif" style={{ color: '#666', fontSize: '0.85rem' }}>Проследяване на гости и потвърждения в реално време.</p>
-                        {eventId && <p style={{ fontSize: '0.7rem', color: 'var(--accent-gold-dark)', marginTop: '0.5rem' }}>ID: {eventId}</p>}
+                        {effectiveEventId && <p style={{ fontSize: '0.7rem', color: 'var(--accent-gold-dark)', marginTop: '0.5rem' }}>ID: {effectiveEventId}</p>}
                     </div>
                     <div style={{ display: 'flex', gap: '10px' }}>
-                        {eventId && (
+                        {effectiveEventId && (
                             <button
                                 onClick={() => {
-                                    const url = window.location.origin + '/invitation/' + eventId;
+                                    const url = window.location.origin + '/wedding/invitation/' + effectiveEventId;
                                     navigator.clipboard.writeText(url);
                                     alert('Линкът е копиран!');
                                 }}

@@ -7,6 +7,7 @@ import ExtrasPage from './ExtrasPage';
 import RegisterPage from './RegisterPage';
 import Dashboard from './Dashboard';
 import { saveEvent, getEvent, logoutUser } from './firebaseService';
+import AdminPanel from './AdminPanel';
 import { auth } from './firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 
@@ -185,6 +186,15 @@ function App() {
         />
 
         <Route 
+          path="/admin" 
+          element={
+            user && user.email === 'davida1991@gmail.com' ? (
+              <AdminPanel />
+            ) : <div style={{ padding: '5rem', textAlign: 'center' }}><h3 className="serif">НЯМАТЕ ДОСТЪП ДО ТАЗИ СТРАНИЦА</h3><button onClick={() => navigate('/')} className="lux-btn">НАЧАЛО</button></div>
+          } 
+        />
+
+        <Route 
           path="/invitation/:id" 
           element={<PublicInvitation />} 
         />
@@ -202,6 +212,36 @@ function App() {
         pointerEvents: 'none',
         zIndex: 5000
       }}></div>
+
+      {/* Admin Floating Access */}
+      {user && user.email === 'davida1991@gmail.com' && location.pathname !== '/admin' && (
+        <button
+          onClick={() => navigate('/admin')}
+          style={{
+            position: 'fixed',
+            bottom: '20px',
+            right: '20px',
+            zIndex: 9999,
+            backgroundColor: 'var(--accent-gold-dark)',
+            color: 'white',
+            border: 'none',
+            borderRadius: '50%',
+            width: '60px',
+            height: '60px',
+            boxShadow: '0 10px 30px rgba(0,0,0,0.3)',
+            cursor: 'pointer',
+            fontSize: '0.8rem',
+            textAlign: 'center',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontWeight: 'bold',
+            letterSpacing: '1px'
+          }}
+        >
+          АДМИН
+        </button>
+      )}
     </div>
   );
 }
