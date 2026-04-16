@@ -5,6 +5,7 @@ import angelImg from './assets/angel.png';
 import starsImg from './assets/stars.png';
 import balloonsImg from './assets/balloons.png';
 import wreathIvoryImg from './assets/wreath_ivory.png';
+import { submitRSVP } from './firebaseService';
 
 const BaroqueOrnament = ({ style }) => (
     <svg viewBox="0 0 500 100" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: 'min(400px, 90%)', opacity: 0.35, ...style }}>
@@ -378,11 +379,13 @@ const ProgramItem = ({ time, activity, icon, isReversed, theme }) => {
     );
 };
 
-const InvitationCard = ({ data }) => {
+const InvitationCard = ({ data, eventId }) => {
     const { eventType = 'wedding' } = data;
     const [submitted, setSubmitted] = useState(false);
     const [guests, setGuests] = useState(1);
     const [guestNames, setGuestNames] = useState('');
+    const [guestName, setGuestName] = useState('');
+    const [rsvpStatus, setRsvpStatus] = useState('Ще присъствам');
 
     const getTheme = () => {
         switch (eventType) {
@@ -494,6 +497,24 @@ const InvitationCard = ({ data }) => {
     const program = data.program || [];
     const heroPhoto = photos[0];
     const remainingPhotos = photos.slice(1);
+
+    const handleSubmitRSVP = async (e) => {
+        e.preventDefault();
+        try {
+            if (eventId) {
+                await submitRSVP(eventId, {
+                    name: guestName,
+                    count: guests,
+                    names: guestNames,
+                    status: rsvpStatus
+                });
+            }
+            setSubmitted(true);
+        } catch (err) {
+            console.error(err);
+            alert("Грешка при изпращане. Моля опитайте пак.");
+        }
+    };
 
     return (
         <div style={{
@@ -711,10 +732,18 @@ const InvitationCard = ({ data }) => {
                         boxSizing: 'border-box'
                     }}>
                         {!submitted ? (
-                            <form onSubmit={(e) => { e.preventDefault(); setSubmitted(true); }}>
+                            <form onSubmit={handleSubmitRSVP}>
                                 <p className="serif" style={{ marginBottom: '2rem', fontStyle: 'italic', color: '#777', fontSize: '0.95rem' }}>Моля, потвърдете Вашето присъствие.</p>
                                 <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem', maxWidth: '500px', margin: '0 auto' }}>
-                                    <input type="text" placeholder="Вашето име..." className="lux-input" style={{ textAlign: 'center' }} required />
+                                    <input 
+                                        type="text" 
+                                        placeholder="Вашето име..." 
+                                        className="lux-input" 
+                                        style={{ textAlign: 'center' }} 
+                                        required 
+                                        value={guestName}
+                                        onChange={(e) => setGuestName(e.target.value)}
+                                    />
                                     <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', alignItems: 'center' }}>
                                         <p className="serif" style={{ fontSize: '0.9rem', opacity: 0.6 }}>Брой гости (включително Вас):</p>
                                         <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
@@ -724,15 +753,33 @@ const InvitationCard = ({ data }) => {
                                         </div>
                                     </div>
                                     {guests > 1 && (
-                                        <textarea placeholder="Имена на спътници..." className="lux-input" style={{ textAlign: 'center', height: '100px', resize: 'none', paddingTop: '1rem' }} value={guestNames} onChange={(e) => setGuestNames(e.target.value)} />
+                                        <textarea 
+                                            placeholder="Имена на спътници..." 
+                                            className="lux-input" 
+                                            style={{ textAlign: 'center', height: '100px', resize: 'none', paddingTop: '1rem' }} 
+                                            value={guestNames} 
+                                            onChange={(e) => setGuestNames(e.target.value)} 
+                                        />
                                     )}
                                 </div>
                                 <div style={{ display: 'flex', gap: 'clamp(20px, 5vw, 50px)', justifyContent: 'center', margin: '3rem 0', flexWrap: 'wrap' }}>
                                     <label style={{ display: 'flex', alignItems: 'center', gap: '12px', cursor: 'pointer', fontSize: 'clamp(0.9rem, 3.5vw, 1.1rem)', color: theme.accent }}>
-                                        <input type="radio" name="rsvp" defaultChecked style={{ accentColor: theme.primary }} /> Ще присъствам
+                                        <input 
+                                            type="radio" 
+                                            name="rsvp" 
+                                            checked={rsvpStatus === 'Ще присъствам'} 
+                                            onChange={() => setRsvpStatus('Ще присъствам')}
+                                            style={{ accentColor: theme.primary }} 
+                                        /> Ще присъствам
                                     </label>
                                     <label style={{ display: 'flex', alignItems: 'center', gap: '12px', cursor: 'pointer', fontSize: 'clamp(0.9rem, 3.5vw, 1.1rem)', color: theme.accent }}>
-                                        <input type="radio" name="rsvp" style={{ accentColor: theme.primary }} /> Няма да мога
+                                        <input 
+                                            type="radio" 
+                                            name="rsvp" 
+                                            checked={rsvpStatus === 'Няма да мога'} 
+                                            onChange={() => setRsvpStatus('Няма да мога')}
+                                            style={{ accentColor: theme.primary }} 
+                                        /> Няма да мога
                                     </label>
                                 </div>
                                 <button type="submit" className="lux-btn" style={{ width: 'min(280px, 100%)', background: theme.primary, color: 'white' }}>ИЗПРАТИ ОТГОВОР</button>

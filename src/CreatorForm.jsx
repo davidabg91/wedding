@@ -328,11 +328,11 @@ const CreatorForm = ({ data, onChange, onSubmit, onLogin, onRegister }) => {
     <div style={{ background: 'var(--paper-bg)', minHeight: '100vh' }}>
       {/* Premium Header */}
       <nav style={{
-        padding: '1rem clamp(1rem, 5vw, 4rem)',
+        padding: 'clamp(0.8rem, 3vw, 1.2rem) clamp(1rem, 5vw, 4rem)',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
-        background: 'rgba(255, 255, 255, 0.7)',
+        background: 'rgba(255, 255, 255, 0.9)',
         backdropFilter: 'blur(15px)',
         borderBottom: '1px solid rgba(197, 160, 89, 0.1)',
         position: 'sticky',
@@ -340,25 +340,33 @@ const CreatorForm = ({ data, onChange, onSubmit, onLogin, onRegister }) => {
         zIndex: 1000,
         boxShadow: '0 4px 30px rgba(0, 0, 0, 0.03)',
         flexWrap: 'wrap',
-        gap: '1rem'
+        gap: 'clamp(0.5rem, 2vw, 1.5rem)',
+        flexDirection: window.innerWidth <= 480 ? 'column' : 'row'
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', cursor: 'pointer' }} onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
           <img src={logo} alt="PokaniPro Logo" style={{ height: '40px', mixBlendMode: 'multiply' }} />
           <span className="serif" style={{ fontSize: '1.6rem', letterSpacing: '3px', color: 'var(--accent-gold-dark)', fontWeight: '500' }}>PokaniPro</span>
         </div>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: 'clamp(1rem, 5vw, 4rem)' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 'clamp(1rem, 3vw, 2rem)' }}>
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: 'clamp(0.8rem, 4vw, 3rem)',
+          width: window.innerWidth <= 480 ? '100%' : 'auto',
+          justifyContent: 'center',
+          flexWrap: 'wrap'
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 'clamp(0.8rem, 3vw, 1.5rem)' }}>
             <span
               className="serif"
-              style={{ fontSize: 'clamp(0.8rem, 3vw, 0.9rem)', letterSpacing: '2px', cursor: 'pointer', opacity: 0.8, textTransform: 'uppercase', fontWeights: '600' }}
+              style={{ fontSize: 'clamp(0.7rem, 2.8vw, 0.85rem)', letterSpacing: '1px', cursor: 'pointer', opacity: 0.8, textTransform: 'uppercase', fontWeight: '600' }}
               onClick={() => scrollToSection('features')}
             >
               Функции
             </span>
             <span
               className="serif"
-              style={{ fontSize: 'clamp(0.8rem, 3vw, 0.9rem)', letterSpacing: '2px', cursor: 'pointer', opacity: 0.8, textTransform: 'uppercase', fontWeights: '600' }}
+              style={{ fontSize: 'clamp(0.7rem, 2.8vw, 0.85rem)', letterSpacing: '1px', cursor: 'pointer', opacity: 0.8, textTransform: 'uppercase', fontWeight: '600' }}
               onClick={() => document.getElementById('designer').scrollIntoView({ behavior: 'smooth' })}
             >
               Създай
@@ -396,48 +404,46 @@ const CreatorForm = ({ data, onChange, onSubmit, onLogin, onRegister }) => {
         </div>
       </nav>
 
-      {/* High-Tech Innovative Hero Section */}
+      {/* Premium Elegant Hero Section */}
       <div id="hero" style={{
-        minHeight: '90vh',
+        minHeight: '85vh',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
         position: 'relative',
-        padding: '6rem 2rem 2rem 2rem', // Account for fixed nav
+        padding: '4rem 2rem 2rem 2rem', 
         overflow: 'hidden',
-        background: '#0a0a0a', // Dark, sleek high-tech background
+        background: 'linear-gradient(135deg, #fdfaf5 0%, #f7f1e6 100%)', // Inviting Champagne/Ivory Gradient
       }}>
-        {/* Animated Glowing Orbs Behind */}
-        <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '100vw', height: '100vw', maxWidth: '800px', maxHeight: '800px', zIndex: 0, opacity: 0.6 }}>
-          <div style={{ position: 'absolute', top: '20%', left: '20%', width: '40%', height: '40%', background: 'radial-gradient(circle, rgba(197,160,89,0.3) 0%, transparent 70%)', filter: 'blur(40px)', animation: 'float 8s ease-in-out infinite' }}></div>
-          <div style={{ position: 'absolute', bottom: '20%', right: '20%', width: '50%', height: '50%', background: 'radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%)', filter: 'blur(60px)', animation: 'float 12s ease-in-out infinite reverse' }}></div>
+        {/* Subtle Elegant Shadows Behind */}
+        <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '100vw', height: '100vw', maxWidth: '800px', maxHeight: '800px', zIndex: 0, opacity: 0.3 }}>
+          <div style={{ position: 'absolute', top: '20%', left: '20%', width: '40%', height: '40%', background: 'radial-gradient(circle, rgba(197,160,89,0.2) 0%, transparent 70%)', filter: 'blur(40px)' }}></div>
+          <div style={{ position: 'absolute', bottom: '20%', right: '20%', width: '50%', height: '50%', background: 'radial-gradient(circle, rgba(255,255,255,0.8) 0%, transparent 70%)', filter: 'blur(60px)' }}></div>
         </div>
-
-        {/* Global Keyframes for the animation are needed, but we can do a simple inline trick or just let it be static if keyframes aren't defined. We'll rely on the CSS filter block for an amazing look regardless */}
 
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', gap: '4rem', alignItems: 'center', maxWidth: '1200px', width: '100%', zIndex: 1, position: 'relative' }}>
 
           {/* Text Content */}
           <div style={{ textAlign: 'center', padding: '0 1rem' }}>
-            <span className="serif" style={{ display: 'inline-block', color: 'var(--accent-gold)', fontSize: 'clamp(0.7rem, 2.5vw, 0.85rem)', letterSpacing: '4px', textTransform: 'uppercase', marginBottom: '1.5rem', fontWeight: 'bold', padding: '5px 15px', border: '1px solid rgba(197,160,89,0.3)', borderRadius: '20px', background: 'rgba(197,160,89,0.05)' }}>
+            <span className="serif" style={{ display: 'inline-block', color: 'var(--accent-gold-dark)', fontSize: 'clamp(0.7rem, 2.5vw, 0.85rem)', letterSpacing: '4px', textTransform: 'uppercase', marginBottom: '1.5rem', fontWeight: 'bold', padding: '5px 20px', border: '1px solid rgba(197,160,89,0.3)', borderRadius: '30px', background: 'rgba(255,255,255,0.5)' }}>
               Технологията среща Изкуството
             </span>
-            <h1 className="serif" style={{ fontSize: 'clamp(2.2rem, 8vw, 4.8rem)', color: '#fff', lineHeight: '1.1', marginBottom: '1.5rem', letterSpacing: '-1px' }}>
+            <h1 className="serif" style={{ fontSize: 'clamp(2.5rem, 8vw, 4.5rem)', color: '#222', lineHeight: '1.1', marginBottom: '1.5rem', letterSpacing: '-1px' }}>
               Интелигентни Дигитални Покани.
             </h1>
-            <p className="serif" style={{ fontSize: 'clamp(1rem, 4vw, 1.2rem)', color: '#aaa', lineHeight: '1.7', marginBottom: '2.5rem', maxWidth: '500px', margin: '0 auto 2.5rem auto' }}>
+            <p className="serif" style={{ fontSize: 'clamp(1rem, 4vw, 1.2rem)', color: '#666', lineHeight: '1.7', marginBottom: '2.5rem', maxWidth: '500px', margin: '0 auto 2.5rem auto' }}>
               Край на хартията. Подарете на гостите си изумително дигитално преживяване, което спира дъха. С мигновена доставка, жива програма и умна навигация директно в техния телефон.
             </p>
             <button
               style={{
-                fontSize: 'clamp(0.9rem, 3.5vw, 1.1rem)',
-                padding: '1.1rem clamp(1.5rem, 5vw, 2.5rem)',
-                background: 'linear-gradient(135deg, var(--accent-gold) 0%, var(--accent-gold-dark) 100%)',
+                fontSize: 'clamp(0.9rem, 3.5vw, 1rem)',
+                padding: '1.15rem clamp(2rem, 6vw, 3rem)',
+                background: 'var(--accent-gold-dark)',
                 color: 'white',
                 border: 'none',
                 borderRadius: '30px',
                 cursor: 'pointer',
-                boxShadow: '0 10px 30px rgba(197, 160, 89, 0.25)',
+                boxShadow: '0 15px 35px rgba(158, 125, 68, 0.25)',
                 textTransform: 'uppercase',
                 letterSpacing: '2px',
                 fontWeight: '600',
@@ -814,31 +820,50 @@ const CreatorForm = ({ data, onChange, onSubmit, onLogin, onRegister }) => {
                   {isProgramDetailsOpen && (
                     <div style={{ marginTop: '1rem' }}>
                       {formData.program.map((item, index) => (
-                        <div key={index} style={{ display: 'flex', gap: '15px', marginBottom: '1.5rem', alignItems: 'center' }}>
-                          <IconPicker
-                            currentIcon={item.icon}
-                            onSelect={(newIcon) => handleProgramChange(index, 'icon', newIcon)}
-                          />
-                          <input
-                            type="time"
-                            value={item.time}
-                            onChange={(e) => handleProgramChange(index, 'time', e.target.value)}
-                            className="lux-input"
-                            style={{ width: '90px', margin: 0 }}
-                          />
+                        <div key={index} style={{
+                          display: 'flex',
+                          gap: '10px',
+                          marginBottom: '2rem',
+                          alignItems: window.innerWidth <= 600 ? 'stretch' : 'center',
+                          flexDirection: window.innerWidth <= 600 ? 'column' : 'row',
+                          borderBottom: window.innerWidth <= 600 ? '1px solid rgba(197, 160, 89, 0.1)' : 'none',
+                          paddingBottom: window.innerWidth <= 600 ? '1.5rem' : '0'
+                        }}>
+                          <div style={{ display: 'flex', gap: '15px', alignItems: 'center', width: '100%' }}>
+                            <IconPicker
+                              currentIcon={item.icon}
+                              onSelect={(newIcon) => handleProgramChange(index, 'icon', newIcon)}
+                            />
+                            <input
+                              type="time"
+                              value={item.time}
+                              onChange={(e) => handleProgramChange(index, 'time', e.target.value)}
+                              className="lux-input"
+                              style={{ width: '100px', margin: 0, flexShrink: 0 }}
+                            />
+                            {window.innerWidth <= 600 && (
+                              <button
+                                type="button"
+                                onClick={() => removeProgramItem(index)}
+                                style={{ background: 'none', border: 'none', color: '#ff4d4d', cursor: 'pointer', fontSize: '1.2rem', marginLeft: 'auto' }}
+                              >✕</button>
+                            )}
+                          </div>
                           <input
                             type="text"
                             value={item.activity}
                             onChange={(e) => handleProgramChange(index, 'activity', e.target.value)}
                             placeholder="Дейност..."
                             className="lux-input"
-                            style={{ flex: 2, margin: 0 }}
+                            style={{ flex: 2, margin: 0, width: '100%' }}
                           />
-                          <button
-                            type="button"
-                            onClick={() => removeProgramItem(index)}
-                            style={{ background: 'none', border: 'none', color: '#ff4d4d', cursor: 'pointer', fontSize: '1.2rem' }}
-                          >✕</button>
+                          {window.innerWidth > 600 && (
+                            <button
+                              type="button"
+                              onClick={() => removeProgramItem(index)}
+                              style={{ background: 'none', border: 'none', color: '#ff4d4d', cursor: 'pointer', fontSize: '1.2rem' }}
+                            >✕</button>
+                          )}
                         </div>
                       ))}
                       <button
@@ -854,17 +879,16 @@ const CreatorForm = ({ data, onChange, onSubmit, onLogin, onRegister }) => {
             </div>
 
             {/* Photo Management */}
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '2rem', marginBottom: '3rem' }}>
-              <div style={{ border: '1px dashed var(--accent-gold)', padding: 'clamp(1rem, 4vw, 2rem)', textAlign: 'center' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 250px), 1fr))', gap: '2rem', marginBottom: '3rem' }}>
+              <div style={{ border: '1px dashed var(--accent-gold)', padding: 'clamp(1rem, 5vw, 2rem)', textAlign: 'center', width: '100%', boxSizing: 'border-box' }}>
                 <input type="file" multiple accept="image/*" onChange={handlePhotoUpload} style={{ display: 'none' }} id="photo-upload" />
-                <p className="serif" style={{ fontSize: '0.8rem', marginBottom: '1rem', color: 'var(--accent-gold-dark)' }}>Снимки на двойката</p>
-                <label htmlFor="photo-upload" className="lux-btn" style={{ cursor: 'pointer', fontSize: '0.7rem', display: 'inline-block' }}>Добави снимки</label>
+                <p className="serif" style={{ fontSize: '0.85rem', marginBottom: '1rem', color: 'var(--accent-gold-dark)', fontWeight: 'bold' }}>СНИМКИ НА ДВОЙКАТА</p>
+                <label htmlFor="photo-upload" className="lux-btn" style={{ cursor: 'pointer', fontSize: '0.75rem', display: 'inline-block', padding: '0.8rem 1.5rem' }}>ДОБАВИ СНИМКИ</label>
 
-                {/* Photo Preview Added Back - FIX for "not working" */}
                 {formData.photos.length > 0 && (
-                  <div style={{ display: 'flex', gap: '10px', marginTop: '2rem', flexWrap: 'wrap', justifyContent: 'center' }}>
+                  <div style={{ display: 'flex', gap: '8px', marginTop: '1.5rem', flexWrap: 'wrap', justifyContent: 'center' }}>
                     {formData.photos.map((url, i) => (
-                      <div key={i} style={{ width: '40px', height: '40px', borderRadius: '50%', overflow: 'hidden', border: '1px solid var(--accent-gold)' }}>
+                      <div key={i} style={{ width: '35px', height: '35px', borderRadius: '50%', overflow: 'hidden', border: '1px solid var(--accent-gold)' }}>
                         <img src={url} alt="preview" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                       </div>
                     ))}
@@ -872,14 +896,14 @@ const CreatorForm = ({ data, onChange, onSubmit, onLogin, onRegister }) => {
                 )}
               </div>
 
-              <div style={{ border: '1px dashed var(--accent-gold)', padding: '2rem', textAlign: 'center' }}>
+              <div style={{ border: '1px dashed var(--accent-gold)', padding: 'clamp(1rem, 5vw, 2rem)', textAlign: 'center', width: '100%', boxSizing: 'border-box' }}>
                 <input type="file" accept="image/*" onChange={handleVenuePhotoUpload} style={{ display: 'none' }} id="venue-upload" />
-                <p className="serif" style={{ fontSize: '0.8rem', marginBottom: '1rem', color: 'var(--accent-gold-dark)' }}>Снимка на ресторанта</p>
-                <label htmlFor="venue-upload" className="lux-btn" style={{ cursor: 'pointer', fontSize: '0.7rem' }}>Качи снимка</label>
+                <p className="serif" style={{ fontSize: '0.85rem', marginBottom: '1rem', color: 'var(--accent-gold-dark)', fontWeight: 'bold' }}>СНИМКА НА РЕСТОРАНТА</p>
+                <label htmlFor="venue-upload" className="lux-btn" style={{ cursor: 'pointer', fontSize: '0.75rem', display: 'inline-block', padding: '0.8rem 1.5rem' }}>КАЧИ СНИМКА</label>
                 {formData.venuePhoto && (
                   <div style={{ marginTop: '15px' }}>
                     <img src={formData.venuePhoto} alt="venue preview" style={{ width: '60px', height: '40px', objectFit: 'cover', border: '1px solid var(--accent-gold)' }} />
-                    <p style={{ fontSize: '0.6rem', color: 'green', marginTop: '5px' }}>Качена ✓</p>
+                    <p style={{ fontSize: '0.6rem', color: 'green', marginTop: '5px' }}>КАЧЕНА ✓</p>
                   </div>
                 )}
               </div>
@@ -890,7 +914,7 @@ const CreatorForm = ({ data, onChange, onSubmit, onLogin, onRegister }) => {
                 type="submit"
                 className="lux-btn"
                 style={{
-                  minWidth: '350px',
+                  minWidth: window.innerWidth <= 480 ? '90%' : '350px',
                   fontSize: '1.2rem',
                   padding: '1.2rem 2rem',
                   boxShadow: '0 10px 40px rgba(197, 160, 89, 0.3)',
@@ -900,7 +924,8 @@ const CreatorForm = ({ data, onChange, onSubmit, onLogin, onRegister }) => {
                   background: 'linear-gradient(135deg, var(--accent-gold) 0%, var(--accent-gold-dark) 100%)',
                   color: 'white',
                   border: 'none',
-                  borderRadius: '30px'
+                  borderRadius: '30px',
+                  width: window.innerWidth <= 480 ? '100%' : 'auto'
                 }}
               >
                 Виж Готовата Покана
@@ -934,7 +959,6 @@ const CreatorForm = ({ data, onChange, onSubmit, onLogin, onRegister }) => {
 
       <CustomRequestModal isOpen={isCustomModalOpen} onClose={() => setIsCustomModalOpen(false)} />
 
-
       {/* Footer Branding */}
       <footer id="support" style={{ padding: '4rem 0', textAlign: 'center', borderTop: '1px solid rgba(197, 160, 89, 0.1)', background: '#fdfaf5' }}>
         <div style={{ height: '40px', overflow: 'hidden', display: 'inline-flex', alignItems: 'flex-start', justifyContent: 'center' }}>
@@ -942,7 +966,7 @@ const CreatorForm = ({ data, onChange, onSubmit, onLogin, onRegister }) => {
         </div>
         <p className="serif" style={{ fontSize: '0.8rem', letterSpacing: '4px', color: 'var(--accent-gold-dark)', marginTop: '1rem', opacity: 0.6 }}>POKANIPRO • © 2026 • ПОДДРЪЖКА: support@pokani.pro</p>
       </footer>
-    </div >
+    </div>
   );
 };
 
