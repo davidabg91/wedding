@@ -62,6 +62,20 @@ export const getUserEvents = async (userId) => {
 };
 
 /**
+ * Gets event data by ID
+ */
+export const getEvent = async (id) => {
+  const docRef = doc(db, "events", id);
+  const docSnap = await getDoc(docRef);
+  
+  if (docSnap.exists()) {
+    return { id: docSnap.id, ...docSnap.data() };
+  } else {
+    throw new Error("No such document!");
+  }
+};
+
+/**
  * Submits an RSVP for a specific event
  */
 export const submitRSVP = async (eventId, rsvpData) => {
