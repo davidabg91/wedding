@@ -46,7 +46,8 @@ const CornerOrnament = ({ position = "top-left", eventType }) => {
             style={{
                 width: 'min(180px, 40vw)',
                 position: 'absolute',
-                transform: `rotate(${rotations[position]})`,
+                transform: `rotate(${rotations[position]}) translateZ(25px)`,
+                transformStyle: 'preserve-3d',
                 opacity: 0.35,
                 zIndex: 5,
                 ...{
@@ -162,8 +163,8 @@ const CountdownTimer = ({ targetDate, label }) => {
     if (!targetDate || isNaN(new Date(targetDate).getTime())) return null;
 
     return (
-        <div style={{ textAlign: 'center', margin: '3rem auto', width: '100%', maxWidth: '800px' }}>
-            <h4 className="serif" style={{ fontSize: 'min(1.2rem, 4vw)', color: 'var(--accent-gold-dark)', letterSpacing: '4px', marginBottom: '2rem', opacity: 0.8 }}>
+        <div style={{ textAlign: 'center', margin: '4rem auto 3rem auto', width: '100%', maxWidth: '800px' }}>
+            <h4 className="serif letterpress-text" style={{ fontSize: 'min(1.2rem, 4vw)', color: 'var(--accent-gold-dark)', letterSpacing: '4px', marginBottom: '2rem', opacity: 0.8 }}>
                 {label}
             </h4>
             <div style={{
@@ -200,17 +201,20 @@ const FloralHeroPhoto = ({ src, alt, eventType }) => {
             position: 'relative',
             width: '100%',
             maxWidth: '850px',
-            margin: 'clamp(3rem, 10vw, 6rem) auto clamp(3rem, 8vw, 6rem) auto',
+            height: isWedding ? 'calc(1.45 * min(400px, 75vw))' : 'min(400px, 75vw)',
+            margin: '2.5rem auto 3rem auto',
             display: 'flex',
             alignItems: 'center',
-            justifyContent: 'center'
+            justifyContent: 'center',
+            boxSizing: 'border-box',
+            transformStyle: 'preserve-3d'
         }}>
             {/* Floral Wreath - ONLY for Weddings */}
             {isWedding && (
-                <div style={{
+                <div className="wreath-animate" style={{
                     position: 'absolute',
-                    width: '180%',
-                    height: '180%',
+                    width: '100%',
+                    height: '100%',
                     backgroundImage: `url(${wreathIvoryImg})`,
                     backgroundSize: 'contain',
                     backgroundPosition: 'center',
@@ -221,7 +225,8 @@ const FloralHeroPhoto = ({ src, alt, eventType }) => {
                     WebkitClipPath: 'circle(49% at 50% 50%)',
                     maskImage: 'radial-gradient(circle at center, black 65%, transparent 98%)',
                     WebkitMaskImage: 'radial-gradient(circle at center, black 65%, transparent 98%)',
-                    filter: 'contrast(1.02) brightness(1.01)'
+                    filter: 'contrast(1.02) brightness(1.01)',
+                    transform: 'translateZ(15px)'
                 }}></div>
             )}
 
@@ -240,7 +245,8 @@ const FloralHeroPhoto = ({ src, alt, eventType }) => {
                 maskRepeat: 'no-repeat',
                 WebkitMaskImage: isHeart ? 'url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><path d=\'M50 30 C30 10 10 10 10 40 C10 65 50 90 50 90 C50 90 90 65 90 40 C90 10 70 10 50 30 Z\' fill=\'black\'/></svg>")' : 'none',
                 WebkitMaskSize: '100% 100%',
-                WebkitMaskRepeat: 'no-repeat'
+                WebkitMaskRepeat: 'no-repeat',
+                transform: 'translateZ(30px)'
             }}>
                 <img src={src} alt={alt} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
             </div>
@@ -248,7 +254,7 @@ const FloralHeroPhoto = ({ src, alt, eventType }) => {
             {/* Bottom Fade */}
             <div style={{
                 position: 'absolute',
-                bottom: '-40px',
+                bottom: isWedding ? 'calc(0.225 * min(400px, 75vw) - 40px)' : '-40px',
                 width: 'min(600px, 120%)',
                 height: 'min(150px, 30vw)',
                 background: 'radial-gradient(ellipse at center, var(--paper-bg) 0%, transparent 80%)',
@@ -260,32 +266,38 @@ const FloralHeroPhoto = ({ src, alt, eventType }) => {
     );
 };
 
-const HeartImage = ({ src, size = "200px" }) => (
-    <div style={{
-        position: 'relative',
-        height: size,
-        width: size,
-        margin: '2rem auto',
-        overflow: 'hidden',
-        display: 'block'
-    }}>
+const HeartImage = ({ src, size = "200px" }) => {
+    const isResponsive = size === "responsive";
+    
+    return (
         <div style={{
-            width: '100%',
-            height: '100%',
-            backgroundImage: `url("${src}")`,
-            backgroundPosition: 'center',
-            backgroundSize: 'cover',
-            backgroundRepeat: 'no-repeat',
-            maskImage: 'url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><path d=\'M50 30 C30 10 10 10 10 40 C10 65 50 90 50 90 C50 90 90 65 90 40 C90 10 70 10 50 30 Z\' fill=\'black\'/></svg>")',
-            maskSize: '100% 100%',
-            maskRepeat: 'no-repeat',
-            WebkitMaskImage: 'url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><path d=\'M50 30 C30 10 10 10 10 40 C10 65 50 90 50 90 C50 90 90 65 90 40 C90 10 70 10 50 30 Z\' fill=\'black\'/></svg>")',
-            WebkitMaskSize: '100% 100%',
-            WebkitMaskRepeat: 'no-repeat',
-            filter: 'sepia(0.1) contrast(1.05)'
-        }} />
-    </div>
-);
+            position: 'relative',
+            width: isResponsive ? '100%' : size,
+            height: isResponsive ? 'auto' : size,
+            maxWidth: isResponsive ? '400px' : 'none',
+            aspectRatio: isResponsive ? '1/1' : 'auto',
+            margin: '2rem auto',
+            overflow: 'hidden',
+            display: 'block'
+        }}>
+            <div style={{
+                width: '100%',
+                height: '100%',
+                backgroundImage: `url("${src}")`,
+                backgroundPosition: 'center',
+                backgroundSize: 'cover',
+                backgroundRepeat: 'no-repeat',
+                maskImage: 'url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><path d=\'M50 30 C30 10 10 10 10 40 C10 65 50 90 50 90 C50 90 90 65 90 40 C90 10 70 10 50 30 Z\' fill=\'black\'/></svg>")',
+                maskSize: '100% 100%',
+                maskRepeat: 'no-repeat',
+                WebkitMaskImage: 'url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><path d=\'M50 30 C30 10 10 10 10 40 C10 65 50 90 50 90 C50 90 90 65 90 40 C90 10 70 10 50 30 Z\' fill=\'black\'/></svg>")',
+                WebkitMaskSize: '100% 100%',
+                WebkitMaskRepeat: 'no-repeat',
+                filter: 'sepia(0.1) contrast(1.05)'
+            }} />
+        </div>
+    );
+};
 
 const MaskedImage = ({ src, alt, height = "450px", ornate = false }) => (
     <div style={{
@@ -314,8 +326,8 @@ const MaskedImage = ({ src, alt, height = "450px", ornate = false }) => (
 
         {ornate && (
             <>
-                <BaroqueOrnament style={{ position: 'absolute', top: '-60px', left: '50%', transform: 'translateX(-50%) scale(1.2)', zIndex: -1, opacity: 0.6 }} />
-                <BaroqueOrnament style={{ position: 'absolute', bottom: '-80px', left: '50%', transform: 'translateX(-50%) scale(1.2) scaleY(-1)', zIndex: -1, opacity: 0.6 }} />
+                <BaroqueOrnament style={{ position: 'absolute', top: '-60px', left: '50%', transform: 'translateX(-50%) scale(1.2) translateZ(10px)', zIndex: -1, opacity: 0.6 }} />
+                <BaroqueOrnament style={{ position: 'absolute', bottom: '-80px', left: '50%', transform: 'translateX(-50%) scale(1.2) scaleY(-1) translateZ(10px)', zIndex: -1, opacity: 0.6 }} />
                 <SwirlOrnament style={{ position: 'absolute', top: '-30px', left: '-30px', opacity: 0.4 }} />
                 <SwirlOrnament style={{ position: 'absolute', bottom: '-30px', right: '-30px', opacity: 0.4, transform: 'rotate(180deg)' }} />
             </>
@@ -379,6 +391,37 @@ const ProgramItem = ({ time, activity, icon, isReversed, theme }) => {
     );
 };
 
+// Moving Section outside InvitationCard to prevent unmounting/remounting on parent state updates
+const Section = ({ title, children, className = "", delay = "0s", theme }) => {
+    const [isVisible, setIsVisible] = useState(false);
+    const domRef = useRef();
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) setIsVisible(true);
+            });
+        }, { threshold: 0.1 });
+        if (domRef.current) observer.observe(domRef.current);
+        return () => observer.disconnect();
+    }, []);
+
+    return (
+        <div
+            ref={domRef}
+            className={`reveal ${isVisible ? 'active' : ''} ${className}`}
+            style={{ padding: 'min(1rem, 2vw) min(2rem, 5vw)', textAlign: 'center', transitionDelay: delay, marginBottom: 'var(--section-margin)', position: 'relative' }}
+        >
+            {title && (
+                <h3 className="serif" style={{ textAlign: 'center', color: theme?.primary || 'var(--accent-gold-dark)', letterSpacing: '4px', fontSize: 'clamp(1.5rem, 6vw, 2.2rem)', marginBottom: 'clamp(1.5rem, 5vw, 3rem)' }}>
+                    {title}
+                </h3>
+            )}
+            {children}
+        </div>
+    );
+};
+
 const InvitationCard = ({ data, eventId }) => {
     const { eventType = 'wedding' } = data;
     const [submitted, setSubmitted] = useState(false);
@@ -386,6 +429,7 @@ const InvitationCard = ({ data, eventId }) => {
     const [guestNames, setGuestNames] = useState('');
     const [guestName, setGuestName] = useState('');
     const [rsvpStatus, setRsvpStatus] = useState('Ще присъствам');
+    const [activeImageIndex, setActiveImageIndex] = useState(null);
 
     const getTheme = () => {
         switch (eventType) {
@@ -474,36 +518,6 @@ const InvitationCard = ({ data, eventId }) => {
 
     const theme = getTheme();
 
-    const Section = ({ title, children, className = "", delay = "0s" }) => {
-        const [isVisible, setIsVisible] = useState(false);
-        const domRef = useRef();
-
-        useEffect(() => {
-            const observer = new IntersectionObserver(entries => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) setIsVisible(true);
-                });
-            }, { threshold: 0.1 });
-            if (domRef.current) observer.observe(domRef.current);
-            return () => observer.disconnect();
-        }, []);
-
-        return (
-            <div
-                ref={domRef}
-                className={`reveal ${isVisible ? 'active' : ''} ${className}`}
-                style={{ padding: 'min(1rem, 2vw) min(2rem, 5vw)', textAlign: 'center', transitionDelay: delay, marginBottom: 'var(--section-margin)', position: 'relative' }}
-            >
-                {title && (
-                    <h3 className="serif" style={{ textAlign: 'center', color: theme.primary, letterSpacing: '4px', fontSize: 'clamp(1.5rem, 6vw, 2.2rem)', marginBottom: 'clamp(1.5rem, 5vw, 3rem)' }}>
-                        {title}
-                    </h3>
-                )}
-                {children}
-            </div>
-        );
-    };
-
     useEffect(() => {
         window.scrollTo(0, 0);
     }, []);
@@ -513,6 +527,24 @@ const InvitationCard = ({ data, eventId }) => {
     const program = data.program || [];
     const heroPhoto = photos[0];
     const remainingPhotos = photos.slice(1);
+
+    const openLightbox = (index) => {
+        setActiveImageIndex(index);
+    };
+
+    const closeLightbox = () => {
+        setActiveImageIndex(null);
+    };
+
+    const nextImage = (e) => {
+        if (e) e.stopPropagation();
+        setActiveImageIndex((prev) => (prev + 1) % remainingPhotos.length);
+    };
+
+    const prevImage = (e) => {
+        if (e) e.stopPropagation();
+        setActiveImageIndex((prev) => (prev - 1 + remainingPhotos.length) % remainingPhotos.length);
+    };
 
     const handleSubmitRSVP = async (e) => {
         e.preventDefault();
@@ -595,20 +627,33 @@ const InvitationCard = ({ data, eventId }) => {
                 </div>
             )}
 
-            <div className="lux-container main-card-container" style={{
-                maxWidth: '850px',
-                margin: '2rem auto',
-                position: 'relative',
-                zIndex: 11,
-                background: theme.bg,
-                boxShadow: '0 40px 100px rgba(0,0,0,0.12), 0 10px 30px rgba(0,0,0,0.05)',
-                padding: 'clamp(3rem, 10vw, 6rem) clamp(1.5rem, 5vw, 4rem)',
-                border: '1px solid rgba(197, 160, 89, 0.3)',
-                borderRadius: '4px',
-                backgroundImage: 'var(--paper-texture)',
-                overflow: 'visible',
-                width: 'min(calc(100% - 2rem), 850px)'
-            }}>
+            {/* Outer Static Wrapper (establishes 3D perspective space) */}
+            <div 
+                style={{
+                    width: '100%',
+                    maxWidth: '850px',
+                    margin: '2rem auto',
+                    perspective: '1000px',
+                    position: 'relative',
+                    zIndex: 11
+                }}
+            >
+                {/* Inner Card (Permanently tilted at a subtle static 3D angle. No mouse tracking/movement) */}
+                <div 
+                    className="lux-container main-card-container" 
+                    style={{
+                        width: 'min(calc(100% - 2rem), 850px)',
+                        margin: '0 auto',
+                        background: theme.bg,
+                        boxShadow: '0 45px 110px rgba(197, 160, 89, 0.12), 0 15px 40px rgba(0,0,0,0.06)',
+                        padding: 'clamp(3rem, 10vw, 6rem) clamp(1.5rem, 5vw, 4rem)',
+                        border: '1px solid rgba(197, 160, 89, 0.3)',
+                        borderRadius: '4px',
+                        backgroundImage: 'var(--paper-texture)',
+                        overflow: 'visible',
+                        transform: 'rotateX(2.5deg) rotateY(-3.5deg)',
+                        transformStyle: 'preserve-3d'
+                    }}>
                 {/* Decorative Inner Border */}
                 <div style={{
                     position: 'absolute',
@@ -637,13 +682,18 @@ const InvitationCard = ({ data, eventId }) => {
                         </div>
                     )}
                     <div style={{ height: '1px', width: '100px', background: theme.secondary, margin: '1.5rem auto', opacity: 0.4 }}></div>
-                    <h2 className="script" style={{
+                    <h2 className="script foil-text auto-shimmer" style={{
                         fontSize: 'clamp(3.5rem, 15vw, 7rem)',
-                        color: theme.primary,
                         marginTop: '0.5rem',
-                        lineHeight: '1',
+                        lineHeight: '1.1',
                         wordBreak: 'break-word',
-                        width: '100%'
+                        width: '100%',
+                        backgroundImage: `linear-gradient(135deg, ${theme.primary} 0%, ${theme.secondary} 30%, #fff1c2 50%, ${theme.secondary} 70%, ${theme.primary} 100%)`,
+                        WebkitBackgroundClip: 'text',
+                        WebkitTextFillColor: 'transparent',
+                        backgroundSize: '200% 200%',
+                        transform: 'translateZ(40px)',
+                        display: 'inline-block'
                     }}>
                         {eventType === 'wedding' && `${data.groom} & ${data.bride}`}
                         {eventType === 'christening' && data.childName}
@@ -657,22 +707,33 @@ const InvitationCard = ({ data, eventId }) => {
                     )}
                 </div>
 
-                <Section>
+                <Section theme={theme}>
                     {eventType === 'christening' && data.parents && (
-                        <p className="serif" style={{ fontSize: '1.2rem', color: theme.primary, letterSpacing: '2px', marginBottom: '1rem' }}>
+                        <p className="serif letterpress-text" style={{ fontSize: '1.2rem', color: theme.primary, letterSpacing: '2px', marginBottom: '1rem' }}>
                             {data.parents.toUpperCase()}
                         </p>
                     )}
-                    <p className="serif" style={{ fontSize: '1rem', color: theme.primary, letterSpacing: '4px', marginBottom: '1rem', opacity: 0.8 }}>
+                    <p className="serif letterpress-text" style={{ fontSize: '1rem', color: theme.primary, letterSpacing: '4px', marginBottom: '1rem', opacity: 0.8 }}>
                         {theme.introSubtitle}
                     </p>
 
-                    <p className="serif" style={{ fontSize: 'clamp(1rem, 4vw, 1.5rem)', color: theme.accent, maxWidth: '650px', margin: '0 auto', lineHeight: '1.8', fontStyle: 'italic' }}>
-                        {eventType === 'wedding'
-                            ? '"Най-красивото в живота е да намериш човек, който вижда в теб всичко, от което ти се страхува някой да бъдеш."'
+                    <p className="serif letterpress-text" style={{
+                        fontSize: 'clamp(1rem, 4vw, 1.5rem)',
+                        color: theme.accent,
+                        maxWidth: '650px',
+                        margin: '0 auto',
+                        lineHeight: '1.8',
+                        fontStyle: 'italic',
+                        whiteSpace: 'pre-wrap',
+                        position: 'relative',
+                        zIndex: 2,
+                        transform: 'translateZ(20px)'
+                    }}>
+                        {data.message || (eventType === 'wedding'
+                            ? '"Най-красивото в живота е да намериш човек, който вижда в теб всичко, което се страхуваш да бъдеш."'
                             : eventType === 'christening'
                                 ? '„Всяко дете е ангел, изпратен от небето... Днес нашето малко съкровище приема Божието благословение!“'
-                                : 'За нас е огромно удоволствие да Ви поканим да бъдете част от нашето специално тържество!'}
+                                : 'За нас е огромно удоволствие да Ви поканим да бъдете част от нашето специално тържество!')}
                     </p>
 
                     {eventType === 'christening' && data.godparents && (
@@ -690,7 +751,7 @@ const InvitationCard = ({ data, eventId }) => {
 
                 {/* Church Info for Christening */}
                 {eventType === 'christening' && data.church && (
-                    <Section title="СВЕТО ТАЙНСТВО">
+                    <Section title="СВЕТО ТАЙНСТВО" theme={theme}>
                         <OrthodoxCross style={{ marginBottom: '2rem' }} />
                         <p className="serif" style={{ fontSize: 'clamp(0.9rem, 3.5vw, 1.1rem)', letterSpacing: '4px', opacity: 0.6 }}>РИТУАЛЪТ ЩЕ СЕ ИЗВЪРШИ В</p>
                         <p className="serif" style={{ fontSize: 'clamp(1.5rem, 5vw, 2.5rem)', color: theme.primary, margin: '1rem 0' }}>{data.church.toUpperCase()}</p>
@@ -699,7 +760,7 @@ const InvitationCard = ({ data, eventId }) => {
                 )}
 
                 {data.showProgram && program.length > 0 && (
-                    <Section title="ПРОГРАМА">
+                    <Section title="ПРОГРАМА" theme={theme}>
                         <div style={{ position: 'relative', padding: '4rem 0', maxWidth: '750px', margin: '0 auto' }}>
                             <div style={{ position: 'absolute', left: '50%', top: '0', bottom: '0', width: '1px', background: theme.secondary, opacity: 0.2, transform: 'translateX(-50%)' }}></div>
                             {program.map((item, index) => (
@@ -711,15 +772,27 @@ const InvitationCard = ({ data, eventId }) => {
                     </Section>
                 )}
 
-                <Section title={theme.photosLabel}>
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '2rem', margin: '2rem 0' }}>
+                <Section title={theme.photosLabel} theme={theme}>
+                    <div style={{
+                        display: 'grid',
+                        gridTemplateColumns: remainingPhotos.length === 1
+                            ? '1fr'
+                            : remainingPhotos.length === 2
+                                ? 'repeat(auto-fit, minmax(320px, 1fr))'
+                                : 'repeat(auto-fit, minmax(260px, 1fr))',
+                        gap: '2rem',
+                        margin: '2rem 0',
+                        justifyContent: 'center'
+                    }}>
                         {remainingPhotos.map((src, i) => (
-                            <HeartImage key={i} src={src} size="min(250px, 60vw)" />
+                            <div key={i} onClick={() => openLightbox(i)} style={{ cursor: 'pointer' }} className="hover-lift">
+                                <HeartImage src={src} size="responsive" />
+                            </div>
                         ))}
                     </div>
                 </Section>
 
-                <Section title={theme.venueLabel}>
+                <Section title={theme.venueLabel} theme={theme}>
                     <h3 className="serif" style={{ letterSpacing: '6px', fontSize: 'clamp(0.9rem, 3.5vw, 1.1rem)', color: theme.primary, marginBottom: '2rem', opacity: 0.7 }}>КЪДЕ ЩЕ СЕ СЛУЧИ МАГИЯТА</h3>
                     <p className="serif" style={{ fontSize: 'clamp(1.8rem, 6vw, 3rem)', color: theme.primary, marginBottom: '1.5rem' }}>{data.location}</p>
                     {venuePhoto && <MaskedImage src={venuePhoto} alt="Location" height="400px" />}
@@ -748,7 +821,7 @@ const InvitationCard = ({ data, eventId }) => {
 
                 <div style={{ textAlign: 'center', padding: '3rem 0' }}><BaroqueOrnament style={{ width: 'min(400px, 80%)' }} /></div>
 
-                <Section className="rsvp-section" title="ПОТВЪРЖДЕНИЕ">
+                <Section className="rsvp-section" title="ПОТВЪРЖДЕНИЕ" theme={theme}>
                     <div style={{
                         padding: 'clamp(1.5rem, 5vw, 4rem) clamp(1rem, 4vw, 3rem)',
                         background: 'rgba(255, 255, 255, 0.4)',
@@ -832,8 +905,117 @@ const InvitationCard = ({ data, eventId }) => {
                     </p>
                     <p className="serif" style={{ fontSize: '0.7rem', color: theme.secondary, marginTop: '2rem', letterSpacing: '4px' }}>2026</p>
                 </div>
+
+                {/* Lightbox Modal for Gallery */}
+                {activeImageIndex !== null && (
+                    <div 
+                        onClick={closeLightbox}
+                        style={{
+                            position: 'fixed',
+                            inset: 0,
+                            backgroundColor: 'rgba(15, 11, 6, 0.95)',
+                            backdropFilter: 'blur(10px)',
+                            zIndex: 99999,
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            animation: 'fadeIn 0.3s ease'
+                        }}
+                    >
+                        {/* Close Button */}
+                        <button 
+                            onClick={closeLightbox}
+                            style={{
+                                position: 'absolute',
+                                top: '30px',
+                                right: '30px',
+                                background: 'none',
+                                border: 'none',
+                                color: 'white',
+                                fontSize: '2.5rem',
+                                cursor: 'pointer',
+                                zIndex: 10,
+                                transition: 'transform 0.2s',
+                            }}
+                            onMouseOver={(e) => e.target.style.transform = 'scale(1.2)'}
+                            onMouseOut={(e) => e.target.style.transform = 'scale(1)'}
+                        >
+                            ✕
+                        </button>
+
+                        {/* Left Arrow */}
+                        {remainingPhotos.length > 1 && (
+                            <button 
+                                onClick={prevImage}
+                                style={{
+                                    position: 'absolute',
+                                    left: 'max(20px, 3vw)',
+                                    background: 'none',
+                                    border: 'none',
+                                    color: 'white',
+                                    fontSize: '4rem',
+                                    cursor: 'pointer',
+                                    zIndex: 10,
+                                    opacity: 0.7,
+                                    transition: 'opacity 0.2s, transform 0.2s',
+                                    padding: '20px'
+                                }}
+                                onMouseOver={(e) => { e.target.style.opacity = 1; e.target.style.transform = 'scale(1.1)'; }}
+                                onMouseOut={(e) => { e.target.style.opacity = 0.7; e.target.style.transform = 'scale(1)'; }}
+                            >
+                                ‹
+                            </button>
+                        )}
+
+                        {/* Image Container with Passepartout Frame */}
+                        <div 
+                            onClick={(e) => e.stopPropagation()}
+                            style={{
+                                position: 'relative',
+                                width: 'min(420px, 85vw)',
+                                height: 'min(420px, 85vw)',
+                                background: '#fdfaf5',
+                                padding: '24px',
+                                boxShadow: '0 30px 80px rgba(0,0,0,0.6)',
+                                border: '1px solid rgba(197, 160, 89, 0.4)',
+                                borderRadius: '4px',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                backgroundImage: 'var(--paper-texture)',
+                            }}
+                        >
+                            <HeartImage src={remainingPhotos[activeImageIndex]} size="100%" />
+                        </div>
+
+                        {/* Right Arrow */}
+                        {remainingPhotos.length > 1 && (
+                            <button 
+                                onClick={nextImage}
+                                style={{
+                                    position: 'absolute',
+                                    right: 'max(20px, 3vw)',
+                                    background: 'none',
+                                    border: 'none',
+                                    color: 'white',
+                                    fontSize: '4rem',
+                                    cursor: 'pointer',
+                                    zIndex: 10,
+                                    opacity: 0.7,
+                                    transition: 'opacity 0.2s, transform 0.2s',
+                                    padding: '20px'
+                                }}
+                                onMouseOver={(e) => { e.target.style.opacity = 1; e.target.style.transform = 'scale(1.1)'; }}
+                                onMouseOut={(e) => { e.target.style.opacity = 0.7; e.target.style.transform = 'scale(1)'; }}
+                            >
+                                ›
+                            </button>
+                        )}
+                    </div>
+                )}
             </div>
         </div>
+    </div>
     );
 };
 

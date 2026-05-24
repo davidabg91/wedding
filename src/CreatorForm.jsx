@@ -174,7 +174,7 @@ const IconPicker = ({ currentIcon, onSelect }) => {
                 type="button"
                 title={option.label}
                 onClick={() => {
-                  onSelect(option.key);
+                  onSelect(option.key, option.label);
                   setIsOpen(false);
                 }}
                 style={{
@@ -201,36 +201,55 @@ const IconPicker = ({ currentIcon, onSelect }) => {
   );
 };
 
+const useWindowWidth = () => {
+  const [width, setWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1200);
+  useEffect(() => {
+    const handleResize = () => setWidth(window.innerWidth);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+  return width;
+};
+
 const CreatorForm = ({ data, onChange, onSubmit, onLogin, onRegister }) => {
-  const [formData, setFormData] = useState(data || {
-    eventType: 'wedding', // 'wedding', 'christening', 'birthday', 'jubilee'
-    groom: '',
-    bride: '',
-    childName: '', // For Christening
-    childGender: 'boy', // 'boy' or 'girl'
-    godparents: '', // For Christening
-    church: '', // For Christening
-    parents: '', // For Christening/Birthday
-    birthdayPerson: '', // For Birthday
-    illustrativeTheme: 'bear', // 'bear', 'angel', 'star', 'balloon'
-    jubileePerson: '', // For Jubilee
-    jubileeYears: '', // For Jubilee
-    date: '',
-    time: '',
-    location: '',
-    locationLink: '',
-    message: '',
-    photos: [],
-    venuePhoto: null,
-    showProgram: true,
-    program: [
-      { time: '13:00', activity: 'Подготовка на булката и младоженеца', icon: '👔' },
-      { time: '15:00', activity: 'Взимана на кумове и крадене на булката', icon: '💍' },
-      { time: '16:00', activity: 'Църковен ритуал', icon: '⛪' },
-      { time: '17:00', activity: 'Сватбена фотосесия', icon: '📸' },
-      { time: '17:30', activity: 'Граждански ритуал', icon: '✍️' },
-      { time: '19:00', activity: 'Вечеря и празнуване', icon: '🥂' }
-    ]
+  const windowWidth = useWindowWidth();
+  const [formData, setFormData] = useState(() => {
+    if (data) {
+      return {
+        ...data,
+        message: data.message !== undefined && data.message !== '' ? data.message : '"Най-красивото в живота е да намериш човек, който вижда в теб всичко, което се страхуваш да бъдеш."'
+      };
+    }
+    return {
+      eventType: 'wedding', // 'wedding', 'christening', 'birthday', 'jubilee'
+      groom: '',
+      bride: '',
+      childName: '', // For Christening
+      childGender: 'boy', // 'boy' or 'girl'
+      godparents: '', // For Christening
+      church: '', // For Christening
+      parents: '', // For Christening/Birthday
+      birthdayPerson: '', // For Birthday
+      illustrativeTheme: 'bear', // 'bear', 'angel', 'star', 'balloon'
+      jubileePerson: '', // For Jubilee
+      jubileeYears: '', // For Jubilee
+      date: '',
+      time: '',
+      location: '',
+      locationLink: '',
+      message: '"Най-красивото в живота е да намериш човек, който вижда в теб всичко, което се страхуваш да бъдеш."',
+      photos: [],
+      venuePhoto: null,
+      showProgram: true,
+      program: [
+        { time: '13:00', activity: 'Подготовка на булката и младоженеца', icon: '👔' },
+        { time: '15:00', activity: 'Взимана на кумове и крадене на булката', icon: '💍' },
+        { time: '16:00', activity: 'Църковен ритуал', icon: '⛪' },
+        { time: '17:00', activity: 'Сватбена фотосесия', icon: '📸' },
+        { time: '17:30', activity: 'Граждански ритуал', icon: '✍️' },
+        { time: '19:00', activity: 'Вечеря и празнуване', icon: '🥂' }
+      ]
+    };
   });
 
   const [isCustomModalOpen, setIsCustomModalOpen] = useState(false);
@@ -238,6 +257,7 @@ const CreatorForm = ({ data, onChange, onSubmit, onLogin, onRegister }) => {
 
   const updateProgramDefaults = (type) => {
     let newProgram = [];
+    let defaultMessage = '';
     if (type === 'wedding') {
       newProgram = [
         { time: '13:00', activity: 'Подготовка на булката и младоженеца', icon: '👔' },
@@ -247,6 +267,7 @@ const CreatorForm = ({ data, onChange, onSubmit, onLogin, onRegister }) => {
         { time: '17:30', activity: 'Граждански ритуал', icon: '✍️' },
         { time: '19:00', activity: 'Вечеря и празнуване', icon: '🥂' }
       ];
+      defaultMessage = '"Най-красивото в живота е да намериш човек, който вижда в теб всичко, което се страхуваш да бъдеш."';
     } else if (type === 'christening') {
       newProgram = [
         { time: '11:00', activity: 'Ритуал в храма', icon: '⛪' },
@@ -254,12 +275,14 @@ const CreatorForm = ({ data, onChange, onSubmit, onLogin, onRegister }) => {
         { time: '13:30', activity: 'Празничен обяд', icon: '🍽️' },
         { time: '15:30', activity: 'Торта и изненади', icon: '🍰' }
       ];
+      defaultMessage = '„Всяко дете е ангел, изпратен от небето... Днес нашето малко съкровище приема Божието благословение!“';
     } else if (type === 'birthday') {
       newProgram = [
         { time: '18:00', activity: 'Посрещане на гостите', icon: '🥂' },
         { time: '19:00', activity: 'Начало на партито', icon: '💃' },
         { time: '21:00', activity: 'Торта и наздравици', icon: '🍰' }
       ];
+      defaultMessage = 'За нас е огромно удоволствие да Ви поканим да бъдете част от нашето специално тържество!';
     } else if (type === 'jubilee') {
       newProgram = [
         { time: '19:00', activity: 'Посрещане и коктейл', icon: '🥂' },
@@ -267,8 +290,9 @@ const CreatorForm = ({ data, onChange, onSubmit, onLogin, onRegister }) => {
         { time: '21:30', activity: 'Поздрави и ретроспекция', icon: '📸' },
         { time: '22:30', activity: 'Торта', icon: '🍰' }
       ];
+      defaultMessage = 'За нас е огромно удоволствие да Ви поканим да бъдете част от нашето специално тържество!';
     }
-    setFormData(prev => ({ ...prev, eventType: type, program: newProgram }));
+    setFormData(prev => ({ ...prev, eventType: type, program: newProgram, message: defaultMessage }));
   };
 
   const handleChange = (e) => {
@@ -341,7 +365,7 @@ const CreatorForm = ({ data, onChange, onSubmit, onLogin, onRegister }) => {
         boxShadow: '0 4px 30px rgba(0, 0, 0, 0.03)',
         flexWrap: 'wrap',
         gap: 'clamp(0.5rem, 2vw, 1.5rem)',
-        flexDirection: window.innerWidth <= 480 ? 'column' : 'row'
+        flexDirection: windowWidth <= 480 ? 'column' : 'row'
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', cursor: 'pointer' }} onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
           <img src={logo} alt="PokaniPro Logo" style={{ height: '40px', mixBlendMode: 'multiply' }} />
@@ -352,7 +376,7 @@ const CreatorForm = ({ data, onChange, onSubmit, onLogin, onRegister }) => {
           display: 'flex',
           alignItems: 'center',
           gap: 'clamp(0.8rem, 4vw, 3rem)',
-          width: window.innerWidth <= 480 ? '100%' : 'auto',
+          width: windowWidth <= 480 ? '100%' : 'auto',
           justifyContent: 'center',
           flexWrap: 'wrap'
         }}>
@@ -702,11 +726,11 @@ const CreatorForm = ({ data, onChange, onSubmit, onLogin, onRegister }) => {
 
               {formData.eventType === 'jubilee' && (
                 <>
-                  <div style={{ gridColumn: window.innerWidth <= 600 ? '1 / -1' : 'auto' }}>
+                  <div style={{ gridColumn: windowWidth <= 600 ? '1 / -1' : 'auto' }}>
                     <label className="serif" style={{ color: 'var(--accent-gold-dark)', fontSize: '0.9rem', letterSpacing: '2px' }}>ИМЕ НА ЮБИЛЯРА</label>
                     <input type="text" name="jubileePerson" className="lux-input" placeholder="Име..." value={formData.jubileePerson} onChange={handleChange} required />
                   </div>
-                  <div style={{ gridColumn: window.innerWidth <= 600 ? '1 / -1' : 'auto' }}>
+                  <div style={{ gridColumn: windowWidth <= 600 ? '1 / -1' : 'auto' }}>
                     <label className="serif" style={{ color: 'var(--accent-gold-dark)', fontSize: '0.9rem', letterSpacing: '2px' }}>ГОДИНИ (ЮБИЛЕЙ)</label>
                     <input type="number" name="jubileeYears" className="lux-input" placeholder="Напр. 50" value={formData.jubileeYears} onChange={handleChange} required />
                   </div>
@@ -772,6 +796,19 @@ const CreatorForm = ({ data, onChange, onSubmit, onLogin, onRegister }) => {
               </div>
             </div>
 
+            <div style={{ margin: '3rem 0 2rem 0' }}>
+              <label className="serif" style={{ color: 'var(--accent-gold-dark)', fontSize: '0.95rem', letterSpacing: '2px', display: 'block', marginBottom: '0.8rem', fontWeight: 'bold' }}>
+                ПОСЛАНИЕ / ЦИТАТ НА ПОКАНАТА
+              </label>
+              <textarea
+                name="message"
+                className="lux-textarea"
+                placeholder="Въведете Вашето послание или цитат..."
+                value={formData.message}
+                onChange={handleChange}
+              />
+            </div>
+
             {/* Program Toggle & Editor */}
             <div style={{ margin: '2rem 0', padding: '2rem', border: '1px solid rgba(197, 160, 89, 0.2)', background: 'rgba(255,255,255,0.2)' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '15px', marginBottom: (formData.showProgram && isProgramDetailsOpen) ? '2rem' : '0' }}>
@@ -820,19 +857,18 @@ const CreatorForm = ({ data, onChange, onSubmit, onLogin, onRegister }) => {
                   {isProgramDetailsOpen && (
                     <div style={{ marginTop: '1rem' }}>
                       {formData.program.map((item, index) => (
-                        <div key={index} style={{
-                          display: 'flex',
-                          gap: '10px',
-                          marginBottom: '2rem',
-                          alignItems: window.innerWidth <= 600 ? 'stretch' : 'center',
-                          flexDirection: window.innerWidth <= 600 ? 'column' : 'row',
-                          borderBottom: window.innerWidth <= 600 ? '1px solid rgba(197, 160, 89, 0.1)' : 'none',
-                          paddingBottom: window.innerWidth <= 600 ? '1.5rem' : '0'
-                        }}>
-                          <div style={{ display: 'flex', gap: '15px', alignItems: 'center', width: '100%' }}>
+                        <div key={index} className="program-edit-item">
+                          <div className="program-edit-left">
                             <IconPicker
                               currentIcon={item.icon}
-                              onSelect={(newIcon) => handleProgramChange(index, 'icon', newIcon)}
+                              onSelect={(newIcon, newLabel) => {
+                                const newProgram = [...formData.program];
+                                newProgram[index].icon = newIcon;
+                                if (newLabel) {
+                                  newProgram[index].activity = newLabel;
+                                }
+                                setFormData(prev => ({ ...prev, program: newProgram }));
+                              }}
                             />
                             <input
                               type="time"
@@ -841,29 +877,24 @@ const CreatorForm = ({ data, onChange, onSubmit, onLogin, onRegister }) => {
                               className="lux-input"
                               style={{ width: '100px', margin: 0, flexShrink: 0 }}
                             />
-                            {window.innerWidth <= 600 && (
-                              <button
-                                type="button"
-                                onClick={() => removeProgramItem(index)}
-                                style={{ background: 'none', border: 'none', color: '#ff4d4d', cursor: 'pointer', fontSize: '1.2rem', marginLeft: 'auto' }}
-                              >✕</button>
-                            )}
+                            <button
+                              type="button"
+                              onClick={() => removeProgramItem(index)}
+                              className="program-edit-delete-mobile"
+                            >✕</button>
                           </div>
                           <input
                             type="text"
                             value={item.activity}
                             onChange={(e) => handleProgramChange(index, 'activity', e.target.value)}
                             placeholder="Дейност..."
-                            className="lux-input"
-                            style={{ flex: 2, margin: 0, width: '100%' }}
+                            className="lux-input program-edit-input"
                           />
-                          {window.innerWidth > 600 && (
-                            <button
-                              type="button"
-                              onClick={() => removeProgramItem(index)}
-                              style={{ background: 'none', border: 'none', color: '#ff4d4d', cursor: 'pointer', fontSize: '1.2rem' }}
-                            >✕</button>
-                          )}
+                          <button
+                            type="button"
+                            onClick={() => removeProgramItem(index)}
+                            className="program-edit-delete-desktop"
+                          >✕</button>
                         </div>
                       ))}
                       <button
@@ -920,7 +951,7 @@ const CreatorForm = ({ data, onChange, onSubmit, onLogin, onRegister }) => {
                 type="submit"
                 className="lux-btn"
                 style={{
-                  minWidth: window.innerWidth <= 480 ? '90%' : '350px',
+                  minWidth: windowWidth <= 480 ? '90%' : '350px',
                   fontSize: '1.2rem',
                   padding: '1.2rem 2rem',
                   boxShadow: '0 10px 40px rgba(197, 160, 89, 0.3)',
@@ -931,7 +962,7 @@ const CreatorForm = ({ data, onChange, onSubmit, onLogin, onRegister }) => {
                   color: 'white',
                   border: 'none',
                   borderRadius: '30px',
-                  width: window.innerWidth <= 480 ? '100%' : 'auto'
+                  width: windowWidth <= 480 ? '100%' : 'auto'
                 }}
               >
                 Виж Готовата Покана
