@@ -353,7 +353,7 @@ const EnvelopeDemo = () => {
                     border-radius: 4px;
                     box-shadow: 0 4px 8px rgba(0,0,0,0.08);
                     z-index: 2;
-                    transform: translateZ(2px);
+                    transform: translate3d(0, 0, 2px);
                     padding: 10px 8px;
                     box-sizing: border-box;
                     background-image: var(--paper-texture);
@@ -363,16 +363,18 @@ const EnvelopeDemo = () => {
                     justify-content: center;
                     transform-style: preserve-3d;
                     transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+                    will-change: transform;
+                    backface-visibility: hidden;
                 }
 
                 .demo-envelope-card.emerged {
-                    transform: translateY(-70%) scale(1.05) translateZ(2px);
+                    transform: translate3d(0, -70%, 2px) scale(1.05);
                     box-shadow: 0 20px 40px rgba(0,0,0,0.25), inset 0 0 10px rgba(197,160,89,0.08);
                     transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
                 }
 
                 .demo-envelope-card.zoomed {
-                    transform: translateY(-28%) scale(1.35) translateZ(60px);
+                    transform: translate3d(0, -28%, 60px) scale(1.35);
                     box-shadow: 0 35px 70px rgba(0,0,0,0.4), inset 0 0 15px rgba(197,160,89,0.1);
                     z-index: 100;
                     transition: transform 1.0s cubic-bezier(0.25, 1, 0.5, 1), z-index 0s linear;
@@ -387,11 +389,13 @@ const EnvelopeDemo = () => {
                     transform-origin: top;
                     transition: transform 1.0s cubic-bezier(0.4, 0, 0.2, 1);
                     transform-style: preserve-3d;
-                    transform: rotateX(0deg) translateZ(3px); /* sits flush with front flaps */
+                    transform: rotateX(0deg) translate3d(0, 0, 4.02px); /* flush with front flaps but distinct in Z */
+                    will-change: transform;
+                    backface-visibility: hidden;
                 }
 
                 .demo-envelope-flap.open {
-                    transform: rotateX(180deg) translateZ(1px); /* flips flat behind card */
+                    transform: rotateX(180deg) translate3d(0, 0, 1px); /* flips flat behind card */
                 }
 
                 .demo-seal-half {
@@ -401,8 +405,10 @@ const EnvelopeDemo = () => {
                     height: 80px;
                     overflow: hidden;
                     z-index: 5;
-                    transform: translateZ(3.02px); /* sits on top of closed top flap */
+                    transform: translate3d(0, 0, 4.05px); /* sits on top of closed top flap */
                     transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+                    will-change: transform;
+                    backface-visibility: hidden;
                 }
 
                 .demo-seal-left {
@@ -414,12 +420,12 @@ const EnvelopeDemo = () => {
                 }
 
                 .demo-seal-left.broken {
-                    transform: translate(-30px, 15px) rotate(-20deg) scale(0.8) translateZ(3.02px);
+                    transform: translate3d(-30px, 15px, 4.05px) rotate(-20deg) scale(0.8);
                     opacity: 0;
                 }
 
                 .demo-seal-right.broken {
-                    transform: translate(30px, 15px) rotate(20deg) scale(0.8) translateZ(3.02px);
+                    transform: translate3d(30px, 15px, 4.05px) rotate(20deg) scale(0.8);
                     opacity: 0;
                 }
             `}</style>
