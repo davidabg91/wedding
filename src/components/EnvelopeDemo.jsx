@@ -38,9 +38,11 @@ const WaxSealSVG = ({ isLeft, monogram }) => {
 };
 
 const EnvelopeDemo = () => {
-    const [isOpened, setIsOpened] = useState(false);
+    const [sealBroken, setSealBroken] = useState(false);
+    const [flapOpen, setFlapOpen] = useState(false);
     const [flapFlipped, setFlapFlipped] = useState(false);
-    const [isZoomed, setIsZoomed] = useState(false);
+    const [cardOut, setCardOut] = useState(false);
+    const [cardZoomed, setCardZoomed] = useState(false);
 
     useEffect(() => {
         let isMounted = true;
@@ -48,46 +50,62 @@ const EnvelopeDemo = () => {
         const runCycle = () => {
             if (!isMounted) return;
             
-            // 0s: Closed, wax seal pulsing
-            setIsOpened(false);
+            // 0s: Reset to fully closed
+            setSealBroken(false);
+            setFlapOpen(false);
             setFlapFlipped(false);
-            setIsZoomed(false);
+            setCardOut(false);
+            setCardZoomed(false);
 
-            // 2.5s: Wax seal breaks, flap opens
+            // 2.0s: Wax seal breaks
             setTimeout(() => {
                 if (!isMounted) return;
-                setIsOpened(true);
+                setSealBroken(true);
+            }, 2000);
+
+            // 2.5s: Flap starts opening (takes 1.0s, finishes at 3.5s)
+            setTimeout(() => {
+                if (!isMounted) return;
+                setFlapOpen(true);
             }, 2500);
 
-            // 3.4s: Flip flap z-index so card can emerge in front of it
+            // 3.5s: Flap is open. Flip z-index and start sliding card out (takes 1.2s, finishes at 4.7s)
             setTimeout(() => {
                 if (!isMounted) return;
                 setFlapFlipped(true);
-            }, 3400);
+                setCardOut(true);
+            }, 3500);
 
-            // 4.5s: Card zooms in for detail view
+            // 4.8s: Card is out. Zoom card (takes 1.0s, finishes at 5.8s)
             setTimeout(() => {
                 if (!isMounted) return;
-                setIsZoomed(true);
-            }, 4500);
+                setCardZoomed(true);
+            }, 4800);
 
-            // 9.5s: Card zooms back down
+            // 8.8s: Zoom card back down (takes 1.0s, finishes at 9.8s)
             setTimeout(() => {
                 if (!isMounted) return;
-                setIsZoomed(false);
-            }, 9500);
+                setCardZoomed(false);
+            }, 8800);
 
-            // 10.5s: Card goes back inside, flap closes
+            // 9.9s: Slide card back inside envelope (takes 1.2s, finishes at 11.1s)
             setTimeout(() => {
                 if (!isMounted) return;
-                setIsOpened(false);
-            }, 10500);
+                setCardOut(false);
+            }, 9900);
 
-            // 11.4s: Reset flap z-index
+            // 11.2s: Card is inside. Reset flap z-index and close flap (takes 1.0s, finishes at 12.2s)
             setTimeout(() => {
                 if (!isMounted) return;
                 setFlapFlipped(false);
-            }, 11400);
+                setFlapOpen(false);
+            }, 11200);
+
+            // 12.3s: Seal closes
+            setTimeout(() => {
+                if (!isMounted) return;
+                setSealBroken(false);
+            }, 12300);
         };
 
         // Start cycle immediately
@@ -142,7 +160,7 @@ const EnvelopeDemo = () => {
 
             {/* Envelope 3D Container */}
             <div className="demo-envelope-wrapper" style={{
-                transform: isZoomed ? 'translateY(15px) scale(0.95)' : 'none',
+                transform: cardZoomed ? 'translateY(15px) scale(0.95)' : 'none',
                 transition: 'transform 1.2s ease-in-out'
             }}>
                 <div className="demo-envelope" style={{
@@ -151,7 +169,7 @@ const EnvelopeDemo = () => {
                 }}>
                     
                     {/* The Card inside the envelope */}
-                    <div className={`demo-envelope-card ${isOpened ? 'emerged' : ''} ${isZoomed ? 'zoomed' : ''}`}>
+                    <div className={`demo-envelope-card ${cardOut ? 'emerged' : ''} ${cardZoomed ? 'zoomed' : ''}`}>
                         <div style={{
                             border: '1px solid var(--accent-gold)',
                             padding: '6px',
@@ -232,26 +250,32 @@ const EnvelopeDemo = () => {
                         </svg>
                     </div>
 
-                    {/* Left and Right Front Flaps */}
-                    <svg viewBox="0 0 450 300" style={{ position: 'absolute', inset: 0, zIndex: 3, width: '100%', height: '100%', pointerEvents: 'none', transform: 'translateZ(3px)' }}>
-                        <path d="M 0 0 L 225 150 L 0 300 Z" fill="url(#demoEnvelopeGrad)" opacity="0.98" filter="drop-shadow(3px 0 6px rgba(0,0,0,0.1))" />
-                        <path d="M 450 0 L 225 150 L 450 300 Z" fill="url(#demoEnvelopeGrad)" opacity="0.98" filter="drop-shadow(-3px 0 6px rgba(0,0,0,0.1))" />
-                        <path d="M 0 300 L 225 150 L 450 300 Z" fill="url(#demoEnvelopeGrad)" filter="drop-shadow(0 -4px 8px rgba(0,0,0,0.12))" />
-                        <path d="M 0 0 L 225 150" stroke="rgba(0,0,0,0.2)" strokeWidth="1.5" fill="none" transform="translate(0, 1.2)" />
-                        <path d="M 450 0 L 225 150" stroke="rgba(0,0,0,0.2)" strokeWidth="1.5" fill="none" transform="translate(0, 1.2)" />
-                        <path d="M 0 300 L 225 150 L 450 300" stroke="rgba(0,0,0,0.2)" strokeWidth="1.8" fill="none" transform="translate(0, -1)" />
+                    {/* Left, Right and Bottom Front Flaps with Bleed (Overlapping Paths to prevent subpixel lines) */}
+                    <svg viewBox="0 0 450 300" style={{ position: 'absolute', inset: -0.5, zIndex: 3, width: 'calc(100% + 1px)', height: 'calc(100% + 1px)', pointerEvents: 'none', transform: 'translateZ(3px)' }}>
+                        {/* Left Flap with +1px overlap bleed */}
+                        <path d="M -1.5 -1.5 L 226.5 150 L -1.5 301.5 Z" fill="url(#demoEnvelopeGrad)" opacity="0.98" filter="drop-shadow(3px 0 6px rgba(0,0,0,0.08))" />
+                        {/* Right Flap with +1px overlap bleed */}
+                        <path d="M 451.5 -1.5 L 223.5 150 L 451.5 301.5 Z" fill="url(#demoEnvelopeGrad)" opacity="0.98" filter="drop-shadow(-3px 0 6px rgba(0,0,0,0.08))" />
+                        {/* Bottom Flap with +1px overlap bleed */}
+                        <path d="M -1.5 301.5 L 225 148.5 L 451.5 301.5 Z" fill="url(#demoEnvelopeGrad)" filter="drop-shadow(0 -4px 8px rgba(0,0,0,0.1))" />
+                        
+                        {/* Shadows and Foil Borders */}
+                        <path d="M 0 0 L 225 150" stroke="rgba(0,0,0,0.18)" strokeWidth="1.5" fill="none" transform="translate(0, 1.2)" />
+                        <path d="M 450 0 L 225 150" stroke="rgba(0,0,0,0.18)" strokeWidth="1.5" fill="none" transform="translate(0, 1.2)" />
+                        <path d="M 0 300 L 225 150 L 450 300" stroke="rgba(0,0,0,0.18)" strokeWidth="1.8" fill="none" transform="translate(0, -1)" />
                         <path d="M 0 0 L 225 150" stroke="url(#demoGoldGradient)" strokeWidth="1" fill="none" opacity="0.8" />
                         <path d="M 450 0 L 225 150" stroke="url(#demoGoldGradient)" strokeWidth="1" fill="none" opacity="0.8" />
                         <path d="M 0 300 L 225 150 L 450 300" stroke="url(#demoGoldGradient)" strokeWidth="1.2" fill="none" />
                     </svg>
 
                     {/* Top Flap (flips open) */}
-                    <div className={`demo-envelope-flap ${isOpened ? 'open' : ''}`} style={{
+                    <div className={`demo-envelope-flap ${flapOpen ? 'open' : ''}`} style={{
                         zIndex: flapFlipped ? 1 : 4,
                     }}>
-                        <svg viewBox="0 0 450 150" style={{ width: '100%', height: '100%', display: 'block', filter: isOpened ? 'drop-shadow(0 -3px 4px rgba(0,0,0,0.1))' : 'drop-shadow(0 4px 6px rgba(0,0,0,0.18))', transition: 'filter 1.0s' }}>
-                            <path d="M 0 0 L 225 150 L 450 0 Z" fill="url(#demoEnvelopeGrad)" />
-                            <path d="M 0 0 L 225 150 L 450 0" stroke="rgba(0,0,0,0.2)" strokeWidth="1.8" fill="none" transform="translate(0, 1.2)" />
+                        <svg viewBox="0 0 450 150" style={{ width: '100%', height: '100%', display: 'block', filter: flapOpen ? 'drop-shadow(0 -3px 4px rgba(0,0,0,0.1))' : 'drop-shadow(0 4px 6px rgba(0,0,0,0.15))', transition: 'filter 1.0s' }}>
+                            {/* Triangle path with slightly expanded height and side coordinates for seamless overlap */}
+                            <path d="M -1.5 -1.5 L 225 151.5 L 451.5 -1.5 Z" fill="url(#demoEnvelopeGrad)" />
+                            <path d="M 0 0 L 225 150 L 450 0" stroke="rgba(0,0,0,0.18)" strokeWidth="1.8" fill="none" transform="translate(0, 1.2)" />
                             <path d="M 0 0 L 225 150 L 450 0" stroke="url(#demoGoldGradient)" strokeWidth="1.2" fill="none" />
                         </svg>
                     </div>
@@ -269,12 +293,12 @@ const EnvelopeDemo = () => {
                     }}></div>
 
                     {/* Left Half of Wax Seal */}
-                    <div className={`demo-seal-half demo-seal-left ${isOpened ? 'broken' : ''}`}>
+                    <div className={`demo-seal-half demo-seal-left ${sealBroken ? 'broken' : ''}`}>
                         <WaxSealSVG isLeft={true} monogram="A & S" />
                     </div>
 
                     {/* Right Half of Wax Seal */}
-                    <div className={`demo-seal-half demo-seal-right ${isOpened ? 'broken' : ''}`}>
+                    <div className={`demo-seal-half demo-seal-right ${sealBroken ? 'broken' : ''}`}>
                         <WaxSealSVG isLeft={false} monogram="A & S" />
                     </div>
                 </div>
@@ -291,9 +315,9 @@ const EnvelopeDemo = () => {
                 textAlign: 'center',
                 minHeight: '20px'
             }}>
-                {!isOpened 
+                {!sealBroken 
                     ? "Запечатване на поканата..." 
-                    : isZoomed 
+                    : cardZoomed 
                         ? "Преглед на съдържанието" 
                         : "Отваряне на плика..."}
             </p>
@@ -335,23 +359,23 @@ const EnvelopeDemo = () => {
                     background-image: var(--paper-texture);
                     display: flex;
                     flex-direction: column;
-                    alignItems: center;
+                    align-items: center;
                     justify-content: center;
                     transform-style: preserve-3d;
-                    transition: transform 1.5s cubic-bezier(0.25, 1, 0.5, 1);
+                    transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1);
                 }
 
                 .demo-envelope-card.emerged {
                     transform: translateY(-70%) scale(1.05) translateZ(2px);
                     box-shadow: 0 20px 40px rgba(0,0,0,0.25), inset 0 0 10px rgba(197,160,89,0.08);
-                    transition: transform 1.5s cubic-bezier(0.25, 1, 0.5, 1) 0.8s;
+                    transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1);
                 }
 
                 .demo-envelope-card.zoomed {
-                    transform: translateY(-28%) scale(1.3) translateZ(60px);
+                    transform: translateY(-28%) scale(1.35) translateZ(60px);
                     box-shadow: 0 35px 70px rgba(0,0,0,0.4), inset 0 0 15px rgba(197,160,89,0.1);
                     z-index: 100;
-                    transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1), z-index 0s linear;
+                    transition: transform 1.0s cubic-bezier(0.25, 1, 0.5, 1), z-index 0s linear;
                 }
 
                 .demo-envelope-flap {
@@ -363,11 +387,11 @@ const EnvelopeDemo = () => {
                     transform-origin: top;
                     transition: transform 1.0s cubic-bezier(0.4, 0, 0.2, 1);
                     transform-style: preserve-3d;
-                    transform: rotateX(0deg) translateZ(4px);
+                    transform: rotateX(0deg) translateZ(3.05px); /* pressed flat on top of front flaps */
                 }
 
                 .demo-envelope-flap.open {
-                    transform: rotateX(180deg) translateZ(1px);
+                    transform: rotateX(180deg) translateZ(1px); /* flips flat behind card */
                 }
 
                 .demo-seal-half {
@@ -377,7 +401,7 @@ const EnvelopeDemo = () => {
                     height: 80px;
                     overflow: hidden;
                     z-index: 5;
-                    transform: translateZ(5px);
+                    transform: translateZ(3.1px); /* sits on top of closed top flap */
                     transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
                 }
 
@@ -390,12 +414,12 @@ const EnvelopeDemo = () => {
                 }
 
                 .demo-seal-left.broken {
-                    transform: translate(-30px, 15px) rotate(-20deg) scale(0.8) translateZ(5px);
+                    transform: translate(-30px, 15px) rotate(-20deg) scale(0.8) translateZ(3.1px);
                     opacity: 0;
                 }
 
                 .demo-seal-right.broken {
-                    transform: translate(30px, 15px) rotate(20deg) scale(0.8) translateZ(5px);
+                    transform: translate(30px, 15px) rotate(20deg) scale(0.8) translateZ(3.1px);
                     opacity: 0;
                 }
             `}</style>
