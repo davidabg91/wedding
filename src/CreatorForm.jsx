@@ -477,7 +477,7 @@ const CreatorForm = ({ data, onChange, onSubmit, onLogin, onRegister }) => {
                 document.getElementById('designer').scrollIntoView({ behavior: 'smooth' });
               }}
             >
-              Създай Сега
+              Създай безплатно сега
             </button>
           </div>
 
