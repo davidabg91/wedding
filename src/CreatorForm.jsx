@@ -554,8 +554,8 @@ const CreatorForm = ({ data, onChange, onSubmit, onLogin, onRegister }) => {
       <div id="designer" className="lux-container" style={{ maxWidth: '1000px', padding: '1rem' }}>
         <div className="paper-surface" style={{ padding: 'clamp(2rem, 8vw, 5rem) clamp(1rem, 5vw, 4rem)', border: '1px solid rgba(197, 160, 89, 0.2)', borderRadius: '4px', position: 'relative', overflow: 'hidden' }}>
           {/* Subtle Background Ornament */}
-          <div style={{ position: 'absolute', top: '-100px', right: '-100px', opacity: 0.05, transform: 'rotate(45deg)' }}>
-            <img src={wreathIvory} alt="bg" style={{ width: '400px' }} />
+          <div style={{ position: 'absolute', top: '-100px', right: '-100px', opacity: 0.05, transform: 'rotate(45deg)', pointerEvents: 'none' }}>
+            <img src={wreathIvory} alt="bg" style={{ width: '400px', pointerEvents: 'none' }} />
           </div>
 
           <h2 className="serif" style={{
@@ -569,7 +569,7 @@ const CreatorForm = ({ data, onChange, onSubmit, onLogin, onRegister }) => {
             СЪЗДАЙТЕ ВАШАТА МОДЕРНА ПОКАНА
           </h2>
 
-          <div style={{ display: 'flex', justifyContent: 'center', gap: '1rem', marginBottom: '4rem', flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', justifyContent: 'center', gap: 'clamp(0.6rem, 2vw, 1rem)', marginBottom: '4rem', flexWrap: 'wrap', position: 'relative', zIndex: 2 }}>
             {[
               { id: 'wedding', label: 'Сватба', icon: '💍' },
               { id: 'christening', label: 'Кръщене', icon: '👼' },
@@ -582,21 +582,28 @@ const CreatorForm = ({ data, onChange, onSubmit, onLogin, onRegister }) => {
                 onClick={() => updateProgramDefaults(type.id)}
                 className="serif"
                 style={{
-                  padding: '1rem 2rem',
+                  padding: '0.85rem clamp(1rem, 4vw, 2rem)',
+                  minHeight: '48px',
                   background: formData.eventType === type.id ? 'var(--accent-gold)' : 'white',
                   color: formData.eventType === type.id ? 'white' : 'var(--accent-gold-dark)',
                   border: '1px solid var(--accent-gold)',
                   borderRadius: '30px',
                   cursor: 'pointer',
-                  fontSize: '0.9rem',
+                  fontSize: 'clamp(0.8rem, 3vw, 0.9rem)',
                   letterSpacing: '2px',
-                  transition: 'all 0.3s ease',
+                  transition: 'background 0.3s ease, color 0.3s ease',
                   display: 'flex',
                   alignItems: 'center',
-                  gap: '10px'
+                  gap: '8px',
+                  touchAction: 'manipulation',
+                  WebkitTapHighlightColor: 'transparent',
+                  userSelect: 'none',
+                  position: 'relative',
+                  zIndex: 2
                 }}
               >
-                <span>{type.icon}</span> <span style={{ whiteSpace: 'nowrap' }}>{type.label}</span>
+                <span style={{ pointerEvents: 'none' }}>{type.icon}</span>
+                <span style={{ whiteSpace: 'nowrap', pointerEvents: 'none' }}>{type.label}</span>
               </button>
             ))}
           </div>
@@ -647,7 +654,8 @@ const CreatorForm = ({ data, onChange, onSubmit, onLogin, onRegister }) => {
                           onClick={() => setFormData(prev => ({ ...prev, childGender: gender }))}
                           className="serif"
                           style={{
-                            padding: '0.5rem 1.5rem',
+                            padding: '0.6rem 1.5rem',
+                            minHeight: '44px',
                             background: formData.childGender === gender ? (gender === 'boy' ? '#7FB3D5' : '#F1948A') : 'white',
                             color: formData.childGender === gender ? 'white' : '#777',
                             border: `1px solid ${gender === 'boy' ? '#7FB3D5' : '#F1948A'}`,
@@ -655,7 +663,10 @@ const CreatorForm = ({ data, onChange, onSubmit, onLogin, onRegister }) => {
                             cursor: 'pointer',
                             fontSize: '0.8rem',
                             letterSpacing: '1px',
-                            transition: 'all 0.3s ease'
+                            transition: 'background 0.3s ease, color 0.3s ease',
+                            touchAction: 'manipulation',
+                            WebkitTapHighlightColor: 'transparent',
+                            userSelect: 'none'
                           }}
                         >
                           {gender === 'boy' ? 'Момче 👦' : 'Момиче 👧'}
@@ -704,7 +715,8 @@ const CreatorForm = ({ data, onChange, onSubmit, onLogin, onRegister }) => {
                       onClick={() => setFormData(prev => ({ ...prev, illustrativeTheme: theme.id }))}
                       className="serif"
                       style={{
-                        padding: '1.5rem',
+                        padding: '1.2rem 1rem',
+                        minHeight: '60px',
                         background: formData.illustrativeTheme === theme.id ? 'var(--accent-gold-dark)' : 'white',
                         color: formData.illustrativeTheme === theme.id ? 'white' : '#777',
                         border: `1px solid var(--accent-gold)`,
@@ -712,12 +724,15 @@ const CreatorForm = ({ data, onChange, onSubmit, onLogin, onRegister }) => {
                         cursor: 'pointer',
                         fontSize: '1rem',
                         textAlign: 'center',
-                        transition: 'all 0.3s ease',
+                        transition: 'background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease',
                         display: 'flex',
                         flexDirection: 'column',
                         alignItems: 'center',
                         gap: '0.8rem',
-                        boxShadow: formData.illustrativeTheme === theme.id ? '0 10px 20px rgba(0,0,0,0.1)' : 'none'
+                        boxShadow: formData.illustrativeTheme === theme.id ? '0 10px 20px rgba(0,0,0,0.1)' : 'none',
+                        touchAction: 'manipulation',
+                        WebkitTapHighlightColor: 'transparent',
+                        userSelect: 'none'
                       }}
                     >
                       {theme.label}
