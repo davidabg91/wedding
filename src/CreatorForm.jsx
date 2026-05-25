@@ -482,32 +482,20 @@ const CreatorForm = ({ data, onChange, onSubmit, onLogin, onRegister }) => {
             </button>
           </div>
 
-          {/* 3D Glass Floating Envelope Demo Showcase */}
-          <div style={{ perspective: '1000px', display: 'flex', justifyContent: 'center', marginTop: '2rem', zIndex: 5 }}>
-            <div style={{
-              width: 'clamp(280px, 85vw, 350px)',
-              height: 'clamp(380px, 110vw, 420px)',
-              background: 'rgba(25, 25, 25, 0.35)',
-              backdropFilter: 'blur(20px)',
-              WebkitBackdropFilter: 'blur(20px)',
-              border: '1px solid rgba(255, 255, 255, 0.1)',
-              borderTop: '1px solid rgba(255, 255, 255, 0.25)',
-              borderLeft: '1px solid rgba(255, 255, 255, 0.15)',
-              borderRadius: '24px',
-              boxShadow: '0 40px 80px rgba(0,0,0,0.45), inset 0 0 0 1px rgba(197,160,89,0.15)',
-              transform: 'rotateY(-10deg) rotateX(10deg) translateY(-10px)',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              justifyContent: 'center',
-              position: 'relative',
-              overflow: 'visible',
-              padding: '2rem'
-            }}>
-              {/* Card Inner Reflections */}
-              <div style={{ position: 'absolute', inset: 0, borderRadius: '24px', background: 'linear-gradient(to bottom, rgba(255,255,255,0.03), transparent)', pointerEvents: 'none', zIndex: 0 }}></div>
-              <EnvelopeDemo />
-            </div>
+          {/* 3D Floating Envelope Demo Showcase */}
+          <div style={{
+            perspective: '1000px',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginTop: '2rem',
+            width: '100%',
+            maxWidth: '350px',
+            margin: '2rem auto 0 auto',
+            zIndex: 5,
+            overflow: 'visible'
+          }}>
+            <EnvelopeDemo />
           </div>
 
         </div>

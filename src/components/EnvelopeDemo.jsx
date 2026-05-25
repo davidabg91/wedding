@@ -387,7 +387,7 @@ const EnvelopeDemo = () => {
                     transform-origin: top;
                     transition: transform 1.0s cubic-bezier(0.4, 0, 0.2, 1);
                     transform-style: preserve-3d;
-                    transform: rotateX(0deg) translateZ(3.05px); /* pressed flat on top of front flaps */
+                    transform: rotateX(0deg) translateZ(3px); /* sits flush with front flaps */
                 }
 
                 .demo-envelope-flap.open {
@@ -401,7 +401,7 @@ const EnvelopeDemo = () => {
                     height: 80px;
                     overflow: hidden;
                     z-index: 5;
-                    transform: translateZ(3.1px); /* sits on top of closed top flap */
+                    transform: translateZ(3.02px); /* sits on top of closed top flap */
                     transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
                 }
 
@@ -414,12 +414,12 @@ const EnvelopeDemo = () => {
                 }
 
                 .demo-seal-left.broken {
-                    transform: translate(-30px, 15px) rotate(-20deg) scale(0.8) translateZ(3.1px);
+                    transform: translate(-30px, 15px) rotate(-20deg) scale(0.8) translateZ(3.02px);
                     opacity: 0;
                 }
 
                 .demo-seal-right.broken {
-                    transform: translate(30px, 15px) rotate(20deg) scale(0.8) translateZ(3.1px);
+                    transform: translate(30px, 15px) rotate(20deg) scale(0.8) translateZ(3.02px);
                     opacity: 0;
                 }
             `}</style>
