@@ -44,6 +44,12 @@ const EnvelopeDemo = () => {
     const [showDashboardRow, setShowDashboardRow] = useState(false);
     const [confirmedCount, setConfirmedCount] = useState(82);
 
+    const [sealBroken, setSealBroken] = useState(false);
+    const [flapOpen, setFlapOpen] = useState(false);
+    const [flapFlipped, setFlapFlipped] = useState(false);
+    const [cardOut, setCardOut] = useState(false);
+    const [cardZoomed, setCardZoomed] = useState(false);
+
     useEffect(() => {
         let isMounted = true;
         let typingTimeout;
@@ -57,12 +63,42 @@ const EnvelopeDemo = () => {
             setRsvpSubmitted(false);
             setShowDashboardRow(false);
             setConfirmedCount(82);
+            setSealBroken(false);
+            setFlapOpen(false);
+            setFlapFlipped(false);
+            setCardOut(false);
+            setCardZoomed(false);
 
-            // Phase 1: Envelope opens, card slides up, zooms in (Starts at 2.0s)
+            // Phase 1: Envelope opening sequence begins (Starts at 2.0s)
             setTimeout(() => {
                 if (!isMounted) return;
                 setPhase(1);
+                setSealBroken(true);
             }, 2000);
+
+            // 2.5s: Flap starts opening (takes 1.0s)
+            setTimeout(() => {
+                if (!isMounted) return;
+                setFlapOpen(true);
+            }, 2500);
+
+            // 3.4s: Flip flap z-index
+            setTimeout(() => {
+                if (!isMounted) return;
+                setFlapFlipped(true);
+            }, 3400);
+
+            // 3.5s: Flap is open. Card starts sliding out (takes 1.2s)
+            setTimeout(() => {
+                if (!isMounted) return;
+                setCardOut(true);
+            }, 3500);
+
+            // 4.8s: Card is out. Zoom card (takes 1.0s)
+            setTimeout(() => {
+                if (!isMounted) return;
+                setCardZoomed(true);
+            }, 4800);
 
             // Phase 2: RSVP Auto-fill Demo (Starts at 5.5s, after card is fully zoomed)
             setTimeout(() => {
@@ -98,6 +134,13 @@ const EnvelopeDemo = () => {
                 if (!isMounted) return;
                 setPhase(4);
                 
+                // Reset envelope states while it is fading out
+                setCardZoomed(false);
+                setCardOut(false);
+                setFlapOpen(false);
+                setFlapFlipped(false);
+                setSealBroken(false);
+                
                 // Show dashboard new guest row after a delay
                 setTimeout(() => {
                     if (!isMounted) return;
@@ -125,13 +168,6 @@ const EnvelopeDemo = () => {
             clearTimeout(typingTimeout);
         };
     }, []);
-
-    // Helper boolean parameters for envelope 3D state orchestration based on animation phase
-    const sealBroken = phase >= 1 && phase < 4;
-    const flapOpen = phase >= 1 && phase < 4;
-    const flapFlipped = phase >= 1 && phase < 4;
-    const cardOut = phase >= 1 && phase < 4;
-    const cardZoomed = phase === 1 || phase === 2 || phase === 3;
 
     return (
         <div style={{
