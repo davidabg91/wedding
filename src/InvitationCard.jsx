@@ -573,12 +573,12 @@ const InvitationCard = ({ data, eventId }) => {
     const [rsvpStatus, setRsvpStatus] = useState('Ще присъствам');
     const [activeImageIndex, setActiveImageIndex] = useState(null);
 
-    const [tilt, setTilt] = useState({ x: 0, y: 0 });
-    const [isHovered, setIsHovered] = useState(false);
     const [isShaking, setIsShaking] = useState(false);
+    const cardRef = useRef(null);
 
     const handleMouseMove = (e) => {
-        const card = e.currentTarget;
+        const card = cardRef.current;
+        if (!card) return;
         const rect = card.getBoundingClientRect();
         const x = e.clientX - rect.left - rect.width / 2;
         const y = e.clientY - rect.top - rect.height / 2;
@@ -587,16 +587,26 @@ const InvitationCard = ({ data, eventId }) => {
         const tiltX = (y / (rect.height / 2)) * -8;
         const tiltY = (x / (rect.width / 2)) * 8;
         
-        setTilt({ x: tiltX, y: tiltY });
+        card.style.transform = `rotateX(${tiltX}deg) rotateY(${tiltY}deg)`;
+        card.style.setProperty('--foil-x', `${(tiltY + 8) / 16 * 100}%`);
+        card.style.setProperty('--foil-y', `${(tiltX + 8) / 16 * 100}%`);
     };
 
     const handleMouseEnter = () => {
-        setIsHovered(true);
+        const card = cardRef.current;
+        if (card) {
+            card.classList.remove('ambient-sway');
+        }
     };
 
     const handleMouseLeave = () => {
-        setIsHovered(false);
-        setTilt({ x: 0, y: 0 });
+        const card = cardRef.current;
+        if (card) {
+            card.classList.add('ambient-sway');
+            card.style.transform = '';
+            card.style.setProperty('--foil-x', '50%');
+            card.style.setProperty('--foil-y', '50%');
+        }
     };
 
     const getMonogram = () => {
@@ -931,26 +941,23 @@ const InvitationCard = ({ data, eventId }) => {
             >
                 {/* Inner Card (Interactive 3D Parallax & Ambient Sway) */}
                 <div 
+                    ref={cardRef}
                     onMouseMove={handleMouseMove}
                     onMouseEnter={handleMouseEnter}
                     onMouseLeave={handleMouseLeave}
-                    className={`lux-container main-card-container ${isHovered ? '' : 'ambient-sway'} ${isShaking ? 'shaking' : ''}`}
+                    className={`lux-container main-card-container ambient-sway ${isShaking ? 'shaking' : ''}`}
                     style={{
                         width: 'min(calc(100% - 2rem), 850px)',
                         margin: '0 auto',
                         background: theme.bg,
-                        boxShadow: isHovered 
-                            ? '0 60px 130px rgba(197, 160, 89, 0.18), 0 25px 60px rgba(0,0,0,0.08)' 
-                            : '0 45px 110px rgba(197, 160, 89, 0.12), 0 15px 40px rgba(0,0,0,0.06)',
                         padding: 'clamp(3rem, 10vw, 6rem) clamp(1.5rem, 5vw, 4rem)',
                         border: '1px solid rgba(197, 160, 89, 0.3)',
                         borderRadius: '4px',
                         backgroundImage: 'var(--paper-texture)',
                         overflow: 'visible',
-                        transform: isHovered ? `rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)` : undefined,
                         transformStyle: 'preserve-3d',
-                        '--foil-x': isHovered ? `${(tilt.y + 8) / 16 * 100}%` : '50%',
-                        '--foil-y': isHovered ? `${(tilt.x + 8) / 16 * 100}%` : '50%',
+                        '--foil-x': '50%',
+                        '--foil-y': '50%',
                     }}>
                 {/* Decorative Inner Border */}
                 <div style={{
