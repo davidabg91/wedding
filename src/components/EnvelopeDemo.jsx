@@ -251,7 +251,7 @@ const EnvelopeDemo = () => {
                     </div>
 
                     {/* Left, Right and Bottom Front Flaps with Bleed (Overlapping Paths to prevent subpixel lines) */}
-                    <svg viewBox="0 0 450 300" style={{ position: 'absolute', inset: -0.5, zIndex: 3, width: 'calc(100% + 1px)', height: 'calc(100% + 1px)', pointerEvents: 'none', transform: 'translateZ(3px)' }}>
+                    <svg viewBox="0 0 450 300" style={{ position: 'absolute', inset: -0.5, zIndex: 3, width: 'calc(100% + 1px)', height: 'calc(100% + 1px)', pointerEvents: 'none', transform: 'translateZ(3px)', transformStyle: 'preserve-3d' }}>
                         {/* Left Flap with +1px overlap bleed */}
                         <path d="M -1.5 -1.5 L 226.5 150 L -1.5 301.5 Z" fill="url(#demoEnvelopeGrad)" opacity="0.98" filter="drop-shadow(3px 0 6px rgba(0,0,0,0.08))" />
                         {/* Right Flap with +1px overlap bleed */}
@@ -368,7 +368,7 @@ const EnvelopeDemo = () => {
                 .demo-envelope-card.emerged {
                     transform: translateY(-70%) scale(1.05) translateZ(2px);
                     box-shadow: 0 20px 40px rgba(0,0,0,0.25), inset 0 0 10px rgba(197,160,89,0.08);
-                    transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+                    transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
                 }
 
                 .demo-envelope-card.zoomed {
