@@ -162,7 +162,7 @@ const WaxSealStamp = ({ theme, monogram }) => {
 const GoldParticles = () => {
     return (
         <div style={{ position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: 1 }}>
-            {[...Array(15)].map((_, i) => {
+            {[...Array(50)].map((_, i) => {
                 const size = Math.random() * 4 + 2;
                 const left = Math.random() * 100;
                 const delay = Math.random() * 8;
@@ -576,38 +576,7 @@ const InvitationCard = ({ data, eventId }) => {
     const [isShaking, setIsShaking] = useState(false);
     const cardRef = useRef(null);
 
-    const handleMouseMove = (e) => {
-        const card = cardRef.current;
-        if (!card) return;
-        const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left - rect.width / 2;
-        const y = e.clientY - rect.top - rect.height / 2;
-        
-        // Normalize values to -8 to 8 degrees
-        const tiltX = (y / (rect.height / 2)) * -8;
-        const tiltY = (x / (rect.width / 2)) * 8;
-        
-        card.style.transform = `rotateX(${tiltX}deg) rotateY(${tiltY}deg)`;
-        card.style.setProperty('--foil-x', `${(tiltY + 8) / 16 * 100}%`);
-        card.style.setProperty('--foil-y', `${(tiltX + 8) / 16 * 100}%`);
-    };
 
-    const handleMouseEnter = () => {
-        const card = cardRef.current;
-        if (card) {
-            card.classList.remove('ambient-sway');
-        }
-    };
-
-    const handleMouseLeave = () => {
-        const card = cardRef.current;
-        if (card) {
-            card.classList.add('ambient-sway');
-            card.style.transform = '';
-            card.style.setProperty('--foil-x', '50%');
-            card.style.setProperty('--foil-y', '50%');
-        }
-    };
 
     const getMonogram = () => {
         if (eventType === 'wedding') {
@@ -776,7 +745,6 @@ const InvitationCard = ({ data, eventId }) => {
             color: theme.accent,
             '--accent-gold': theme.secondary,
             '--accent-gold-dark': theme.primary,
-            overflowX: 'hidden',
             width: '100%'
         }}>
             {/* Global Gradients Definition SVG */}
@@ -805,11 +773,11 @@ const InvitationCard = ({ data, eventId }) => {
                 .float-anim { pointer-events: none; }
 
                 @keyframes ambientSway {
-                    0% { transform: rotateX(2deg) rotateY(-3deg); }
-                    25% { transform: rotateX(3.5deg) rotateY(-1deg); }
-                    50% { transform: rotateX(1deg) rotateY(-4deg); }
-                    75% { transform: rotateX(2.8deg) rotateY(-2deg); }
-                    100% { transform: rotateX(2deg) rotateY(-3deg); }
+                    0% { transform: rotateX(1deg) rotateY(-1.5deg); }
+                    25% { transform: rotateX(1.5deg) rotateY(-0.5deg); }
+                    50% { transform: rotateX(0.5deg) rotateY(-2deg); }
+                    75% { transform: rotateX(1.2deg) rotateY(-1deg); }
+                    100% { transform: rotateX(1deg) rotateY(-1.5deg); }
                 }
 
                 @keyframes cardShake {
@@ -942,9 +910,6 @@ const InvitationCard = ({ data, eventId }) => {
                 {/* Inner Card (Interactive 3D Parallax & Ambient Sway) */}
                 <div 
                     ref={cardRef}
-                    onMouseMove={handleMouseMove}
-                    onMouseEnter={handleMouseEnter}
-                    onMouseLeave={handleMouseLeave}
                     className={`lux-container main-card-container ambient-sway ${isShaking ? 'shaking' : ''}`}
                     style={{
                         width: 'min(calc(100% - 2rem), 850px)',
@@ -975,9 +940,6 @@ const InvitationCard = ({ data, eventId }) => {
                 <CornerOrnament position="bottom-right" eventType={eventType} />
 
                 <div style={{ textAlign: 'center', marginBottom: '3rem', position: 'relative', zIndex: 1 }}>
-                    <h2 className="serif" style={{ fontSize: 'clamp(0.8rem, 3vw, 1.1rem)', letterSpacing: 'clamp(4px, 2vw, 12px)', opacity: 0.6, marginBottom: '2rem', textTransform: 'uppercase' }}>
-                        ДИГИТАЛНА ПОКАНА С ПОДАРЪК
-                    </h2>
                     <h1 className="serif" style={{ fontSize: 'clamp(2rem, 10vw, 4.0rem)', marginTop: '3rem', letterSpacing: '5px', fontWeight: '400', color: theme.primary }}>
                         {theme.label}
                     </h1>
