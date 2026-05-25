@@ -222,6 +222,60 @@ const BalloonIllustration = ({ style }) => (
     <img src={balloonsImg} alt="Balloons Illustration" style={{ width: 'min(150px, 40%)', height: 'auto', mixBlendMode: 'multiply', ...style }} />
 );
 
+const PogachaLoaf = ({ style }) => (
+    <svg viewBox="0 0 160 130" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: '160px', ...style }}>
+        {/* Долна основа — сянка */}
+        <ellipse cx="80" cy="98" rx="62" ry="18" fill="var(--accent-gold)" opacity="0.12"/>
+        {/* Тяло на хляба */}
+        <ellipse cx="80" cy="72" rx="60" ry="44" fill="var(--accent-gold)" opacity="0.18"/>
+        <ellipse cx="80" cy="70" rx="58" ry="42" fill="none" stroke="var(--accent-gold)" strokeWidth="1.4" opacity="0.7"/>
+        {/* Горна купола */}
+        <path d="M22 72 Q22 28 80 24 Q138 28 138 72" fill="var(--accent-gold)" opacity="0.22"/>
+        <path d="M22 72 Q22 28 80 24 Q138 28 138 72" fill="none" stroke="var(--accent-gold)" strokeWidth="1.4" opacity="0.7"/>
+        {/* Кръст на горната повърхност */}
+        <line x1="80" y1="34" x2="80" y2="66" stroke="var(--accent-gold)" strokeWidth="1.6" opacity="0.55" strokeLinecap="round"/>
+        <line x1="58" y1="50" x2="102" y2="50" stroke="var(--accent-gold)" strokeWidth="1.6" opacity="0.55" strokeLinecap="round"/>
+        {/* Декоративни кръгчета около кръста */}
+        <circle cx="80" cy="50" r="3.5" fill="var(--accent-gold)" opacity="0.35"/>
+        <circle cx="65" cy="62" r="2.2" fill="var(--accent-gold)" opacity="0.3"/>
+        <circle cx="80" cy="68" r="2.2" fill="var(--accent-gold)" opacity="0.3"/>
+        <circle cx="95" cy="62" r="2.2" fill="var(--accent-gold)" opacity="0.3"/>
+        {/* Малки точки по ръба */}
+        <circle cx="44" cy="72" r="1.5" fill="var(--accent-gold)" opacity="0.25"/>
+        <circle cx="116" cy="72" r="1.5" fill="var(--accent-gold)" opacity="0.25"/>
+    </svg>
+);
+
+const WheatBranch = ({ style }) => (
+    <svg viewBox="0 0 50 130" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: '44px', pointerEvents: 'none', ...style }}>
+        {/* Стъбло */}
+        <line x1="25" y1="125" x2="25" y2="8" stroke="var(--accent-gold)" strokeWidth="1.3" strokeLinecap="round" opacity="0.6"/>
+        {/* Връх */}
+        <ellipse cx="25" cy="8" rx="4" ry="7" fill="var(--accent-gold)" opacity="0.5" />
+        {/* 4 двойки зърна */}
+        {[[25,28],[25,48],[25,68],[25,90]].map(([cx, cy], i) => (
+            <g key={i}>
+                <ellipse cx={cx - 9} cy={cy} rx="9" ry="4.5" fill="var(--accent-gold)" opacity="0.45" transform={`rotate(-30 ${cx-9} ${cy})`}/>
+                <ellipse cx={cx + 9} cy={cy} rx="9" ry="4.5" fill="var(--accent-gold)" opacity="0.45" transform={`rotate(30 ${cx+9} ${cy})`}/>
+            </g>
+        ))}
+    </svg>
+);
+
+const BirthStatBox = ({ label, value }) => (
+    <div style={{ textAlign: 'center', minWidth: '100px' }}>
+        <p className="serif" style={{ fontSize: '0.7rem', letterSpacing: '3px', opacity: 0.5, marginBottom: '0.5rem', textTransform: 'uppercase' }}>{label}</p>
+        <p className="serif" style={{ fontSize: 'clamp(1.2rem, 4vw, 1.8rem)', color: 'var(--accent-gold-dark)', fontWeight: '600', lineHeight: 1.2 }}>{value}</p>
+    </div>
+);
+
+const formatBirthDate = (dateStr) => {
+    if (!dateStr) return '';
+    const months = ['ЯНУАРИ','ФЕВРУАРИ','МАРТ','АПРИЛ','МАЙ','ЮНИ','ЮЛИ','АВГУСТ','СЕПТЕМВРИ','ОКТОМВРИ','НОЕМВРИ','ДЕКЕМВРИ'];
+    const [year, month, day] = dateStr.split('-');
+    return `${parseInt(day)} ${months[parseInt(month) - 1]} ${year}`;
+};
+
 const CountdownTimer = ({ targetDate, label }) => {
     const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
 
@@ -298,7 +352,8 @@ const CountdownTimer = ({ targetDate, label }) => {
 const FloralHeroPhoto = ({ src, alt, eventType }) => {
     const isBirthday = eventType === 'birthday';
     const isWedding = eventType === 'wedding';
-    const isHeart = !isWedding && !isBirthday;
+    const isPogacha = eventType === 'pogacha';
+    const isHeart = !isWedding && !isBirthday && !isPogacha;
 
     return (
         <div className="floral-hero-container" style={{
@@ -339,7 +394,7 @@ const FloralHeroPhoto = ({ src, alt, eventType }) => {
                 position: 'relative',
                 width: 'min(420px, 79vw)',
                 height: 'min(420px, 79vw)',
-                borderRadius: isWedding ? '50%' : isBirthday ? 'max(24px, 6vw)' : '4px',
+                borderRadius: isWedding ? '50%' : isBirthday ? 'max(24px, 6vw)' : isPogacha ? '50% / 60%' : '4px',
                 background: '#fcfaf6',
                 backgroundImage: 'var(--paper-texture)',
                 padding: 'min(15px, 3.5vw)',
@@ -357,7 +412,7 @@ const FloralHeroPhoto = ({ src, alt, eventType }) => {
                     position: 'relative',
                     width: '100%',
                     height: '100%',
-                    borderRadius: isWedding ? '50%' : isBirthday ? 'max(16px, 4vw)' : '2px',
+                    borderRadius: isWedding ? '50%' : isBirthday ? 'max(16px, 4vw)' : isPogacha ? '50% / 60%' : '2px',
                     overflow: 'hidden',
                     boxShadow: 'inset 0 0 10px rgba(0,0,0,0.15), 0 2px 8px rgba(0,0,0,0.1)',
                     border: '1px solid rgba(197, 160, 89, 0.15)',
@@ -590,6 +645,9 @@ const InvitationCard = ({ data, eventId }) => {
         if (eventType === 'birthday') {
             return data.birthdayPerson ? data.birthdayPerson.trim().charAt(0).toUpperCase() : '🎂';
         }
+        if (eventType === 'pogacha') {
+            return data.pogachaBabyName ? data.pogachaBabyName.trim().charAt(0).toUpperCase() : '🍞';
+        }
         return '✨';
     };
 
@@ -663,6 +721,28 @@ const InvitationCard = ({ data, eventId }) => {
                     symbol: <span style={{ fontSize: '3rem', marginTop: '2rem' }}>💎</span>,
                     introSubtitle: 'ВИ КАНЯ ДА ОТПРАЗНУВАМЕ МОЯ ЮБИЛЕЙ ЗАЕДНО'
                 };
+            case 'pogacha': {
+                const isGirl = data.pogachaGender === 'girl';
+                return {
+                    primary:      isGirl ? '#B5566A' : '#4A7FA5',
+                    secondary:    isGirl ? '#DFA0B0' : '#8AB8D4',
+                    accent:       '#3D2B1F',
+                    bg:           isGirl ? '#FDF5F2' : '#F2F7FB',
+                    waxColor:     '#C17A3A',
+                    label:        'ПОГАЧА',
+                    timerLabel:   'ДО ПРАЗНИКА ОСТАВАТ',
+                    photosLabel:  'СНИМКИ НА БЕБЕТО',
+                    venueLabel:   'МЯСТО НА СЪБИРАНЕТО',
+                    rsvpLabel:    'ЩЕ СПОДЕЛИТЕ ЛИ РАДОСТТА С НАС?',
+                    ornament:     isGirl ? '🌸' : '🍀',
+                    bgPattern:    `url("data:image/svg+xml,%3Csvg width='40' height='40' xmlns='http://www.w3.org/2000/svg'%3E%3Cellipse cx='20' cy='20' rx='5' ry='2.5' fill='%23C17A3A' fill-opacity='0.07' transform='rotate(30 20 20)'/%3E%3C/svg%3E")`,
+                    bgSize:       '40px 40px',
+                    symbol:       <PogachaLoaf style={{ marginTop: '2rem' }} />,
+                    introSubtitle: isGirl
+                        ? 'С ГОЛЯМА РАДОСТ ВИ КАНЯТ НА ПОГАЧА ЗА МАЛКОТО ИМ МОМИЧЕНЦЕ'
+                        : 'С ГОЛЯМА РАДОСТ ВИ КАНЯТ НА ПОГАЧА ЗА МАЛКОТО ИМ МОМЧЕНЦЕ',
+                };
+            }
             default: // wedding
                 return {
                     primary: '#c5a059',
@@ -888,6 +968,14 @@ const InvitationCard = ({ data, eventId }) => {
                     <StarCluster style={{ bottom: '10%', right: '18%' }} />
                 </>
             )}
+            {eventType === 'pogacha' && (
+                <>
+                    <WheatBranch style={{ position: 'fixed', top: '8%',    left: '3%',  transform: 'rotate(-15deg)', zIndex: 8 }} />
+                    <WheatBranch style={{ position: 'fixed', top: '38%',   right: '4%', transform: 'rotate(15deg)',  zIndex: 8 }} />
+                    <WheatBranch style={{ position: 'fixed', bottom: '18%',left: '5%',  transform: 'rotate(-8deg)',  zIndex: 8 }} />
+                    <WheatBranch style={{ position: 'fixed', bottom: '6%', right: '6%', transform: 'rotate(22deg)',  zIndex: 8 }} />
+                </>
+            )}
             {data.illustrativeTheme === 'balloon' && (
                 <div style={{ position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: 9 }}>
                     <span style={{ position: 'absolute', top: '20%', left: '10%', fontSize: '2rem', animation: 'float-drift 10s infinite linear' }}>🎈</span>
@@ -966,6 +1054,7 @@ const InvitationCard = ({ data, eventId }) => {
                         {eventType === 'christening' && data.childName}
                         {eventType === 'birthday' && data.birthdayPerson}
                         {eventType === 'jubilee' && `${data.jubileePerson}`}
+                        {eventType === 'pogacha' && data.pogachaBabyName}
                     </h2>
                     {eventType === 'jubilee' && data.jubileeYears && (
                         <p className="serif" style={{ fontSize: 'clamp(1.5rem, 6vw, 2.5rem)', color: theme.secondary, marginTop: '2rem', fontStyle: 'italic' }}>
@@ -978,6 +1067,11 @@ const InvitationCard = ({ data, eventId }) => {
                     {eventType === 'christening' && data.parents && (
                         <p className="serif letterpress-text" style={{ fontSize: '1.2rem', color: theme.primary, letterSpacing: '2px', marginBottom: '1rem' }}>
                             {data.parents.toUpperCase()}
+                        </p>
+                    )}
+                    {eventType === 'pogacha' && data.pogachaParents && (
+                        <p className="serif letterpress-text" style={{ fontSize: '1.1rem', color: theme.primary, letterSpacing: '2px', marginBottom: '1rem', opacity: 0.85 }}>
+                            {data.pogachaParents.toUpperCase()}
                         </p>
                     )}
                     <p className="serif letterpress-text" style={{ fontSize: '1rem', color: theme.primary, letterSpacing: '4px', marginBottom: '1rem', opacity: 0.8 }}>
@@ -1015,6 +1109,25 @@ const InvitationCard = ({ data, eventId }) => {
 
                     {eventType === 'christening' ? <AngelSymbol style={{ marginTop: '2rem', opacity: 0.3 }} /> : <BaroqueOrnament style={{ marginTop: '2rem', transform: 'scaleY(-1)' }} />}
                 </Section>
+
+                {/* Birth Stats for Погача */}
+                {eventType === 'pogacha' && (data.pogachaBirthDate || data.pogachaWeight || data.pogachaHeight) && (
+                    <Section title="ДОБРЕ ДОШЛО, МАЛКО ЧУДО" theme={theme}>
+                        <div style={{ display: 'flex', justifyContent: 'center', gap: 'clamp(1.5rem, 5vw, 3.5rem)', flexWrap: 'wrap', margin: '1rem 0 2rem 0' }}>
+                            {data.pogachaBirthDate && (
+                                <BirthStatBox label="РОДЕНО НА" value={formatBirthDate(data.pogachaBirthDate)} />
+                            )}
+                            {data.pogachaWeight && (
+                                <BirthStatBox label="ТЕГЛО" value={data.pogachaWeight} />
+                            )}
+                            {data.pogachaHeight && (
+                                <BirthStatBox label="РЪСТ" value={data.pogachaHeight} />
+                            )}
+                        </div>
+                        <PogachaLoaf style={{ margin: '0 auto', opacity: 0.5, display: 'block' }} />
+                        <div style={{ height: '1px', width: '80px', background: theme.secondary, margin: '2rem auto 0 auto', opacity: 0.4 }}></div>
+                    </Section>
+                )}
 
                 {/* Church Info for Christening */}
                 {eventType === 'christening' && data.church && (
@@ -1172,6 +1285,7 @@ const InvitationCard = ({ data, eventId }) => {
                         {eventType === 'christening' && data.childName.toUpperCase()}
                         {eventType === 'birthday' && data.birthdayPerson.toUpperCase()}
                         {eventType === 'jubilee' && data.jubileePerson.toUpperCase()}
+                        {eventType === 'pogacha' && data.pogachaBabyName && data.pogachaBabyName.toUpperCase()}
                     </p>
                     <p className="serif" style={{ fontSize: '0.7rem', color: theme.secondary, marginTop: '2rem', letterSpacing: '4px' }}>2026</p>
                 </div>

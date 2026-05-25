@@ -234,6 +234,12 @@ const CreatorForm = ({ data, onChange, onSubmit, onLogin, onRegister }) => {
       illustrativeTheme: 'bear', // 'bear', 'angel', 'star', 'balloon'
       jubileePerson: '', // For Jubilee
       jubileeYears: '', // For Jubilee
+      pogachaBabyName: '', // For Погача
+      pogachaGender: 'boy', // 'boy' | 'girl'
+      pogachaParents: '', // For Погача
+      pogachaBirthDate: '', // For Погача
+      pogachaWeight: '', // For Погача (напр. "3.200 кг")
+      pogachaHeight: '', // For Погача (напр. "50 см")
       date: '',
       time: '',
       location: '',
@@ -292,6 +298,15 @@ const CreatorForm = ({ data, onChange, onSubmit, onLogin, onRegister }) => {
         { time: '22:30', activity: 'Торта', icon: '🍰' }
       ];
       defaultMessage = 'За нас е огромно удоволствие да Ви поканим да бъдете част от нашето специално тържество!';
+    } else if (type === 'pogacha') {
+      newProgram = [
+        { time: '12:00', activity: 'Посрещане на гостите', icon: '🥂' },
+        { time: '12:30', activity: 'Чупене на погачата', icon: '🍞' },
+        { time: '13:00', activity: 'Обяд в чест на новороденото', icon: '🍽️' },
+        { time: '14:30', activity: 'Поздрави и подаръци', icon: '🎁' },
+        { time: '15:30', activity: 'Торта и сладки', icon: '🍰' }
+      ];
+      defaultMessage = '„С голяма радост Ви каним да посрещнете новия член на нашето семейство. Елате с усмивка и с отворено сърце!"';
     }
     setFormData(prev => ({ ...prev, eventType: type, program: newProgram, message: defaultMessage }));
   };
@@ -574,7 +589,8 @@ const CreatorForm = ({ data, onChange, onSubmit, onLogin, onRegister }) => {
               { id: 'wedding', label: 'Сватба', icon: '💍' },
               { id: 'christening', label: 'Кръщене', icon: '👼' },
               { id: 'birthday', label: 'Рожден Ден', icon: '🎂' },
-              { id: 'jubilee', label: 'Юбилей', icon: '🎊' }
+              { id: 'jubilee', label: 'Юбилей', icon: '🎊' },
+              { id: 'pogacha', label: 'Погача', icon: '🍞' }
             ].map(type => (
               <button
                 key={type.id}
@@ -693,6 +709,61 @@ const CreatorForm = ({ data, onChange, onSubmit, onLogin, onRegister }) => {
                   <div style={{ gridColumn: windowWidth <= 600 ? '1 / -1' : 'auto' }}>
                     <label className="serif" style={{ color: 'var(--accent-gold-dark)', fontSize: '0.9rem', letterSpacing: '2px' }}>ГОДИНИ (ЮБИЛЕЙ)</label>
                     <input type="number" name="jubileeYears" className="lux-input" placeholder="Напр. 50" value={formData.jubileeYears} onChange={handleChange} required />
+                  </div>
+                </>
+              )}
+
+              {formData.eventType === 'pogacha' && (
+                <>
+                  {/* Ime на бебето */}
+                  <div style={{ gridColumn: '1 / -1' }}>
+                    <label className="serif" style={{ color: 'var(--accent-gold-dark)', fontSize: '0.9rem', letterSpacing: '2px' }}>ИМЕ НА БЕБЕТО</label>
+                    <input type="text" name="pogachaBabyName" className="lux-input" placeholder="Ime..." value={formData.pogachaBabyName} onChange={handleChange} required />
+                  </div>
+                  {/* Пол */}
+                  <div style={{ gridColumn: '1 / -1', display: 'flex', gap: '1.5rem', alignItems: 'center', marginTop: '0.5rem', flexWrap: 'wrap' }}>
+                    <label className="serif" style={{ color: 'var(--accent-gold-dark)', fontSize: '0.9rem', letterSpacing: '2px' }}>ПОЛ:</label>
+                    <div style={{ display: 'flex', gap: '1rem' }}>
+                      {['boy', 'girl'].map(gender => (
+                        <button
+                          key={gender}
+                          type="button"
+                          onClick={() => setFormData(prev => ({ ...prev, pogachaGender: gender }))}
+                          className="serif"
+                          style={{
+                            padding: '0.6rem 1.5rem', minHeight: '44px',
+                            background: formData.pogachaGender === gender ? (gender === 'boy' ? '#4A7FA5' : '#B5566A') : 'white',
+                            color: formData.pogachaGender === gender ? 'white' : '#777',
+                            border: `1px solid ${gender === 'boy' ? '#4A7FA5' : '#B5566A'}`,
+                            borderRadius: '20px', cursor: 'pointer', fontSize: '0.85rem', letterSpacing: '1px',
+                            transition: 'background 0.3s ease, color 0.3s ease',
+                            touchAction: 'manipulation', WebkitTapHighlightColor: 'transparent', userSelect: 'none'
+                          }}
+                        >
+                          {gender === 'boy' ? 'Момче 👦' : 'Момиче 👧'}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                  {/* Родители */}
+                  <div style={{ gridColumn: '1 / -1' }}>
+                    <label className="serif" style={{ color: 'var(--accent-gold-dark)', fontSize: '0.9rem', letterSpacing: '2px' }}>РОДИТЕЛИ</label>
+                    <input type="text" name="pogachaParents" className="lux-input" placeholder="Имена на родителите..." value={formData.pogachaParents} onChange={handleChange} />
+                  </div>
+                  {/* Дата на раждане + Тегло + Ръст */}
+                  <div style={{ gridColumn: '1 / -1', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '2rem' }}>
+                    <div>
+                      <label className="serif" style={{ color: 'var(--accent-gold-dark)', fontSize: '0.9rem', letterSpacing: '2px' }}>ДАТА НА РАЖДАНЕ</label>
+                      <input type="date" name="pogachaBirthDate" className="lux-input" value={formData.pogachaBirthDate} onChange={handleChange} />
+                    </div>
+                    <div>
+                      <label className="serif" style={{ color: 'var(--accent-gold-dark)', fontSize: '0.9rem', letterSpacing: '2px' }}>ТЕГЛО <span style={{ opacity: 0.5, fontSize: '0.75rem' }}>(незадължително)</span></label>
+                      <input type="text" name="pogachaWeight" className="lux-input" placeholder="напр. 3.200 кг" value={formData.pogachaWeight} onChange={handleChange} />
+                    </div>
+                    <div>
+                      <label className="serif" style={{ color: 'var(--accent-gold-dark)', fontSize: '0.9rem', letterSpacing: '2px' }}>РЪСТ <span style={{ opacity: 0.5, fontSize: '0.75rem' }}>(незадължително)</span></label>
+                      <input type="text" name="pogachaHeight" className="lux-input" placeholder="напр. 50 см" value={formData.pogachaHeight} onChange={handleChange} />
+                    </div>
                   </div>
                 </>
               )}
@@ -878,9 +949,10 @@ const CreatorForm = ({ data, onChange, onSubmit, onLogin, onRegister }) => {
               <div style={{ border: '1px dashed var(--accent-gold)', padding: 'clamp(1rem, 5vw, 2rem)', textAlign: 'center', width: '100%', boxSizing: 'border-box' }}>
                 <input type="file" multiple accept="image/*" onChange={handlePhotoUpload} style={{ display: 'none' }} id="photo-upload" />
                 <p className="serif" style={{ fontSize: '0.85rem', marginBottom: '1rem', color: 'var(--accent-gold-dark)', fontWeight: 'bold' }}>
-                  {formData.eventType === 'wedding' ? 'СНИМКИ НА ДВОЙКАТА' : 
-                   formData.eventType === 'christening' ? 'СНИМКИ НА АНГЕЛЧЕТО' : 
-                   formData.eventType === 'birthday' ? 'СНИМКИ НА РОЖДЕНИКА' : 'СНИМКИ НА ЮБИЛЯРА'}
+                  {formData.eventType === 'wedding' ? 'СНИМКИ НА ДВОЙКАТА' :
+                   formData.eventType === 'christening' ? 'СНИМКИ НА АНГЕЛЧЕТО' :
+                   formData.eventType === 'birthday' ? 'СНИМКИ НА РОЖДЕНИКА' :
+                   formData.eventType === 'pogacha' ? 'СНИМКИ НА БЕБЕТО' : 'СНИМКИ НА ЮБИЛЯРА'}
                 </p>
                 <label htmlFor="photo-upload" className="lux-btn" style={{ cursor: 'pointer', fontSize: '0.75rem', display: 'inline-block', padding: '0.8rem 1.5rem' }}>ДОБАВИ СНИМКИ</label>
 
