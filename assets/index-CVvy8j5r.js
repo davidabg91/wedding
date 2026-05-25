@@ -30,17 +30,17 @@ Please change the parent <Route path="${R}"> to <Route path="${R==="/"?"*":`${R}
 
                 .demo-envelope-card {
                     position: absolute;
-                    top: 4%;
-                    left: 4%;
-                    width: 92%;
-                    height: 92%;
+                    top: 9%;
+                    left: 7%;
+                    width: 86%;
+                    height: 82%;
                     background: #fdfaf5;
                     border: 1px solid rgba(197,160,89,0.3);
                     border-radius: 4px;
                     box-shadow: 0 4px 8px rgba(0,0,0,0.08);
                     z-index: 2;
                     transform: translateZ(2px);
-                    padding: 12px 10px;
+                    padding: 10px 8px;
                     box-sizing: border-box;
                     background-image: var(--paper-texture);
                     display: flex;
