@@ -200,7 +200,11 @@ const IntroVideo = ({ data, onFinish }) => {
 
             {/* Envelope 3D Container */}
             <div className="envelope-wrapper" style={{ opacity: isFaded ? 0 : 1, transition: 'opacity 1s ease' }}>
-                <div className="envelope" style={{ background: theme.envelopeColor }}>
+                <div className="envelope" style={{ 
+                    background: theme.envelopeColor,
+                    transform: isZoomed ? 'translate3d(0,0,0) rotateX(0deg) rotateY(0deg) rotateZ(0deg)' : 'rotateX(14deg) rotateY(-10deg) rotateZ(-1deg)',
+                    transformStyle: 'preserve-3d'
+                }}>
                     
                     {/* The Card inside the envelope */}
                     <div className={`envelope-card ${isOpened ? 'emerged' : ''} ${isZoomed ? 'zoomed' : ''}`}>
@@ -275,7 +279,7 @@ const IntroVideo = ({ data, onFinish }) => {
                         overflow: 'hidden',
                         boxShadow: 'inset 0 0 30px rgba(0,0,0,0.85)',
                         border: '1px solid rgba(197,160,89,0.2)',
-                        transform: 'translateZ(1px)'
+                        transform: 'translate3d(0, 0, 1px)'
                     }}>
                         <svg width="100%" height="100%" style={{ display: 'block' }}>
                             <rect width="100%" height="100%" fill={theme.innerLiningColor} />
@@ -284,13 +288,24 @@ const IntroVideo = ({ data, onFinish }) => {
                     </div>
 
                     {/* Left and Right Front Flaps */}
-                    <svg viewBox="0 0 450 300" style={{ position: 'absolute', inset: 0, zIndex: 3, width: '100%', height: '100%', pointerEvents: 'none', transform: 'translateZ(3px)' }}>
+                    <svg viewBox="0 0 450 300" style={{
+                        position: 'absolute',
+                        inset: '-0.5px',
+                        zIndex: 3,
+                        width: 'calc(100% + 1px)',
+                        height: 'calc(100% + 1px)',
+                        pointerEvents: 'none',
+                        transform: 'translate3d(0, 0, 4px)',
+                        transformStyle: 'preserve-3d',
+                        willChange: 'transform',
+                        backfaceVisibility: 'hidden'
+                    }}>
                         {/* Left Flap with bevel gold embossed border */}
-                        <path d="M 0 0 L 225 150 L 0 300 Z" fill={theme.envelopeColor} opacity="0.98" filter="drop-shadow(3px 0 6px rgba(0,0,0,0.15))" />
+                        <path d="M -1.5 -1.5 L 226.5 150 L -1.5 301.5 Z" fill={theme.envelopeColor} opacity="0.98" filter="drop-shadow(3px 0 6px rgba(0,0,0,0.15))" />
                         {/* Right Flap with bevel gold embossed border */}
-                        <path d="M 450 0 L 225 150 L 450 300 Z" fill={theme.envelopeColor} opacity="0.98" filter="drop-shadow(-3px 0 6px rgba(0,0,0,0.15))" />
+                        <path d="M 451.5 -1.5 L 223.5 150 L 451.5 301.5 Z" fill={theme.envelopeColor} opacity="0.98" filter="drop-shadow(-3px 0 6px rgba(0,0,0,0.15))" />
                         {/* Bottom Flap with bevel gold embossed border */}
-                        <path d="M 0 300 L 225 150 L 450 300 Z" fill={theme.envelopeColor} filter="drop-shadow(0 -4px 8px rgba(0,0,0,0.18))" />
+                        <path d="M -1.5 301.5 L 225 148.5 L 451.5 301.5 Z" fill={theme.envelopeColor} filter="drop-shadow(0 -4px 8px rgba(0,0,0,0.18))" />
                         
                         {/* 3D Bevel Emboss Shadows under Gold Border */}
                         <path d="M 0 0 L 225 150" stroke="rgba(0,0,0,0.25)" strokeWidth="1.5" fill="none" transform="translate(0, 1.2)" />
@@ -308,7 +323,7 @@ const IntroVideo = ({ data, onFinish }) => {
                         zIndex: flapFlipped ? 1 : 4,
                     }}>
                         <svg viewBox="0 0 450 150" style={{ width: '100%', height: '100%', display: 'block', filter: isOpened ? 'drop-shadow(0 -4px 6px rgba(0,0,0,0.15))' : 'drop-shadow(0 6px 8px rgba(0,0,0,0.22))', transition: 'filter 1.2s' }}>
-                            <path d="M 0 0 L 225 150 L 450 0 Z" fill={theme.envelopeColor} />
+                            <path d="M -1.5 -1.5 L 225 151.5 L 451.5 -1.5 Z" fill={theme.envelopeColor} />
                             {/* 3D Bevel Emboss Shadow */}
                             <path d="M 0 0 L 225 150 L 450 0" stroke="rgba(0,0,0,0.25)" strokeWidth="1.8" fill="none" transform="translate(0, 1.2)" />
                             {/* Gold Foil Border */}
@@ -383,35 +398,38 @@ const IntroVideo = ({ data, onFinish }) => {
                     border-radius: 8px;
                     box-shadow: 0 35px 70px rgba(0,0,0,0.45), inset 0 0 30px rgba(0,0,0,0.1);
                     transform-style: preserve-3d;
+                    transition: transform 1.5s cubic-bezier(0.25, 1, 0.5, 1);
                 }
 
                 .envelope-card {
                     position: absolute;
-                    top: 4%;
-                    left: 4%;
-                    width: 92%;
-                    height: 90%;
+                    top: 9%;
+                    left: 7%;
+                    width: 86%;
+                    height: 82%;
                     background: #fdfaf5;
                     border: 1px solid rgba(197,160,89,0.4);
                     border-radius: 4px;
                     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
                     z-index: 2;
-                    transform: translateZ(2px);
+                    transform: translate3d(0, 0, 2px);
                     transition: transform 1.8s cubic-bezier(0.25, 1, 0.5, 1);
                     padding: 10px;
                     box-sizing: border-box;
                     background-image: var(--paper-texture);
+                    will-change: transform;
+                    backface-visibility: hidden;
                 }
 
                 .envelope-card.emerged {
-                    transform: translateY(-73%) scale(1.08) translateZ(2px);
+                    transform: translate3d(0, -73%, 2px) scale(1.08);
                     box-shadow: 0 30px 50px rgba(0,0,0,0.3), inset 0 0 15px rgba(197,160,89,0.1);
-                    /* Remains z-index 2 and Z-depth 2px during slide to stay behind front flaps (Z=3px) but in front of top open flap (Z=1px) */
+                    /* Remains z-index 2 and Z-depth 2px during slide to stay behind front flaps (Z=4px) but in front of top open flap (Z=1px) */
                     transition: transform 1.8s cubic-bezier(0.25, 1, 0.5, 1) 1.0s;
                 }
 
                 .envelope-card.zoomed {
-                    transform: translateY(-37%) scale(3.5) translateZ(50px);
+                    transform: translate3d(0, -37%, 50px) scale(3.5);
                     opacity: 1;
                     z-index: 100; /* Instantly moves in front of the front flaps during zoom */
                     transition: transform 1.5s cubic-bezier(0.7, 0, 0.3, 1), z-index 0s linear;
@@ -426,12 +444,14 @@ const IntroVideo = ({ data, onFinish }) => {
                     transform-origin: top;
                     transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
                     transform-style: preserve-3d;
-                    transform: rotateX(0deg) translateZ(4px);
+                    transform: rotateX(0deg) translate3d(0, 0, 4.02px);
                     z-index: 4;
+                    will-change: transform;
+                    backface-visibility: hidden;
                 }
 
                 .envelope-flap.open {
-                    transform: rotateX(180deg) translateZ(1px);
+                    transform: rotateX(180deg) translate3d(0, 0, 1px);
                     z-index: 1;
                 }
 
@@ -442,9 +462,11 @@ const IntroVideo = ({ data, onFinish }) => {
                     height: 80px;
                     overflow: hidden;
                     z-index: 5;
-                    transform: translateZ(5px);
+                    transform: translate3d(0, 0, 4.05px);
                     transition: all 0.9s cubic-bezier(0.4, 0, 0.2, 1);
                     cursor: pointer;
+                    will-change: transform;
+                    backface-visibility: hidden;
                 }
 
                 .seal-left {
@@ -456,13 +478,13 @@ const IntroVideo = ({ data, onFinish }) => {
                 }
 
                 .seal-left.broken {
-                    transform: translate(-45px, 20px) rotate(-30deg) scale(0.7) translateZ(5px);
+                    transform: translate3d(-45px, 20px, 4.05px) rotate(-30deg) scale(0.7);
                     opacity: 0;
                     pointer-events: none;
                 }
 
                 .seal-right.broken {
-                    transform: translate(45px, 20px) rotate(30deg) scale(0.7) translateZ(5px);
+                    transform: translate3d(45px, 20px, 4.05px) rotate(30deg) scale(0.7);
                     opacity: 0;
                     pointer-events: none;
                 }
