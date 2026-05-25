@@ -49,6 +49,18 @@ const IntroVideo = ({ data, onFinish }) => {
                     waxColor: '#c5a059',
                     innerLiningColor: '#110021', // Deep purple velvet
                 };
+            case 'pogacha': {
+                const isPogachaGirl = safeData.pogachaGender === 'girl';
+                return {
+                    label: 'ПОКАНА ЗА ПОГАЧА',
+                    names: safeData.pogachaBabyName ? safeData.pogachaBabyName.toUpperCase() : 'НАШЕТО БЕБЕ',
+                    overlay: isPogachaGirl ? 'rgba(181, 86, 106, 0.3)' : 'rgba(74, 127, 165, 0.3)',
+                    envelopeColor: isPogachaGirl ? 'url(#pogachaPinkGrad)' : 'url(#pogachaBlueGrad)',
+                    envelopeFlapColor: isPogachaGirl ? '#f5dfe0' : '#dce8f2',
+                    waxColor: '#C17A3A', // bread-crust brown
+                    innerLiningColor: isPogachaGirl ? '#3d1a22' : '#1a2d3d', // deep velvet rose/navy
+                };
+            }
             default: // wedding
                 return {
                     label: 'ПОКАНА ЗА СВАТБА',
@@ -75,6 +87,12 @@ const IntroVideo = ({ data, onFinish }) => {
         }
         if (safeData.eventType === 'birthday') {
             return safeData.birthdayPerson ? safeData.birthdayPerson.trim().charAt(0).toUpperCase() : '🎂';
+        }
+        if (safeData.eventType === 'jubilee') {
+            return safeData.jubileePerson ? safeData.jubileePerson.trim().charAt(0).toUpperCase() : '💎';
+        }
+        if (safeData.eventType === 'pogacha') {
+            return safeData.pogachaBabyName ? safeData.pogachaBabyName.trim().charAt(0).toUpperCase() : '🍞';
         }
         return '✨';
     };
@@ -161,6 +179,16 @@ const IntroVideo = ({ data, onFinish }) => {
                         <stop offset="0%" stopColor="#431e63" />
                         <stop offset="50%" stopColor="#2b1145" />
                         <stop offset="100%" stopColor="#150524" />
+                    </linearGradient>
+                    <linearGradient id="pogachaBlueGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stopColor="#f4f9ff" />
+                        <stop offset="50%" stopColor="#e0ecf7" />
+                        <stop offset="100%" stopColor="#c5d8ec" />
+                    </linearGradient>
+                    <linearGradient id="pogachaPinkGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stopColor="#fdf5f2" />
+                        <stop offset="50%" stopColor="#f7e3df" />
+                        <stop offset="100%" stopColor="#ecc8c6" />
                     </linearGradient>
 
                     {/* Luxurious Gold Damask Pattern for Inner Lining */}
@@ -575,6 +603,12 @@ const WaxSealSVG = ({ theme, isLeft, monogram }) => {
                             <stop offset="0%" stopColor="#8db6d4" />
                             <stop offset="70%" stopColor="#5d92b8" />
                             <stop offset="100%" stopColor="#2c5c7d" />
+                        </>
+                    ) : theme.waxColor === '#C17A3A' ? (
+                        <>
+                            <stop offset="0%" stopColor="#e0a06a" />
+                            <stop offset="70%" stopColor="#C17A3A" />
+                            <stop offset="100%" stopColor="#6b3d18" />
                         </>
                     ) : (
                         <>
