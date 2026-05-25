@@ -43,6 +43,7 @@ const CornerOrnament = ({ position = "top-left", eventType }) => {
 
     return (
         <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg"
+            className="corner-ornament"
             style={{
                 width: 'min(180px, 40vw)',
                 position: 'absolute',
@@ -84,6 +85,109 @@ const CornerOrnament = ({ position = "top-left", eventType }) => {
                 </>
             )}
         </svg>
+    );
+};
+
+const WaxSealStamp = ({ theme, monogram }) => {
+    return (
+        <div className="wax-stamp-container" style={{
+            position: 'relative',
+            width: '120px',
+            height: '120px',
+            margin: '1.5rem auto',
+            perspective: '500px',
+        }}>
+            <svg viewBox="0 0 80 80" className="wax-stamp-element" style={{
+                width: '100%',
+                height: '100%',
+                filter: 'drop-shadow(0 8px 16px rgba(0,0,0,0.45))'
+            }}>
+                <defs>
+                    <radialGradient id="stampWaxGrad" cx="35%" cy="35%" r="65%">
+                        {theme.waxColor === '#c5a059' ? (
+                            <>
+                                <stop offset="0%" stopColor="#d9b655" />
+                                <stop offset="70%" stopColor="#9e7d44" />
+                                <stop offset="100%" stopColor="#57421c" />
+                            </>
+                        ) : theme.waxColor === '#e07a7a' ? (
+                            <>
+                                <stop offset="0%" stopColor="#f3a7a7" />
+                                <stop offset="70%" stopColor="#e07a7a" />
+                                <stop offset="100%" stopColor="#9c3e3e" />
+                            </>
+                        ) : theme.waxColor === '#5d92b8' ? (
+                            <>
+                                <stop offset="0%" stopColor="#8db6d4" />
+                                <stop offset="70%" stopColor="#5d92b8" />
+                                <stop offset="100%" stopColor="#2c5c7d" />
+                            </>
+                        ) : theme.primary === '#4B0082' ? (
+                            <>
+                                <stop offset="0%" stopColor="#a376eb" />
+                                <stop offset="70%" stopColor="#5a22b0" />
+                                <stop offset="100%" stopColor="#2b0561" />
+                            </>
+                        ) : (
+                            <>
+                                <stop offset="0%" stopColor="#b52626" />
+                                <stop offset="70%" stopColor="#801414" />
+                                <stop offset="100%" stopColor="#400505" />
+                            </>
+                        )}
+                    </radialGradient>
+                </defs>
+                <path d="M 40 5 Q 58 7 70 20 Q 78 38 75 55 Q 70 75 52 77 Q 32 79 16 70 Q 5 54 8 35 Q 11 12 40 5 Z" fill="url(#stampWaxGrad)" />
+                <ellipse cx="26" cy="22" rx="15" ry="7" fill="rgba(255,255,255,0.18)" transform="rotate(-30, 26, 22)" filter="blur(1.5px)" />
+                <circle cx="40" cy="40" r="26" fill="none" stroke="rgba(0,0,0,0.15)" strokeWidth="1.5" />
+                <circle cx="40" cy="40" r="24" fill="none" stroke="url(#goldGradient)" strokeWidth="1.5" />
+                <text 
+                    x="40" 
+                    y="46" 
+                    fontFamily="'Cormorant Garamond', serif" 
+                    fontSize="13" 
+                    fontWeight="700" 
+                    fill="url(#goldGradient)" 
+                    textAnchor="middle" 
+                    letterSpacing="0.5"
+                    style={{ textShadow: '0 1px 2px rgba(0,0,0,0.5)' }}
+                >
+                    {monogram}
+                </text>
+            </svg>
+        </div>
+    );
+};
+
+const GoldParticles = () => {
+    return (
+        <div style={{ position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: 1 }}>
+            {[...Array(15)].map((_, i) => {
+                const size = Math.random() * 4 + 2;
+                const left = Math.random() * 100;
+                const delay = Math.random() * 8;
+                const duration = Math.random() * 10 + 8;
+                const isLeftDirection = i % 2 === 0;
+                return (
+                    <div
+                        key={i}
+                        style={{
+                            position: 'absolute',
+                            bottom: '-20px',
+                            left: `${left}%`,
+                            width: `${size}px`,
+                            height: `${size}px`,
+                            background: 'radial-gradient(circle, #ffe999 0%, #d4af37 70%, transparent 100%)',
+                            borderRadius: '50%',
+                            opacity: Math.random() * 0.4 + 0.2,
+                            animation: `${isLeftDirection ? 'float-up-left' : 'float-up-right'} ${duration}s infinite linear`,
+                            animationDelay: `${delay}s`,
+                            boxShadow: '0 0 10px rgba(212, 175, 55, 0.5)'
+                        }}
+                    />
+                );
+            })}
+        </div>
     );
 };
 
@@ -201,7 +305,7 @@ const FloralHeroPhoto = ({ src, alt, eventType }) => {
             position: 'relative',
             width: '100%',
             maxWidth: '850px',
-            height: isWedding ? 'calc(1.45 * min(400px, 75vw))' : 'min(400px, 75vw)',
+            height: isWedding ? 'calc(1.45 * min(400px, 75vw))' : 'min(420px, 79vw)',
             margin: '2.5rem auto 3rem auto',
             display: 'flex',
             alignItems: 'center',
@@ -230,25 +334,42 @@ const FloralHeroPhoto = ({ src, alt, eventType }) => {
                 }}></div>
             )}
 
-            {/* The Photo Frame - Dynamic for Event Type */}
+            {/* Passepartout Frame */}
             <div style={{
                 position: 'relative',
-                width: 'min(400px, 75vw)',
-                height: 'min(400px, 75vw)',
-                borderRadius: isWedding ? '50%' : isBirthday ? 'max(20px, 5vw)' : '0',
-                overflow: 'hidden',
+                width: 'min(420px, 79vw)',
+                height: 'min(420px, 79vw)',
+                borderRadius: isWedding ? '50%' : isBirthday ? 'max(24px, 6vw)' : '4px',
+                background: '#fcfaf6',
+                backgroundImage: 'var(--paper-texture)',
+                padding: 'min(15px, 3.5vw)',
+                boxShadow: '0 25px 65px rgba(0,0,0,0.12), inset 0 0 15px rgba(197,160,89,0.08)',
+                border: '1px solid rgba(197, 160, 89, 0.35)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
                 zIndex: 1,
-                boxShadow: '0 30px 80px rgba(0,0,0,0.15)',
-                border: isWedding ? '2px solid rgba(255, 255, 255, 0.9)' : isBirthday ? `8px solid white` : 'none',
-                maskImage: isHeart ? 'url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><path d=\'M50 30 C30 10 10 10 10 40 C10 65 50 90 50 90 C50 90 90 65 90 40 C90 10 70 10 50 30 Z\' fill=\'black\'/></svg>")' : 'none',
-                maskSize: '100% 100%',
-                maskRepeat: 'no-repeat',
-                WebkitMaskImage: isHeart ? 'url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><path d=\'M50 30 C30 10 10 10 10 40 C10 65 50 90 50 90 C50 90 90 65 90 40 C90 10 70 10 50 30 Z\' fill=\'black\'/></svg>")' : 'none',
-                WebkitMaskSize: '100% 100%',
-                WebkitMaskRepeat: 'no-repeat',
-                transform: 'translateZ(30px)'
+                transform: 'translateZ(30px)',
+                boxSizing: 'border-box'
             }}>
-                <img src={src} alt={alt} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                {/* The Photo Frame - Dynamic for Event Type */}
+                <div style={{
+                    position: 'relative',
+                    width: '100%',
+                    height: '100%',
+                    borderRadius: isWedding ? '50%' : isBirthday ? 'max(16px, 4vw)' : '2px',
+                    overflow: 'hidden',
+                    boxShadow: 'inset 0 0 10px rgba(0,0,0,0.15), 0 2px 8px rgba(0,0,0,0.1)',
+                    border: '1px solid rgba(197, 160, 89, 0.15)',
+                    maskImage: isHeart ? 'url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><path d=\'M50 30 C30 10 10 10 10 40 C10 65 50 90 50 90 C50 90 90 65 90 40 C90 10 70 10 50 30 Z\' fill=\'black\'/></svg>")' : 'none',
+                    maskSize: '100% 100%',
+                    maskRepeat: 'no-repeat',
+                    WebkitMaskImage: isHeart ? 'url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><path d=\'M50 30 C30 10 10 10 10 40 C10 65 50 90 50 90 C50 90 90 65 90 40 C90 10 70 10 50 30 Z\' fill=\'black\'/></svg>")' : 'none',
+                    WebkitMaskSize: '100% 100%',
+                    WebkitMaskRepeat: 'no-repeat',
+                }}>
+                    <img src={src} alt={alt} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                </div>
             </div>
 
             {/* Bottom Fade */}
@@ -277,7 +398,7 @@ const HeartImage = ({ src, size = "200px" }) => {
             maxWidth: isResponsive ? '400px' : 'none',
             aspectRatio: isResponsive ? '1/1' : 'auto',
             margin: '2rem auto',
-            overflow: 'hidden',
+            overflow: 'visible',
             display: 'block'
         }}>
             <div style={{
@@ -293,8 +414,29 @@ const HeartImage = ({ src, size = "200px" }) => {
                 WebkitMaskImage: 'url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><path d=\'M50 30 C30 10 10 10 10 40 C10 65 50 90 50 90 C50 90 90 65 90 40 C90 10 70 10 50 30 Z\' fill=\'black\'/></svg>")',
                 WebkitMaskSize: '100% 100%',
                 WebkitMaskRepeat: 'no-repeat',
-                filter: 'sepia(0.1) contrast(1.05)'
+                filter: 'sepia(0.1) contrast(1.05)',
+                position: 'relative',
+                zIndex: 1
             }} />
+            
+            {/* Heart Gold Outline */}
+            <svg viewBox="0 0 100 100" style={{
+                position: 'absolute',
+                inset: 0,
+                width: '100%',
+                height: '100%',
+                pointerEvents: 'none',
+                zIndex: 2,
+                filter: 'drop-shadow(0 4px 6px rgba(0,0,0,0.15))'
+            }}>
+                <path 
+                    d="M50 30 C30 10 10 10 10 40 C10 65 50 90 50 90 C50 90 90 65 90 40 C90 10 70 10 50 30 Z" 
+                    fill="none" 
+                    stroke="url(#goldGradient)" 
+                    strokeWidth="1.2" 
+                    opacity="0.9"
+                />
+            </svg>
         </div>
     );
 };
@@ -431,6 +573,49 @@ const InvitationCard = ({ data, eventId }) => {
     const [rsvpStatus, setRsvpStatus] = useState('Ще присъствам');
     const [activeImageIndex, setActiveImageIndex] = useState(null);
 
+    const [tilt, setTilt] = useState({ x: 0, y: 0 });
+    const [isHovered, setIsHovered] = useState(false);
+    const [isShaking, setIsShaking] = useState(false);
+
+    const handleMouseMove = (e) => {
+        const card = e.currentTarget;
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+        
+        // Normalize values to -8 to 8 degrees
+        const tiltX = (y / (rect.height / 2)) * -8;
+        const tiltY = (x / (rect.width / 2)) * 8;
+        
+        setTilt({ x: tiltX, y: tiltY });
+    };
+
+    const handleMouseEnter = () => {
+        setIsHovered(true);
+    };
+
+    const handleMouseLeave = () => {
+        setIsHovered(false);
+        setTilt({ x: 0, y: 0 });
+    };
+
+    const getMonogram = () => {
+        if (eventType === 'wedding') {
+            const gLetter = data.groom ? data.groom.trim().charAt(0).toUpperCase() : 'A';
+            const bLetter = data.bride ? data.bride.trim().charAt(0).toUpperCase() : 'S';
+            return `${gLetter} & ${bLetter}`;
+        }
+        if (eventType === 'christening') {
+            return data.childName ? data.childName.trim().charAt(0).toUpperCase() : '👼';
+        }
+        if (eventType === 'birthday') {
+            return data.birthdayPerson ? data.birthdayPerson.trim().charAt(0).toUpperCase() : '🎂';
+        }
+        return '✨';
+    };
+
+    const monogram = getMonogram();
+
     const getTheme = () => {
         switch (eventType) {
             case 'christening':
@@ -441,6 +626,7 @@ const InvitationCard = ({ data, eventId }) => {
                     secondary: isGirl ? '#F2D7D5' : '#D4E6F1',
                     accent: '#555',
                     bg: isGirl ? '#FFF5F5' : '#F4F9FF',
+                    waxColor: isGirl ? '#e07a7a' : '#5d92b8',
                     label: 'СВЕТО КРЪЩЕНИЕ',
                     timerLabel: 'ДО СВЕТИЯ ПРАЗНИК ОСТАВАТ',
                     photosLabel: 'СНИМКИ НА АНГЕЛЧЕТО',
@@ -464,6 +650,7 @@ const InvitationCard = ({ data, eventId }) => {
                     secondary: bDeco === 'none' ? '#c5a059' : '#FFC300',
                     accent: '#333',
                     bg: bDeco === 'none' ? '#fdfaf5' : '#FFF8F0',
+                    waxColor: bDeco === 'none' ? '#c5a059' : '#ff5733',
                     label: 'ЧЕСТИТ РОЖДЕН ДЕН',
                     timerLabel: 'ДО ПРАЗНИКА ОСТАВАТ',
                     photosLabel: 'СНИМКИ НА РОЖДЕНИКА',
@@ -485,6 +672,7 @@ const InvitationCard = ({ data, eventId }) => {
                     secondary: '#D7BDE2',
                     accent: '#D4AF37',
                     bg: '#FBFAFF',
+                    waxColor: '#c5a059',
                     label: 'ЮБИЛЕЙ',
                     timerLabel: 'ДО ТЪРЖЕСТВЕНИЯ МОМЕНТ ОСТАВАТ',
                     photosLabel: 'СНИМКИ ОТ ЖИВОТА',
@@ -502,6 +690,7 @@ const InvitationCard = ({ data, eventId }) => {
                     secondary: '#d4af37',
                     accent: '#222',
                     bg: '#fdfaf5',
+                    waxColor: '#801414',
                     label: 'СВАТБЕНА ПОКАНА',
                     timerLabel: 'ДО НАШИЯ ВЪЛШЕБЕН ДЕН ОСТАВАТ',
                     photosLabel: 'СНИМКИ НА ДВОЙКАТА',
@@ -558,6 +747,10 @@ const InvitationCard = ({ data, eventId }) => {
                 });
             }
             setSubmitted(true);
+            setIsShaking(true);
+            setTimeout(() => {
+                setIsShaking(false);
+            }, 1500);
         } catch (err) {
             console.error(err);
             alert("Грешка при изпращане. Моля опитайте пак.");
@@ -576,6 +769,19 @@ const InvitationCard = ({ data, eventId }) => {
             overflowX: 'hidden',
             width: '100%'
         }}>
+            {/* Global Gradients Definition SVG */}
+            <svg style={{ width: 0, height: 0, position: 'absolute' }}>
+                <defs>
+                    <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stopColor="#fff1c2" />
+                        <stop offset="30%" stopColor="#f3d070" />
+                        <stop offset="50%" stopColor="#d4af37" />
+                        <stop offset="85%" stopColor="#aa8422" />
+                        <stop offset="100%" stopColor="#876816" />
+                    </linearGradient>
+                </defs>
+            </svg>
+
             <style>{`
                 @keyframes float-drift {
                     0% { transform: translate(0, 0) rotate(0deg); }
@@ -587,7 +793,92 @@ const InvitationCard = ({ data, eventId }) => {
                     50% { transform: scale(1.2); opacity: 1; }
                 }
                 .float-anim { pointer-events: none; }
+
+                @keyframes ambientSway {
+                    0% { transform: rotateX(2deg) rotateY(-3deg); }
+                    25% { transform: rotateX(3.5deg) rotateY(-1deg); }
+                    50% { transform: rotateX(1deg) rotateY(-4deg); }
+                    75% { transform: rotateX(2.8deg) rotateY(-2deg); }
+                    100% { transform: rotateX(2deg) rotateY(-3deg); }
+                }
+
+                @keyframes cardShake {
+                    0%, 100% { transform: rotateX(2deg) rotateY(-3deg) translate3d(0,0,0); }
+                    70% { transform: rotateX(2deg) rotateY(-3deg) translate3d(0,0,0); }
+                    72% { transform: rotateX(3deg) rotateY(-2deg) translate3d(-3px, 4px, 8px); }
+                    75% { transform: rotateX(1deg) rotateY(-4deg) translate3d(3px, -4px, -8px); }
+                    78% { transform: rotateX(2.5deg) rotateY(-2.5deg) translate3d(-1px, 2px, 3px); }
+                    81% { transform: rotateX(1.8deg) rotateY(-3.5deg) translate3d(1px, -2px, -3px); }
+                    85% { transform: rotateX(2deg) rotateY(-3deg) translate3d(0,0,0); }
+                }
+
+                @keyframes stampDrop {
+                    0% {
+                        transform: scale(3.5) translate3d(0, -120px, 120px);
+                        opacity: 0;
+                    }
+                    65% {
+                        transform: scale(0.9) translate3d(0, 0, 0);
+                        opacity: 1;
+                    }
+                    80% {
+                        transform: scale(1.2) translate3d(0, -6px, 15px);
+                    }
+                    100% {
+                        transform: scale(1) translate3d(0, 0, 0);
+                    }
+                }
+
+                @keyframes float-up-left {
+                    0% { transform: translateY(0) translateX(0) scale(0.8); opacity: 0; }
+                    10% { opacity: 0.6; }
+                    90% { opacity: 0.6; }
+                    100% { transform: translateY(-105vh) translateX(-50px) scale(1); opacity: 0; }
+                }
+
+                @keyframes float-up-right {
+                    0% { transform: translateY(0) translateX(0) scale(0.8); opacity: 0; }
+                    10% { opacity: 0.6; }
+                    90% { opacity: 0.6; }
+                    100% { transform: translateY(-105vh) translateX(50px) scale(1); opacity: 0; }
+                }
+
+                .main-card-container {
+                    transition: transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.5s ease;
+                    transform-style: preserve-3d;
+                }
+
+                .main-card-container.ambient-sway {
+                    animation: ambientSway 12s infinite ease-in-out;
+                }
+
+                .main-card-container.shaking {
+                    animation: cardShake 1.5s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+                }
+
+                .wax-stamp-element {
+                    animation: stampDrop 1.1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+                    transform-origin: center;
+                }
+
+                .main-card-container:hover .foil-text {
+                    animation: none;
+                    background-position: var(--foil-x, 50%) var(--foil-y, 50%) !important;
+                }
+
+                .corner-ornament {
+                    opacity: 0;
+                    animation: fadeInOrnament 1.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+                    animation-delay: 0.5s;
+                }
+
+                @keyframes fadeInOrnament {
+                    to { opacity: 0.35; }
+                }
             `}</style>
+
+            {/* Floating Gold Particles background */}
+            <GoldParticles />
 
             <div style={{ position: 'fixed', inset: 0, backgroundImage: 'var(--paper-texture)', opacity: 0.4, pointerEvents: 'none', zIndex: 10 }}></div>
 
@@ -633,26 +924,33 @@ const InvitationCard = ({ data, eventId }) => {
                     width: '100%',
                     maxWidth: '850px',
                     margin: '2rem auto',
-                    perspective: '1000px',
+                    perspective: '1500px',
                     position: 'relative',
                     zIndex: 11
                 }}
             >
-                {/* Inner Card (Permanently tilted at a subtle static 3D angle. No mouse tracking/movement) */}
+                {/* Inner Card (Interactive 3D Parallax & Ambient Sway) */}
                 <div 
-                    className="lux-container main-card-container" 
+                    onMouseMove={handleMouseMove}
+                    onMouseEnter={handleMouseEnter}
+                    onMouseLeave={handleMouseLeave}
+                    className={`lux-container main-card-container ${isHovered ? '' : 'ambient-sway'} ${isShaking ? 'shaking' : ''}`}
                     style={{
                         width: 'min(calc(100% - 2rem), 850px)',
                         margin: '0 auto',
                         background: theme.bg,
-                        boxShadow: '0 45px 110px rgba(197, 160, 89, 0.12), 0 15px 40px rgba(0,0,0,0.06)',
+                        boxShadow: isHovered 
+                            ? '0 60px 130px rgba(197, 160, 89, 0.18), 0 25px 60px rgba(0,0,0,0.08)' 
+                            : '0 45px 110px rgba(197, 160, 89, 0.12), 0 15px 40px rgba(0,0,0,0.06)',
                         padding: 'clamp(3rem, 10vw, 6rem) clamp(1.5rem, 5vw, 4rem)',
                         border: '1px solid rgba(197, 160, 89, 0.3)',
                         borderRadius: '4px',
                         backgroundImage: 'var(--paper-texture)',
                         overflow: 'visible',
-                        transform: 'rotateX(2.5deg) rotateY(-3.5deg)',
-                        transformStyle: 'preserve-3d'
+                        transform: isHovered ? `rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)` : undefined,
+                        transformStyle: 'preserve-3d',
+                        '--foil-x': isHovered ? `${(tilt.y + 8) / 16 * 100}%` : '50%',
+                        '--foil-y': isHovered ? `${(tilt.x + 8) / 16 * 100}%` : '50%',
                     }}>
                 {/* Decorative Inner Border */}
                 <div style={{
@@ -885,9 +1183,12 @@ const InvitationCard = ({ data, eventId }) => {
                                 <button type="submit" className="lux-btn" style={{ width: 'min(280px, 100%)', background: theme.primary, color: 'white' }}>ИЗПРАТИ ОТГОВОР</button>
                             </form>
                         ) : (
-                            <div style={{ padding: '3rem 0', animation: 'fadeIn 2s' }}>
-                                <h3 className="script" style={{ fontSize: 'clamp(3rem, 12vw, 5rem)', color: theme.primary }}>Благодарим Ви!</h3>
-                                <p className="serif" style={{ marginTop: '2rem', fontSize: 'clamp(1rem, 4vw, 1.2rem)', opacity: 0.6 }}>Очакваме Ви с голямо нетърпение!</p>
+                            <div style={{ padding: '2rem 0', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', animation: 'fadeIn 2s' }}>
+                                <WaxSealStamp theme={theme} monogram={monogram} />
+                                <h3 className="script" style={{ fontSize: 'clamp(3rem, 12vw, 5rem)', color: theme.primary, marginTop: '1rem', lineHeight: '1' }}>Благодарим Ви!</h3>
+                                <p className="serif" style={{ marginTop: '1.5rem', fontSize: 'clamp(1rem, 4vw, 1.2rem)', opacity: 0.8, color: theme.primary, letterSpacing: '1px' }}>
+                                    {rsvpStatus === 'Ще присъствам' ? 'Вашият отговор е изпратен успешно. Очакваме Ви!' : 'Благодарим Ви за отговора!'}
+                                </p>
                             </div>
                         )}
                         <SwirlOrnament style={{ position: 'absolute', top: '20px', left: '20px', opacity: 0.1 }} />
