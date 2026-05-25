@@ -93,7 +93,7 @@ const EnvelopeDemo = () => {
         // Start cycle immediately
         runCycle();
 
-        // Run in loop every 13.5 seconds (allowing buffer between cycles)
+        // Run in loop every 13.5 seconds
         const interval = setInterval(runCycle, 13500);
 
         return () => {
@@ -142,48 +142,16 @@ const EnvelopeDemo = () => {
 
             {/* Envelope 3D Container */}
             <div className="demo-envelope-wrapper" style={{
-                position: 'relative',
-                width: 'min(320px, 90%)',
-                height: '213px', // 3:2 ratio
-                perspective: '1000px',
-                zIndex: 10,
                 transform: isZoomed ? 'translateY(15px) scale(0.95)' : 'none',
                 transition: 'transform 1.2s ease-in-out'
             }}>
                 <div className="demo-envelope" style={{
-                    position: 'absolute',
-                    inset: 0,
-                    width: '100%',
-                    height: '100%',
-                    borderRadius: '8px',
-                    boxShadow: '0 25px 50px rgba(0,0,0,0.3), inset 0 0 20px rgba(0,0,0,0.08)',
-                    transformStyle: 'preserve-3d',
                     background: 'url(#demoEnvelopeGrad)',
                     backgroundColor: '#ebdcb8'
                 }}>
                     
                     {/* The Card inside the envelope */}
-                    <div className={`demo-envelope-card ${isOpened ? 'emerged' : ''} ${isZoomed ? 'zoomed' : ''}`} style={{
-                        position: 'absolute',
-                        top: '4%',
-                        left: '4%',
-                        width: '92%',
-                        height: '92%',
-                        background: '#fdfaf5',
-                        border: '1px solid rgba(197,160,89,0.3)',
-                        borderRadius: '4px',
-                        boxShadow: '0 4px 8px rgba(0,0,0,0.08)',
-                        zIndex: 2,
-                        transform: 'translateZ(2px)',
-                        padding: '12px 10px',
-                        boxSizing: 'border-box',
-                        backgroundImage: 'var(--paper-texture)',
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        transformStyle: 'preserve-3d'
-                    }}>
+                    <div className={`demo-envelope-card ${isOpened ? 'emerged' : ''} ${isZoomed ? 'zoomed' : ''}`}>
                         <div style={{
                             border: '1px solid var(--accent-gold)',
                             padding: '6px',
@@ -279,15 +247,6 @@ const EnvelopeDemo = () => {
 
                     {/* Top Flap (flips open) */}
                     <div className={`demo-envelope-flap ${isOpened ? 'open' : ''}`} style={{
-                        position: 'absolute',
-                        top: 0,
-                        left: 0,
-                        width: '100%',
-                        height: '50%',
-                        transformOrigin: 'top',
-                        transition: 'transform 1.0s cubic-bezier(0.4, 0, 0.2, 1)',
-                        transformStyle: 'preserve-3d',
-                        transform: 'rotateX(0deg) translateZ(4px)',
                         zIndex: flapFlipped ? 1 : 4,
                     }}>
                         <svg viewBox="0 0 450 150" style={{ width: '100%', height: '100%', display: 'block', filter: isOpened ? 'drop-shadow(0 -3px 4px rgba(0,0,0,0.1))' : 'drop-shadow(0 4px 6px rgba(0,0,0,0.18))', transition: 'filter 1.0s' }}>
@@ -310,32 +269,12 @@ const EnvelopeDemo = () => {
                     }}></div>
 
                     {/* Left Half of Wax Seal */}
-                    <div className={`demo-seal-half demo-seal-left ${isOpened ? 'broken' : ''}`} style={{
-                        position: 'absolute',
-                        top: 'calc(50% - 40px)',
-                        left: 'calc(50% - 40px)',
-                        width: '40px',
-                        height: '80px',
-                        overflow: 'hidden',
-                        zIndex: 5,
-                        transform: 'translateZ(5px)',
-                        transition: 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)',
-                    }}>
+                    <div className={`demo-seal-half demo-seal-left ${isOpened ? 'broken' : ''}`}>
                         <WaxSealSVG isLeft={true} monogram="A & S" />
                     </div>
 
                     {/* Right Half of Wax Seal */}
-                    <div className={`demo-seal-half demo-seal-right ${isOpened ? 'broken' : ''}`} style={{
-                        position: 'absolute',
-                        top: 'calc(50% - 40px)',
-                        left: '50%',
-                        width: '40px',
-                        height: '80px',
-                        overflow: 'hidden',
-                        zIndex: 5,
-                        transform: 'translateZ(5px)',
-                        transition: 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)',
-                    }}>
+                    <div className={`demo-seal-half demo-seal-right ${isOpened ? 'broken' : ''}`}>
                         <WaxSealSVG isLeft={false} monogram="A & S" />
                     </div>
                 </div>
@@ -360,6 +299,48 @@ const EnvelopeDemo = () => {
             </p>
 
             <style>{`
+                .demo-envelope-wrapper {
+                    position: relative;
+                    width: min(320px, 90%);
+                    height: 213px; /* 3:2 ratio */
+                    perspective: 1000px;
+                    z-index: 10;
+                    transition: transform 1.2s ease-in-out;
+                }
+
+                .demo-envelope {
+                    position: absolute;
+                    inset: 0;
+                    width: 100%;
+                    height: 100%;
+                    border-radius: 8px;
+                    box-shadow: 0 25px 50px rgba(0,0,0,0.3), inset 0 0 20px rgba(0,0,0,0.08);
+                    transform-style: preserve-3d;
+                }
+
+                .demo-envelope-card {
+                    position: absolute;
+                    top: 4%;
+                    left: 4%;
+                    width: 92%;
+                    height: 92%;
+                    background: #fdfaf5;
+                    border: 1px solid rgba(197,160,89,0.3);
+                    border-radius: 4px;
+                    box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+                    z-index: 2;
+                    transform: translateZ(2px);
+                    padding: 12px 10px;
+                    box-sizing: border-box;
+                    background-image: var(--paper-texture);
+                    display: flex;
+                    flex-direction: column;
+                    alignItems: center;
+                    justify-content: center;
+                    transform-style: preserve-3d;
+                    transition: transform 1.5s cubic-bezier(0.25, 1, 0.5, 1);
+                }
+
                 .demo-envelope-card.emerged {
                     transform: translateY(-70%) scale(1.05) translateZ(2px);
                     box-shadow: 0 20px 40px rgba(0,0,0,0.25), inset 0 0 10px rgba(197,160,89,0.08);
@@ -373,9 +354,39 @@ const EnvelopeDemo = () => {
                     transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1), z-index 0s linear;
                 }
 
+                .demo-envelope-flap {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 50%;
+                    transform-origin: top;
+                    transition: transform 1.0s cubic-bezier(0.4, 0, 0.2, 1);
+                    transform-style: preserve-3d;
+                    transform: rotateX(0deg) translateZ(4px);
+                }
+
                 .demo-envelope-flap.open {
                     transform: rotateX(180deg) translateZ(1px);
-                    z-index: 1;
+                }
+
+                .demo-seal-half {
+                    position: absolute;
+                    top: calc(50% - 40px);
+                    width: 40px;
+                    height: 80px;
+                    overflow: hidden;
+                    z-index: 5;
+                    transform: translateZ(5px);
+                    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+                }
+
+                .demo-seal-left {
+                    left: calc(50% - 40px);
+                }
+
+                .demo-seal-right {
+                    left: 50%;
                 }
 
                 .demo-seal-left.broken {
