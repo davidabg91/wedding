@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { WeddingIcons, WeddingIconOptions } from './components/WeddingIcons.jsx';
 import logo from './assets/logo.png';
 import wreathIvory from './assets/wreath_ivory.png';
+import EnvelopeDemo from './components/EnvelopeDemo.jsx';
 
 const CustomRequestModal = ({ isOpen, onClose }) => {
   const [formData, setFormData] = useState({
@@ -481,71 +482,31 @@ const CreatorForm = ({ data, onChange, onSubmit, onLogin, onRegister }) => {
             </button>
           </div>
 
-          {/* 3D Glass Floating Card Showcase */}
-          <div style={{ perspective: '1000px', display: 'flex', justifyContent: 'center', marginTop: '2rem' }}>
+          {/* 3D Glass Floating Envelope Demo Showcase */}
+          <div style={{ perspective: '1000px', display: 'flex', justifyContent: 'center', marginTop: '2rem', zIndex: 5 }}>
             <div style={{
-              width: 'clamp(260px, 80vw, 320px)',
-              height: 'clamp(400px, 120vw, 500px)',
-              background: 'rgba(25, 25, 25, 0.4)',
+              width: 'clamp(280px, 85vw, 350px)',
+              height: 'clamp(380px, 110vw, 420px)',
+              background: 'rgba(25, 25, 25, 0.35)',
               backdropFilter: 'blur(20px)',
               WebkitBackdropFilter: 'blur(20px)',
               border: '1px solid rgba(255, 255, 255, 0.1)',
-              borderTop: '1px solid rgba(255, 255, 255, 0.3)',
-              borderLeft: '1px solid rgba(255, 255, 255, 0.2)',
+              borderTop: '1px solid rgba(255, 255, 255, 0.25)',
+              borderLeft: '1px solid rgba(255, 255, 255, 0.15)',
               borderRadius: '24px',
-              boxShadow: '0 40px 80px rgba(0,0,0,0.5), inset 0 0 0 1px rgba(197,160,89,0.2)',
-              transform: 'rotateY(-15deg) rotateX(10deg) translateY(-10px)',
+              boxShadow: '0 40px 80px rgba(0,0,0,0.45), inset 0 0 0 1px rgba(197,160,89,0.15)',
+              transform: 'rotateY(-10deg) rotateX(10deg) translateY(-10px)',
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
               justifyContent: 'center',
               position: 'relative',
-              overflow: 'hidden'
+              overflow: 'visible',
+              padding: '2rem'
             }}>
               {/* Card Inner Reflections */}
-              <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '40%', background: 'linear-gradient(to bottom, rgba(255,255,255,0.05), transparent)', pointerEvents: 'none' }}></div>
-              {/* Luxury Invitation Mockup */}
-              <div style={{
-                position: 'absolute',
-                top: '5%',
-                left: '5%',
-                right: '5%',
-                bottom: '5%',
-                background: '#fdfaf5', // Ivory paper
-                borderRadius: '16px',
-                padding: '2rem 1.5rem',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'center',
-                boxShadow: 'inset 0 0 20px rgba(197,160,89,0.1)',
-                border: '1px solid rgba(197,160,89,0.3)',
-                overflow: 'hidden'
-              }}>
-                {/* Subtle ornament top */}
-                <svg width="60" height="20" viewBox="0 0 100 30" fill="none" style={{ marginBottom: '1rem', opacity: 0.6 }}>
-                  <path d="M10 15 Q50 -5 90 15" stroke="var(--accent-gold)" strokeWidth="1" fill="none" />
-                  <circle cx="50" cy="8" r="3" fill="var(--accent-gold)" />
-                </svg>
-
-                <p className="serif" style={{ fontSize: '0.6rem', letterSpacing: '3px', color: '#777', textTransform: 'uppercase', marginBottom: '0.5rem' }}>С Голямо Удоволствие</p>
-                <p className="serif" style={{ fontSize: '0.7rem', color: '#555', marginBottom: '1.5rem' }}>Ви Каним на Нашата Сватба</p>
-
-                <h3 style={{ fontFamily: '"Great Vibes", cursive, serif', fontSize: '2.5rem', color: 'var(--accent-gold-dark)', margin: '0 0 0.5rem 0', fontWeight: 'normal', lineHeight: '1.2' }}>Александър</h3>
-                <span style={{ fontSize: '1.2rem', color: 'var(--accent-gold)', marginBottom: '0.5rem', fontStyle: 'italic' }}>&</span>
-                <h3 style={{ fontFamily: '"Great Vibes", cursive, serif', fontSize: '2.5rem', color: 'var(--accent-gold-dark)', margin: '0 0 1.5rem 0', fontWeight: 'normal', lineHeight: '1.2' }}>София</h3>
-
-                <div style={{ width: '30px', height: '1px', background: 'var(--accent-gold)', marginBottom: '1rem', opacity: 0.5 }}></div>
-
-                <p className="serif" style={{ fontSize: '0.8rem', letterSpacing: '2px', color: '#444', fontWeight: 'bold', marginBottom: '0.3rem' }}>14.09.2026</p>
-                <p className="serif" style={{ fontSize: '0.65rem', color: '#777', textTransform: 'uppercase', letterSpacing: '1px' }}>Резиденция Тера</p>
-
-                {/* Subtle ornament bottom */}
-                <svg width="60" height="20" viewBox="0 0 100 30" fill="none" style={{ marginTop: 'auto', opacity: 0.6 }}>
-                  <path d="M10 15 Q50 35 90 15" stroke="var(--accent-gold)" strokeWidth="1" fill="none" />
-                  <circle cx="50" cy="22" r="3" fill="var(--accent-gold)" />
-                </svg>
-              </div>
+              <div style={{ position: 'absolute', inset: 0, borderRadius: '24px', background: 'linear-gradient(to bottom, rgba(255,255,255,0.03), transparent)', pointerEvents: 'none', zIndex: 0 }}></div>
+              <EnvelopeDemo />
             </div>
           </div>
 
