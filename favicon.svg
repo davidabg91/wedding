@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fff1c2"/>
+      <stop offset="30%" stop-color="#f3d070"/>
+      <stop offset="55%" stop-color="#d4af37"/>
+      <stop offset="100%" stop-color="#9e7530"/>
+    </linearGradient>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2a1a0e"/>
+      <stop offset="100%" stop-color="#1a0f06"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background circle -->
+  <circle cx="32" cy="32" r="31" fill="url(#bg)"/>
+  <circle cx="32" cy="32" r="30" fill="none" stroke="url(#gold)" stroke-width="0.8" opacity="0.6"/>
+
+  <!-- Left ring -->
+  <circle cx="24" cy="32" r="11" fill="none" stroke="url(#gold)" stroke-width="4"/>
+  <!-- Right ring -->
+  <circle cx="40" cy="32" r="11" fill="none" stroke="url(#gold)" stroke-width="4"/>
+
+  <!-- Overlap masking: left ring covers part of right -->
+  <path d="M32 22 Q36 32 32 42" fill="url(#bg)" stroke="url(#bg)" stroke-width="4.5"/>
+  <!-- Right ring front -->
+  <path d="M32 22 Q28 32 32 42" fill="none" stroke="url(#gold)" stroke-width="4"/>
+</svg>
