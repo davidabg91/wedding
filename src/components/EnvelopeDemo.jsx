@@ -684,7 +684,6 @@ const EnvelopeDemo = () => {
                     transform-style: preserve-3d;
                     transform: rotateX(0deg) translate3d(0, 0, 4.02px); /* flush with front flaps but distinct in Z */
                     will-change: transform;
-                    backface-visibility: hidden;
                 }
 
                 .demo-envelope-flap.open {

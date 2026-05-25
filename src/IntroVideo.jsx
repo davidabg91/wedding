@@ -447,7 +447,6 @@ const IntroVideo = ({ data, onFinish }) => {
                     transform: rotateX(0deg) translate3d(0, 0, 4.02px);
                     z-index: 4;
                     will-change: transform;
-                    backface-visibility: hidden;
                 }
 
                 .envelope-flap.open {
